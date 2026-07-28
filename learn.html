@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FAFCF8">
+
+<title>مدخل إلى الذكاء الاصطناعي — دليل تعليمي مبسّط بالعربية | أحمد مهنا</title>
+<meta name="description" content="تعلّم الذكاء الاصطناعي بطريقة سهلة ومبسّطة بالعربية: ما هو الذكاء الاصطناعي، تعلّم الآلة، هندسة الأوامر (Prompting)، الاستخدام المسؤول، ووكلاء الذكاء الاصطناعي. دليل تدريبي مجاني من المدرب أحمد مهنا — دبي، الإمارات.">
+<meta name="keywords" content="تعلم الذكاء الاصطناعي, شرح الذكاء الاصطناعي بالعربية, مدخل الى الذكاء الاصطناعي, دورة ذكاء اصطناعي مجانية, هندسة الأوامر, البرومبت, تعلم الآلة, وكلاء الذكاء الاصطناعي, احمد مهنا, أحمد مهنا, Ahmad Muhanna, learn AI in Arabic, AI basics, prompt engineering">
+<meta name="author" content="Ahmad Muhanna — أحمد مهنا">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<!-- ⚠️ بعد رفع الموقع، ضع الرابط الصحيح لهذه الصفحة هنا -->
+<link rel="canonical" href="https://ahmadmuhanna.com/learn-ai">
+<meta property="og:title" content="مدخل إلى الذكاء الاصطناعي — دليل تعليمي مبسّط | أحمد مهنا">
+<meta property="og:description" content="٩ محاور تشرح الذكاء الاصطناعي من الصفر بلغة بسيطة: الأساسيات، الطلبات (Prompting)، الاستخدام المسؤول، والوكلاء الأذكياء.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ar_AE">
+<meta property="og:locale:alternate" content="en_US">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "مدخل إلى الذكاء الاصطناعي — Introduction to Artificial Intelligence",
+  "description": "دليل تدريبي منظّم لبناء المهارات الأساسية في استخدام الذكاء الاصطناعي بمسؤولية وفعالية. A structured free guide to AI fundamentals, prompting and AI agents, in Arabic and English.",
+  "inLanguage": ["ar", "en"],
+  "educationalLevel": "Beginner",
+  "author": {"@type": "Person", "name": "Ahmad Muhanna", "alternateName": "أحمد مهنا", "jobTitle": "AI Trainer"},
+  "provider": {"@type": "Person", "name": "Ahmad Muhanna", "sameAs": "https://www.linkedin.com/in/ahmadmuhanna/"}
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#FAFCF8; --bg-2:#ECF4F9; --card:#FFFFFF; --card-2:#F1F8E9;
+  --border:rgba(21,50,32,.14); --border-hot:rgba(79,157,45,.55);
+  --text:#152219; --muted:#57675B;
+  --green:#3E8E28; --green-dark:#2E7D32; --blue:#1D6FA5;
+  --grad:linear-gradient(92deg,#A8D24C 0%,#5FAD32 45%,#2E7D32 100%);
+  --max:980px; --r:20px;
+  --display:"Cairo",sans-serif; --body:"Cairo",sans-serif;
+  --h-transform:none;
+}
+html[lang="en"]{--display:"Archivo Black",sans-serif;--body:"Archivo",sans-serif;--h-transform:uppercase}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.85;overflow-x:hidden}
+html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3{font-weight:900}
+::selection{background:rgba(139,195,74,.45);color:#152219}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.hot{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* reading progress */
+#progress{position:fixed;top:0;inset-inline-start:0;height:4px;background:var(--grad);z-index:250;width:0}
+
+/* header */
+header{position:sticky;top:0;z-index:100;background:rgba(250,252,248,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:transform .35s ease}
+header.hide{transform:translateY(-110%)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:14px}
+.logo{font-family:var(--display);font-weight:900;font-size:1.15rem;display:flex;gap:4px;white-space:nowrap}
+.back-link{font-weight:700;font-size:.9rem;color:var(--muted)}
+.back-link:hover{color:var(--green)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--body);font-weight:800;font-size:.98rem;padding:14px 26px;border-radius:999px;cursor:pointer;border:none;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn-green{background:var(--grad);color:#0B2310;box-shadow:0 8px 30px rgba(79,157,45,.35)}
+.btn-green:hover{box-shadow:0 12px 40px rgba(79,157,45,.45)}
+.btn-light{background:var(--card);border:1px solid var(--border);color:var(--text)}
+.btn-light:hover{border-color:var(--border-hot)}
+.lang-btn{background:var(--card);border:1px solid var(--border);color:var(--green-dark);font-weight:800;font-size:.85rem;padding:9px 16px;border-radius:999px;cursor:pointer}
+.lang-btn:hover{border-color:var(--border-hot)}
+
+/* hero */
+.hero{position:relative;padding:76px 0 56px;overflow:hidden;text-align:center}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none}
+.g1{width:560px;height:560px;background:rgba(139,195,74,.25);top:-220px;inset-inline-end:-140px}
+.g2{width:460px;height:460px;background:rgba(110,170,215,.25);top:180px;inset-inline-start:-200px}
+.kicker{display:inline-block;background:rgba(139,195,74,.16);border:1px solid rgba(79,157,45,.4);color:var(--green-dark);font-weight:800;font-size:.85rem;padding:9px 18px;border-radius:999px;margin-bottom:24px}
+h1{font-family:var(--display);font-size:clamp(2.1rem,5.4vw,3.6rem);line-height:1.25;text-transform:var(--h-transform);position:relative}
+.hero .lead{margin:22px auto 34px;color:var(--muted);font-size:1.14rem;max-width:40rem;position:relative}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+.statbar{margin:52px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:640px;position:relative}
+.statbar div{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 12px;text-align:center}
+.statbar b{display:block;font-family:var(--display);font-weight:900;font-size:1.5rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.statbar span{color:var(--muted);font-size:.85rem;font-weight:600}
+
+/* TOC */
+.toc{padding:50px 0 10px}
+.toc h2{text-align:center;margin-bottom:30px}
+h2{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.35;text-transform:var(--h-transform)}
+.toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.toc-grid a{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;font-weight:700;font-size:.95rem;display:flex;gap:12px;align-items:center;transition:border-color .2s ease,transform .2s ease}
+.toc-grid a:hover{border-color:var(--border-hot);transform:translateY(-3px)}
+.toc-grid i{font-style:normal;flex-shrink:0;width:32px;height:32px;border-radius:10px;background:var(--grad);color:#0B2310;font-weight:900;display:grid;place-items:center;font-size:.85rem}
+
+/* lessons */
+.lesson{padding:64px 0;border-top:1px solid var(--border)}
+.lesson:nth-child(even){background:linear-gradient(180deg,rgba(236,244,249,.5),transparent 40%)}
+.mod{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.mod i{font-style:normal;width:42px;height:42px;border-radius:13px;background:var(--grad);color:#0B2310;font-weight:900;display:grid;place-items:center;font-size:1.05rem;font-family:var(--display)}
+.mod span{font-weight:800;color:var(--green-dark);font-size:.9rem;letter-spacing:.04em}
+.lesson h2{margin-bottom:18px}
+.lesson p{color:var(--muted);font-size:1.05rem;margin-bottom:16px;max-width:62rem}
+.lesson p strong,.lesson li strong{color:var(--text)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;transition:border-color .2s ease,transform .2s ease}
+.mini:hover{border-color:var(--border-hot);transform:translateY(-3px)}
+.mini em{font-style:normal;font-size:1.5rem;display:block;margin-bottom:10px}
+.mini b{display:block;font-family:var(--display);font-weight:900;font-size:1.02rem;margin-bottom:6px}
+.mini span{color:var(--muted);font-size:.93rem;line-height:1.75;display:block}
+ul.checks{list-style:none;margin:14px 0 18px;display:flex;flex-direction:column;gap:10px}
+ul.checks li{display:flex;gap:11px;color:var(--muted);font-size:1rem}
+ul.checks li::before{content:"✔";color:var(--green);font-weight:900;flex-shrink:0}
+ol.steps{margin:14px 0 18px;padding-inline-start:0;list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:12px}
+ol.steps li{counter-increment:st;display:flex;gap:13px;color:var(--muted);font-size:1rem;align-items:flex-start}
+ol.steps li::before{content:counter(st);flex-shrink:0;width:28px;height:28px;border-radius:9px;background:rgba(139,195,74,.18);border:1px solid rgba(79,157,45,.4);color:var(--green-dark);font-weight:900;display:grid;place-items:center;font-size:.85rem;margin-top:2px}
+.callout{border-radius:16px;padding:18px 20px;margin:20px 0;font-size:.98rem;font-weight:600;line-height:1.8}
+.callout.tip{background:rgba(139,195,74,.14);border:1px solid rgba(79,157,45,.35);color:var(--green-dark)}
+.callout.info{background:rgba(110,170,215,.14);border:1px solid rgba(60,130,180,.4);color:var(--blue)}
+.callout.warn{background:rgba(244,180,60,.15);border:1px solid rgba(200,130,20,.4);color:#96610A}
+details.fold{background:var(--card);border:1px solid var(--border);border-radius:16px;margin:12px 0;overflow:hidden}
+details.fold summary{cursor:pointer;padding:18px 22px;font-weight:800;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.fold summary::-webkit-details-marker{display:none}
+details.fold summary::after{content:"+";font-weight:900;color:var(--green);font-size:1.3rem;transition:transform .2s ease}
+details.fold[open] summary::after{transform:rotate(45deg)}
+details.fold .fold-body{padding:0 22px 20px}
+details.fold .fold-body p{font-size:.98rem}
+.terms{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.terms i{font-style:normal;background:rgba(110,170,215,.14);border:1px solid rgba(60,130,180,.4);color:var(--blue);font-weight:700;font-size:.82rem;padding:6px 13px;border-radius:999px}
+
+/* quiz + CTA */
+.cta-final{background:radial-gradient(700px 380px at 50% 0%,rgba(139,195,74,.28),transparent 70%),var(--bg-2);border-top:1px solid var(--border);text-align:center;padding:90px 0}
+.cta-final p{color:var(--muted);max-width:38rem;margin:18px auto 38px;font-size:1.1rem}
+.cta-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+footer{padding:34px 0;color:var(--muted);font-size:.9rem;border-top:1px solid var(--border)}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* floating WhatsApp */
+.wa-float{position:fixed;bottom:26px;inset-inline-end:26px;z-index:200;width:60px;height:60px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(21,50,32,.3);transition:transform .18s ease}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float svg{width:32px;height:32px;fill:#fff}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}header{transition:none}html{scroll-behavior:auto}}
+
+@media (max-width:860px){.toc-grid,.grid3{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){
+  .toc-grid,.grid3,.grid2{grid-template-columns:1fr}
+  .statbar{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .lesson{padding:52px 0}
+  .hero{padding:56px 0 44px}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><span data-i18n="logo1">أحمد</span><span class="hot" data-i18n="logo2">مهنا</span></a>
+    <a class="back-link" id="link_main" href="#" data-i18n="nav_back">← الموقع الرئيسي</a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a class="btn btn-green" id="link_course" href="#" style="padding:10px 20px;font-size:.88rem" data-i18n="nav_cta">احجز دورة كاملة</a>
+      <button class="lang-btn" id="langBtn" aria-label="Switch language">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="wrap">
+      <span class="kicker reveal in" data-i18n="kicker">📖 دليل تدريبي مجاني · من أحمد مهنا</span>
+      <h1 class="reveal in" data-i18n-html="h1">مدخل إلى <span class="hot">الذكاء الاصطناعي</span></h1>
+      <p class="lead reveal in" data-i18n="lead">دليل منظّم ومبسّط لبناء المهارات الأساسية في استخدام الذكاء الاصطناعي بمسؤولية وفعالية — بدون خلفية تقنية، وبلغة يفهمها الجميع.</p>
+      <div class="hero-ctas reveal in">
+        <a class="btn btn-green" href="#m1" data-i18n="cta_start">🚀 ابدأ التعلّم الآن</a>
+        <a class="btn btn-light" id="link_course2" href="#" data-i18n="cta_course">احجز دورة تدريبية كاملة</a>
+      </div>
+      <div class="statbar reveal in">
+        <div><b>9</b><span data-i18n="stat1">محاور تعليمية</span></div>
+        <div><b>20</b><span data-i18n="stat2">دقيقة قراءة تقريباً</span></div>
+        <div><b>100%</b><span data-i18n="stat3">مجاني وبلغة بسيطة</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOC -->
+  <section class="toc">
+    <div class="wrap">
+      <h2 class="reveal" data-i18n-html="toc_h">ماذا <span class="hot">ستتعلم؟</span></h2>
+      <div class="toc-grid reveal">
+        <a href="#m1"><i>1</i><span data-i18n="toc1">لماذا الذكاء الاصطناعي؟</span></a>
+        <a href="#m2"><i>2</i><span data-i18n="toc2">الذكاء الاصطناعي كشريك</span></a>
+        <a href="#m3"><i>3</i><span data-i18n="toc3">أساسيات فهم الذكاء الاصطناعي</span></a>
+        <a href="#m4"><i>4</i><span data-i18n="toc4">كيف تعمل أدوات الذكاء الاصطناعي</span></a>
+        <a href="#m5"><i>5</i><span data-i18n="toc5">مهارة إنشاء الطلبات (Prompting)</span></a>
+        <a href="#m6"><i>6</i><span data-i18n="toc6">تقنيات متقدّمة في الطلبات</span></a>
+        <a href="#m7"><i>7</i><span data-i18n="toc7">تعدد الوسائط</span></a>
+        <a href="#m8"><i>8</i><span data-i18n="toc8">الاستخدام المسؤول</span></a>
+        <a href="#m9"><i>9</i><span data-i18n="toc9">وكلاء الذكاء الاصطناعي</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- M1 -->
+  <section class="lesson" id="m1">
+    <div class="wrap">
+      <div class="mod reveal"><i>1</i><span data-i18n="m1_tag">المحور الأول</span></div>
+      <h2 class="reveal" data-i18n-html="m1_h">لماذا <span class="hot">الذكاء الاصطناعي؟</span></h2>
+      <p class="reveal" data-i18n="m1_p1">يستخدم معظم الأشخاص الذكاء الاصطناعي يومياً دون أن يدركوا ذلك — من تحديد أفضل مسار مروري إلى اقتراح فيديوهات مخصّصة لك. الذكاء الاصطناعي يفتح طرقاً جديدة للعمل وإدارة الأعمال، لكنه كأي تقنية جديدة يحتاج فقط إلى تغيير بسيط في طريقة تفكيرك للاستفادة منه بأقصى قدر.</p>
+      <div class="callout tip reveal" data-i18n-html="m1_goals"><strong>🎯 أهداف هذا الدليل:</strong> فهم الركائز الأساسية للذكاء الاصطناعي · تعلّم استخدامه في عملك اليومي · إتقان استخدامه بمسؤولية.</div>
+    </div>
+  </section>
+
+  <!-- M2 -->
+  <section class="lesson" id="m2">
+    <div class="wrap">
+      <div class="mod reveal"><i>2</i><span data-i18n="m2_tag">المحور الثاني</span></div>
+      <h2 class="reveal" data-i18n-html="m2_h">الذكاء الاصطناعي <span class="hot">كشريك تعاوني</span></h2>
+      <p class="reveal" data-i18n="m2_p1">الفائدة الحقيقية ليست في تنفيذ مهام فردية (مثل كتابة رسالة إلكترونية)، بل في التعاون معه كشريك عمل: تبادل الأفكار، اختبار الافتراضات، واستكشاف سيناريوهات مختلفة قبل القرار النهائي. القرار النهائي يبقى دائماً بيدك أنت — لأن السياق والذكاء العاطفي والخبرة الشخصية أشياء لا يملكها الذكاء الاصطناعي.</p>
+      <div class="grid3 reveal">
+        <div class="mini"><em>🗂️</em><b data-i18n="m2_c1t">تنظيم المعلومات وفهمها</b><span data-i18n="m2_c1p">تبسيط المعلومات المعقّدة وتلخيص الاتجاهات الرائجة.</span></div>
+        <div class="mini"><em>💡</em><b data-i18n="m2_c2t">فتح آفاق الإبداع</b><span data-i18n="m2_c2p">كتابة النصوص، تحويل البيانات إلى رسوم بيانية، وإنشاء المسودات الأولى.</span></div>
+        <div class="mini"><em>✨</em><b data-i18n="m2_c3t">تحسين العمل وتنقيحه</b><span data-i18n="m2_c3p">مراجعة الكتابة، اكتشاف الأخطاء، وتحسين الإقناع في العروض.</span></div>
+      </div>
+      <p class="reveal" data-i18n="m2_p2">متى لا يكون مناسباً؟ في المواضيع الحساسة أو عالية المخاطر — مثل الاستشارات المالية والقانونية والامتثال — تواصل مع خبير مختص بدلاً من الاعتماد على الذكاء الاصطناعي.</p>
+      <div class="callout warn reveal" data-i18n="m2_warn">⚠️ تنويه مهم: لا تُدخل أبداً أي معلومات حساسة (مثل أرقام بطاقات الائتمان أو كلمات المرور) في أدوات الذكاء الاصطناعي العامة.</div>
+    </div>
+  </section>
+
+  <!-- M3 -->
+  <section class="lesson" id="m3">
+    <div class="wrap">
+      <div class="mod reveal"><i>3</i><span data-i18n="m3_tag">المحور الثالث</span></div>
+      <h2 class="reveal" data-i18n-html="m3_h">أساسيات فهم <span class="hot">الذكاء الاصطناعي</span></h2>
+      <p class="reveal" data-i18n="m3_p1">الذكاء الاصطناعي (AI) مجال واسع يهدف إلى إنشاء أدوات تنجز مهاماً تُنسب عادة للذكاء البشري. أما تعلّم الآلة (Machine Learning) فهو أشهر تقنية لتدريب هذه النماذج: تقنية تمكّن الأداة من اكتشاف الأنماط والتعلّم من البيانات بنفسها، دون برمجة كل سيناريو محتمل. وقدرة النموذج على التعامل مع أمثلة جديدة لم يرها من قبل تُسمى «الاستدلال».</p>
+      <div class="grid3 reveal">
+        <div class="mini"><em>🏷️</em><b data-i18n="m3_c1t">التعلّم الموجّه</b><span data-i18n="m3_c1p">تدريب النموذج على بيانات مصنّفة مسبقاً من قبل أشخاص — عندما تكون النتيجة المطلوبة معروفة.</span></div>
+        <div class="mini"><em>🧩</em><b data-i18n="m3_c2t">التعلّم غير الموجّه</b><span data-i18n="m3_c2p">تدريب على بيانات غير مصنّفة ليكتشف النموذج الأنماط والبنى بنفسه.</span></div>
+        <div class="mini"><em>🎮</em><b data-i18n="m3_c3t">التعلّم المعزّز</b><span data-i18n="m3_c3p">تجربة وخطأ عبر نظام مكافآت وعقوبات لتحسين الأداء تدريجياً.</span></div>
+      </div>
+      <p class="reveal" data-i18n="m3_p2">النموذج اللغوي الكبير (LLM) هو نوع متقدّم يستطيع الاستنتاج من الأنماط لدرجة إنشاء محتوى جديد بالكامل — وهذا ما يسمى «الذكاء الاصطناعي التوليدي» (GenAI). وبعض المساعدين متعددو الوسائط: يعالجون وينشئون نصاً وصوراً وفيديو وصوتاً.</p>
+      <div class="terms reveal">
+        <i data-i18n="m3_t1">🔑 الاستدلال Inference</i>
+        <i data-i18n="m3_t2">🔑 نموذج لغوي كبير LLM</i>
+        <i data-i18n="m3_t3">🔑 ذكاء توليدي GenAI</i>
+        <i data-i18n="m3_t4">🔑 تعدد الوسائط Multimodal</i>
+      </div>
+      <details class="fold reveal">
+        <summary data-i18n="m3_f1s">⚖️ التحيّز في الذكاء الاصطناعي — وكيف تتجنبه</summary>
+        <div class="fold-body">
+          <p data-i18n="m3_f1p">يحدث تحيّز البيانات عندما تكون بيانات التدريب منحازة أو غير مكتملة أو تعكس تحيّزات مجتمعية، فتنتقل إلى نتائج النموذج. لتجنّبه: حدّد النتيجة المرجوة بوضوح مع سياق عن الجمهور المستهدف، واستخدم طلبات متابعة لتصحيح أي نتيجة تبدو متحيّزة أو غير دقيقة.</p>
+        </div>
+      </details>
+      <details class="fold reveal">
+        <summary data-i18n="m3_f2s">📅 توقّف المعرفة (Knowledge Cutoff) — وكيف تتعامل معه</summary>
+        <div class="fold-body">
+          <p data-i18n="m3_f2p">توقّف المعرفة هو التاريخ الذي تتوقف عنده بيانات تدريب النموذج — فمعلوماته لا تشمل ما حدث بعده إلا إذا استخدم البحث المباشر على الويب. للتعامل معه: ابحث عن تاريخ توقّف المعرفة لأداتك، تحقق من المعلومات الزمنية الحساسة من مصدر خارجي، حدّد الإطار الزمني بدقة في طلبك (مثلاً «صيف 2025» بدل «الصيف»)، واستخدم طلبات متابعة لتحديث الإجابات القديمة.</p>
+        </div>
+      </details>
+      <details class="fold reveal">
+        <summary data-i18n="m3_f3s">📉 تدهور الأداء بمرور الوقت — وكيف تحدّ منه</summary>
+        <div class="fold-body">
+          <p data-i18n="m3_f3p">نوعان: تدهور حقائقي (انخفاض الدقة بسبب توقّف المعرفة) وتدهور سلوكي (تغيّر أسلوب الأداة بعد التحديثات). للحدّ منه: قدّم سياقاً دقيقاً وحديثاً في طلباتك، ابدأ محادثة جديدة لكل مهمة أو موضوع، ووضّح المطلوب بتعليمات مباشرة ومحدّدة.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- M4 -->
+  <section class="lesson" id="m4">
+    <div class="wrap">
+      <div class="mod reveal"><i>4</i><span data-i18n="m4_tag">المحور الرابع</span></div>
+      <h2 class="reveal" data-i18n-html="m4_h">كيف تعمل <span class="hot">أدوات الذكاء الاصطناعي؟</span></h2>
+      <p class="reveal" data-i18n="m4_p1">تخيّل النموذج (مثل Gemini أو GPT) كمحرك السيارة: هو مصدر القوة، لكن تفاعلك الفعلي يتم عبر «السيارة» نفسها — أي التطبيق أو الموقع — وأنت من يقود. والنماذج لا توجد في تطبيق واحد فقط؛ بل تُدمج داخل منتجات كثيرة مثل محركات البحث والخرائط والهواتف.</p>
+      <div class="grid2 reveal">
+        <div class="mini"><em>🎯</em><b data-i18n="m4_c1t">اختر النموذج المناسب للمهمة</b><span data-i18n="m4_c1p">لكل نموذج نقاط قوة: بعضها سريع للمساعدة العامة، وبعضها أفضل للأبحاث والبرمجة والقرارات المعقّدة. كلما زاد تعقيد المهمة، زاد الوقت اللازم لإنجازها.</span></div>
+        <div class="mini"><em>🌡️</em><b data-i18n="m4_c2t">درجة العشوائية (Temperature)</b><span data-i18n="m4_c2p">إعداد متقدّم يتحكم بمستوى الإبداع: خفضها يعطي نتائج ثابتة ومتوقعة، ورفعها يعطي نتائج أكثر ابتكاراً وأقل قابلية للتوقع.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- M5 -->
+  <section class="lesson" id="m5">
+    <div class="wrap">
+      <div class="mod reveal"><i>5</i><span data-i18n="m5_tag">المحور الخامس — الأهم عملياً</span></div>
+      <h2 class="reveal" data-i18n-html="m5_h">مهارة إنشاء الطلبات <span class="hot">(Prompting)</span></h2>
+      <p class="reveal" data-i18n="m5_p1">الطلب (Prompt) هو التعليمات التي تعطيها للذكاء الاصطناعي للحصول على ما تريد. التواصل الواضح هو أفضل طريقة للحصول على نتائج ممتازة — تماماً كما توضّح طلب غدائك لزميلك. إليك المنهجية الذهبية المكوّنة من 4 عناصر:</p>
+      <div class="grid2 reveal">
+        <div class="mini"><em>🎭</em><b data-i18n="m5_c1t">1. الشخصية</b><span data-i18n="m5_c1p">صف الخبرة التي يجب أن يتبنّاها: «أنت قائد فريق ذو خبرة في إدارة المشاريع الكبيرة».</span></div>
+        <div class="mini"><em>📋</em><b data-i18n="m5_c2t">2. المهمة</b><span data-i18n="m5_c2p">وصف واضح للمطلوب تحديداً: «أعطني نصائح لإقامة اجتماعات أكثر فعالية».</span></div>
+        <div class="mini"><em>🧾</em><b data-i18n="m5_c3t">3. التنسيق</b><span data-i18n="m5_c3p">حدّد شكل النتيجة النهائي: قائمة نقطية، جدول، نص بطول معيّن... إلخ.</span></div>
+        <div class="mini"><em>🧭</em><b data-i18n="m5_c4t">4. السياق</b><span data-i18n="m5_c4p">المعلومات الإضافية اللازمة للدقة: حجم الشركة، التحديات، القيود...</span></div>
+      </div>
+      <div class="callout info reveal" data-i18n="m5_note">💬 ملاحظة: ترتيب هذه العناصر داخل الطلب لا يهم — المهم أن يكون مضمونها موجوداً وشاملاً.</div>
+      <h2 class="reveal" style="font-size:1.25rem;margin:26px 0 8px" data-i18n="m5_rules_h">القواعد الثلاث لكتابة الطلبات</h2>
+      <ul class="checks reveal">
+        <li data-i18n="m5_r1"><strong>الإيجاز:</strong> طلبات بسيطة ومباشرة — لا تحشو مهاماً كثيرة في طلب واحد.</li>
+        <li data-i18n="m5_r2"><strong>الوضوح:</strong> تعليمات دقيقة غير غامضة — تجنّب عبارات مثل «حسّن ذلك».</li>
+        <li data-i18n="m5_r3"><strong>الاتساق:</strong> استخدم المصطلح نفسه للمفهوم نفسه طوال المحادثة.</li>
+      </ul>
+      <details class="fold reveal">
+        <summary data-i18n="m5_f1s">🔍 كيف تقيّم النتيجة قبل استخدامها؟</summary>
+        <div class="fold-body"><p data-i18n="m5_f1p">اسأل نفسك أربعة أسئلة: الدقة — هل المعلومات صحيحة وقائمة على الحقائق؟ التحيّز — هل تفضّل وجهة نظر واحدة بشكل غير عادل؟ الصلة — هل تجيب مباشرة على الطلب؟ الاتساق — هل النبرة والأسلوب والجودة ثابتة طوال الرد؟</p></div>
+      </details>
+      <details class="fold reveal">
+        <summary data-i18n="m5_f2s">🔁 حسّن نتائجك بالتكرار التحسيني</summary>
+        <div class="fold-body"><p data-i18n="m5_f2p">أعد النظر في عناصر الشخصية أو المهمة أو التنسيق أو السياق · قسّم المهام المعقّدة إلى أجزاء أصغر تُطلب تباعاً · أضف قيوداً واضحة تحدّد نطاق الإجابة · استخدم مراجع (نص، صورة، صوت) لتوضيح شكل النتيجة المطلوبة.</p></div>
+      </details>
+      <div class="callout tip reveal" data-i18n="m5_tip">💡 نصيحتان ذهبيتان: ابدأ محادثة جديدة عند الانتقال لموضوع مختلف تماماً (لأن للمحادثة قدرة استيعابية محدودة تسبب تشويش السياق)، واحتفظ بمكتبة لطلباتك الناجحة لإعادة استخدامها لاحقاً.</div>
+    </div>
+  </section>
+
+  <!-- M6 -->
+  <section class="lesson" id="m6">
+    <div class="wrap">
+      <div class="mod reveal"><i>6</i><span data-i18n="m6_tag">المحور السادس</span></div>
+      <h2 class="reveal" data-i18n-html="m6_h">تقنيات <span class="hot">متقدّمة</span> في الطلبات</h2>
+      <p class="reveal" data-i18n="m6_p1">عبارات الطلب الفعالة هي لغة دقيقة داخل الطلب توجّه الذكاء الاصطناعي حول «كيف» يحقق المطلوب، وليس فقط «ما هو» المطلوب:</p>
+      <ul class="checks reveal">
+        <li data-i18n="m6_l1"><strong>مسار عملي:</strong> «فكّر خطوة بخطوة» / «أولاً... ثانياً... أخيراً...»</li>
+        <li data-i18n="m6_l2"><strong>الجمهور والنبرة:</strong> «اكتب لجمهور من المدراء» / «اجعل النبرة ودّية».</li>
+        <li data-i18n="m6_l3"><strong>شروط دقيقة:</strong> «ملخص من فقرة واحدة» / «ركّز حصرياً على كذا ولا تذكر كذا».</li>
+        <li data-i18n="m6_l4"><strong>طلب نقد:</strong> «قدّم نقداً من منظور عميل محتمل» / «تقمّص دور محامي الشيطان».</li>
+        <li data-i18n="m6_l5"><strong>بدائل وتعمّق:</strong> «أعطني ثلاثة اقتراحات مختلفة» / «فصّل النقطة الثانية».</li>
+      </ul>
+      <p class="reveal" data-i18n="m6_p2">تسلسل الطلبات (Prompt Chaining): تقنية تقسّم المهمة الكبيرة إلى سلسلة طلبات صغيرة مترابطة ضمن المحادثة نفسها — نتيجة كل طلب تصبح أساس الطلب التالي، تماماً كخط تجميع في مصنع.</p>
+      <div class="callout info reveal" data-i18n-html="m6_ex"><strong>✈️ مثال عملي — التخطيط لرحلة إلى باريس:</strong> الطلب 1: اقترح أماكن زيارة حسب اهتماماتي ← الطلب 2: حوّل الأماكن إلى برنامج يومي يقلّل وقت التنقل ← الطلب 3: اقترح مطاعم قريبة من كل موقع.</div>
+    </div>
+  </section>
+
+  <!-- M7 -->
+  <section class="lesson" id="m7">
+    <div class="wrap">
+      <div class="mod reveal"><i>7</i><span data-i18n="m7_tag">المحور السابع</span></div>
+      <h2 class="reveal" data-i18n-html="m7_h">تعدد الوسائط <span class="hot">(Multimodality)</span></h2>
+      <p class="reveal" data-i18n="m7_p1">تعدد الوسائط يعني قدرة الذكاء الاصطناعي على فهم وإنشاء أنواع مختلفة من المحتوى: نص، صورة، صوت، وفيديو. بدل وصف طلبك بالكلمات فقط، أثرِ تعليماتك بالصور أو التسجيلات الصوتية أو الفيديوهات لإعطاء سياق أدق.</p>
+      <div class="callout tip reveal" data-i18n="m7_ex">💡 أمثلة تطبيقية: إنشاء فيديو من جملة واحدة · صياغة رسالة تسويقية بناءً على صور المنتج · إعداد عرض تقديمي كامل من تسجيل صوتي.</div>
+    </div>
+  </section>
+
+  <!-- M8 -->
+  <section class="lesson" id="m8">
+    <div class="wrap">
+      <div class="mod reveal"><i>8</i><span data-i18n="m8_tag">المحور الثامن</span></div>
+      <h2 class="reveal" data-i18n-html="m8_h">الاستخدام <span class="hot">المسؤول</span> للذكاء الاصطناعي</h2>
+      <p class="reveal" data-i18n="m8_p1">الهلوسة (Hallucination): أن يقدّم الذكاء الاصطناعي معلومات غير صحيحة بثقة تامة. أسبابها: أخطاء في بيانات التدريب، أو مواجهة مشكلة لم يتعامل معها من قبل، أو الاعتماد على التخمين. لذلك تحقّق من النتائج دائماً قبل استخدامها — حتى لو بدت واثقة. وتذكّر: الذكاء الاصطناعي لا يختبر العالم كما تفعل أنت، فمسؤولية الإشراف على كل خطوة تقع عليك («المشاركة البشرية»).</p>
+      <div class="grid3 reveal">
+        <div class="mini"><em>❓</em><b data-i18n="m8_c1t">A — التساؤل Ask</b><span data-i18n="m8_c1p">هل تستدعي هذه الحالة فعلاً استخدام الذكاء الاصطناعي؟ لا يُعتمد عليه في الاستشارات الطبية والقانونية والمالية، وراعِ حساسية البيانات وسياسات مؤسستك.</span></div>
+        <div class="mini"><em>✅</em><b data-i18n="m8_c2t">C — التحقّق Check</b><span data-i18n="m8_c2p">راجع الموضوعية (أي تحيّز أو صور نمطية)، وتحقّق من دقة المعلومات المقدَّمة كحقائق، وتأكّد من ملاءمة النتيجة للغرض.</span></div>
+        <div class="mini"><em>📢</em><b data-i18n="m8_c3t">T — التصريح Tell</b><span data-i18n="m8_c3p">كن شفافاً وأفصح عن استخدامك للذكاء الاصطناعي عند مشاركة النتائج مع الآخرين.</span></div>
+      </div>
+      <div class="callout info reveal" data-i18n="m8_synth">🔎 من أدوات الشفافية: SynthID — أداة تضيف علامات مائية رقمية للمحتوى الذي ينشئه الذكاء الاصطناعي (كالفيديوهات) لتسهيل كشفه.</div>
+    </div>
+  </section>
+
+  <!-- M9 -->
+  <section class="lesson" id="m9">
+    <div class="wrap">
+      <div class="mod reveal"><i>9</i><span data-i18n="m9_tag">المحور التاسع</span></div>
+      <h2 class="reveal" data-i18n-html="m9_h">وكلاء الذكاء الاصطناعي <span class="hot">(AI Agents)</span></h2>
+      <p class="reveal" data-i18n="m9_p1">على عكس روبوتات الدردشة التي تنفّذ مهمة واحدة، يستطيع الوكيل الذكي التعامل باستقلالية مع سير عمل كامل متعدد الخطوات: تعطيه هدفاً عاماً بدل مهمة واحدة، وتمنحه وصولاً لأدوات مثل البريد والتقويم — وكل ذلك تحت إشرافك وسيطرتك. أمثلة: تحليل المنافسين وتلخيص مراجعات العملاء أسبوعياً، إنشاء إدخالات CRM تلقائياً من البريد الوارد، أو تحليل المبيعات والمخزون وطلب النواقص.</p>
+      <div class="grid3 reveal">
+        <div class="mini"><em>🧠</em><b data-i18n="m9_c1t">النماذج</b><span data-i18n="m9_c1p">تستخدم تدريبها للتنبؤ بالمهام اللازمة وكيفية استخدام الأدوات المتاحة.</span></div>
+        <div class="mini"><em>🔐</em><b data-i18n="m9_c2t">الأذونات</b><span data-i18n="m9_c2p">تحدّد نطاق وصول الوكيل للبرامج والأدوات — وتعمل كحواجز أمان.</span></div>
+        <div class="mini"><em>🎯</em><b data-i18n="m9_c3t">الأهداف</b><span data-i18n="m9_c3p">الهدف العام المكلَّف به، ويعمل على تحقيقه ضمن حلقة مستمرة.</span></div>
+      </div>
+      <p class="reveal" data-i18n="m9_p2">يعمل الوكيل في حلقة من ثلاث خطوات:</p>
+      <ol class="steps reveal">
+        <li data-i18n="m9_s1"><strong>التحليل:</strong> تحديد المهمة الأولى الضرورية.</li>
+        <li data-i18n="m9_s2"><strong>التنفيذ:</strong> تنفيذ المهمة بعد منح الأذونات اللازمة.</li>
+        <li data-i18n="m9_s3"><strong>التحقّق:</strong> مراجعة النتيجة ومطابقتها مع الهدف قبل المهمة التالية.</li>
+      </ol>
+      <div class="callout warn reveal" data-i18n="m9_warn">⚖️ قبل تكليف وكيل بأي هدف اسأل: ما تأثير الخطأ المحتمل (المخاطر)؟ وما مدى سهولة التراجع عن الإجراء (قابلية التراجع)؟ كلما زادت المخاطر أو صعُب التراجع، أحكِم السيطرة عبر «المشاركة البشرية»: حدود واضحة، معايير مقبولة، وإشراف على كل خطوة مهمة.</div>
+      <ul class="checks reveal">
+        <li data-i18n="m9_b1"><strong>ابدأ بهدف واضح</strong> ومحدد وقابل للتنفيذ — لا هدفاً غامضاً.</li>
+        <li data-i18n="m9_b2"><strong>أدر الأذونات بحكمة:</strong> امنح الحد الأدنى اللازم فقط.</li>
+        <li data-i18n="m9_b3"><strong>قيّم باستمرار:</strong> راجع عمل الوكيل دائماً، خاصة في المهام عالية المخاطر.</li>
+        <li data-i18n="m9_b4"><strong>كرّر وحسّن:</strong> تعامل معه كشريك تعاوني وطوّر تعليماتك باستمرار.</li>
+      </ul>
+      <div class="callout tip reveal" data-i18n="m9_tip">🌱 أفضل بداية مسؤولة: ابحث عن ميزات الوكلاء في الأدوات التي تستخدمها فعلاً، وابدأ بهدف بسيط ومنخفض المخاطر.</div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-final">
+    <div class="wrap">
+      <h2 class="reveal" data-i18n-html="cta_h">جاهز <span class="hot">للخطوة التالية؟</span></h2>
+      <p class="reveal" data-i18n="cta_p">هذا الدليل هو البداية فقط. في دوراتي وورش العمل نطبّق كل ذلك عملياً على مهامك أنت — خطوة بخطوة وبلغة بسيطة.</p>
+      <div class="cta-ctas reveal">
+        <a class="btn btn-green" id="link_wa_cta" href="#" target="_blank" rel="noopener" data-i18n="cta_wa">💬 تواصل معي عبر واتساب</a>
+        <a class="btn btn-light" id="link_main2" href="#" data-i18n="cta_site">استكشف الدورات وورش العمل</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<a class="wa-float" id="link_wa_float" href="#" target="_blank" rel="noopener" aria-label="WhatsApp — تواصل عبر واتساب">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.05 21.8h-.01a9.8 9.8 0 01-5-1.37l-.36-.21-3.72.98.99-3.63-.23-.37a9.77 9.77 0 01-1.5-5.23c0-5.4 4.4-9.8 9.82-9.8a9.75 9.75 0 016.94 2.88 9.74 9.74 0 012.87 6.94c0 5.4-4.4 9.8-9.8 9.8zm8.34-18.15A11.72 11.72 0 0012.04 0C5.46 0 .1 5.35.1 11.94c0 2.1.55 4.16 1.6 5.97L0 24l6.24-1.64a11.93 11.93 0 005.8 1.48h.01c6.58 0 11.94-5.36 11.94-11.94 0-3.19-1.24-6.19-3.5-8.45z"/></svg>
+</a>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top"><span data-i18n="logo1">أحمد</span><span class="hot" data-i18n="logo2">مهنا</span></a>
+    <span data-i18n="footer_c">© 2026 أحمد مهنا · دبي، الإمارات العربية المتحدة</span>
+    <a href="#top" style="color:var(--green);font-weight:700" data-i18n="footer_top">العودة للأعلى ↑</a>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ✏️✏️✏️  منطقة التعديل — EDIT ZONE  ✏️✏️✏️
+   1) CONFIG  ← الروابط (links)
+   2) CONTENT ← كل النصوص عربي/إنجليزي (all texts AR & EN)
+═══════════════════════════════════════════════════════════════ */
+
+const CONFIG = {
+  whatsapp: "https://wa.me/971522346020",
+  mainSite: "index.html",   // ← اسم/رابط ملف الموقع الرئيسي (غيّره إذا كان مختلفاً)
+};
+
+const CONTENT = {
+  ar: {
+    dir: "rtl",
+    pageTitle: "مدخل إلى الذكاء الاصطناعي — دليل تعليمي مبسّط بالعربية | أحمد مهنا",
+    logo1: "أحمد", logo2: "مهنا",
+    nav_back: "← الموقع الرئيسي", nav_cta: "احجز دورة كاملة",
+    kicker: "📖 دليل تدريبي مجاني · من أحمد مهنا",
+    h1: 'مدخل إلى <span class="hot">الذكاء الاصطناعي</span>',
+    lead: "دليل منظّم ومبسّط لبناء المهارات الأساسية في استخدام الذكاء الاصطناعي بمسؤولية وفعالية — بدون خلفية تقنية، وبلغة يفهمها الجميع.",
+    cta_start: "🚀 ابدأ التعلّم الآن", cta_course: "احجز دورة تدريبية كاملة",
+    stat1: "محاور تعليمية", stat2: "دقيقة قراءة تقريباً", stat3: "مجاني وبلغة بسيطة",
+    toc_h: 'ماذا <span class="hot">ستتعلم؟</span>',
+    toc1: "لماذا الذكاء الاصطناعي؟", toc2: "الذكاء الاصطناعي كشريك", toc3: "أساسيات فهم الذكاء الاصطناعي",
+    toc4: "كيف تعمل أدوات الذكاء الاصطناعي", toc5: "مهارة إنشاء الطلبات (Prompting)", toc6: "تقنيات متقدّمة في الطلبات",
+    toc7: "تعدد الوسائط", toc8: "الاستخدام المسؤول", toc9: "وكلاء الذكاء الاصطناعي",
+    m1_tag: "المحور الأول",
+    m1_h: 'لماذا <span class="hot">الذكاء الاصطناعي؟</span>',
+    m1_p1: "يستخدم معظم الأشخاص الذكاء الاصطناعي يومياً دون أن يدركوا ذلك — من تحديد أفضل مسار مروري إلى اقتراح فيديوهات مخصّصة لك. الذكاء الاصطناعي يفتح طرقاً جديدة للعمل وإدارة الأعمال، لكنه كأي تقنية جديدة يحتاج فقط إلى تغيير بسيط في طريقة تفكيرك للاستفادة منه بأقصى قدر.",
+    m1_goals: '<strong>🎯 أهداف هذا الدليل:</strong> فهم الركائز الأساسية للذكاء الاصطناعي · تعلّم استخدامه في عملك اليومي · إتقان استخدامه بمسؤولية.',
+    m2_tag: "المحور الثاني",
+    m2_h: 'الذكاء الاصطناعي <span class="hot">كشريك تعاوني</span>',
+    m2_p1: "الفائدة الحقيقية ليست في تنفيذ مهام فردية (مثل كتابة رسالة إلكترونية)، بل في التعاون معه كشريك عمل: تبادل الأفكار، اختبار الافتراضات، واستكشاف سيناريوهات مختلفة قبل القرار النهائي. القرار النهائي يبقى دائماً بيدك أنت — لأن السياق والذكاء العاطفي والخبرة الشخصية أشياء لا يملكها الذكاء الاصطناعي.",
+    m2_c1t: "تنظيم المعلومات وفهمها", m2_c1p: "تبسيط المعلومات المعقّدة وتلخيص الاتجاهات الرائجة.",
+    m2_c2t: "فتح آفاق الإبداع", m2_c2p: "كتابة النصوص، تحويل البيانات إلى رسوم بيانية، وإنشاء المسودات الأولى.",
+    m2_c3t: "تحسين العمل وتنقيحه", m2_c3p: "مراجعة الكتابة، اكتشاف الأخطاء، وتحسين الإقناع في العروض.",
+    m2_p2: "متى لا يكون مناسباً؟ في المواضيع الحساسة أو عالية المخاطر — مثل الاستشارات المالية والقانونية والامتثال — تواصل مع خبير مختص بدلاً من الاعتماد على الذكاء الاصطناعي.",
+    m2_warn: "⚠️ تنويه مهم: لا تُدخل أبداً أي معلومات حساسة (مثل أرقام بطاقات الائتمان أو كلمات المرور) في أدوات الذكاء الاصطناعي العامة.",
+    m3_tag: "المحور الثالث",
+    m3_h: 'أساسيات فهم <span class="hot">الذكاء الاصطناعي</span>',
+    m3_p1: "الذكاء الاصطناعي (AI) مجال واسع يهدف إلى إنشاء أدوات تنجز مهاماً تُنسب عادة للذكاء البشري. أما تعلّم الآلة (Machine Learning) فهو أشهر تقنية لتدريب هذه النماذج: تقنية تمكّن الأداة من اكتشاف الأنماط والتعلّم من البيانات بنفسها، دون برمجة كل سيناريو محتمل. وقدرة النموذج على التعامل مع أمثلة جديدة لم يرها من قبل تُسمى «الاستدلال».",
+    m3_c1t: "التعلّم الموجّه", m3_c1p: "تدريب النموذج على بيانات مصنّفة مسبقاً من قبل أشخاص — عندما تكون النتيجة المطلوبة معروفة.",
+    m3_c2t: "التعلّم غير الموجّه", m3_c2p: "تدريب على بيانات غير مصنّفة ليكتشف النموذج الأنماط والبنى بنفسه.",
+    m3_c3t: "التعلّم المعزّز", m3_c3p: "تجربة وخطأ عبر نظام مكافآت وعقوبات لتحسين الأداء تدريجياً.",
+    m3_p2: "النموذج اللغوي الكبير (LLM) هو نوع متقدّم يستطيع الاستنتاج من الأنماط لدرجة إنشاء محتوى جديد بالكامل — وهذا ما يسمى «الذكاء الاصطناعي التوليدي» (GenAI). وبعض المساعدين متعددو الوسائط: يعالجون وينشئون نصاً وصوراً وفيديو وصوتاً.",
+    m3_t1: "🔑 الاستدلال Inference", m3_t2: "🔑 نموذج لغوي كبير LLM", m3_t3: "🔑 ذكاء توليدي GenAI", m3_t4: "🔑 تعدد الوسائط Multimodal",
+    m3_f1s: "⚖️ التحيّز في الذكاء الاصطناعي — وكيف تتجنبه",
+    m3_f1p: "يحدث تحيّز البيانات عندما تكون بيانات التدريب منحازة أو غير مكتملة أو تعكس تحيّزات مجتمعية، فتنتقل إلى نتائج النموذج. لتجنّبه: حدّد النتيجة المرجوة بوضوح مع سياق عن الجمهور المستهدف، واستخدم طلبات متابعة لتصحيح أي نتيجة تبدو متحيّزة أو غير دقيقة.",
+    m3_f2s: "📅 توقّف المعرفة (Knowledge Cutoff) — وكيف تتعامل معه",
+    m3_f2p: "توقّف المعرفة هو التاريخ الذي تتوقف عنده بيانات تدريب النموذج — فمعلوماته لا تشمل ما حدث بعده إلا إذا استخدم البحث المباشر على الويب. للتعامل معه: ابحث عن تاريخ توقّف المعرفة لأداتك، تحقق من المعلومات الزمنية الحساسة من مصدر خارجي، حدّد الإطار الزمني بدقة في طلبك (مثلاً «صيف 2025» بدل «الصيف»)، واستخدم طلبات متابعة لتحديث الإجابات القديمة.",
+    m3_f3s: "📉 تدهور الأداء بمرور الوقت — وكيف تحدّ منه",
+    m3_f3p: "نوعان: تدهور حقائقي (انخفاض الدقة بسبب توقّف المعرفة) وتدهور سلوكي (تغيّر أسلوب الأداة بعد التحديثات). للحدّ منه: قدّم سياقاً دقيقاً وحديثاً في طلباتك، ابدأ محادثة جديدة لكل مهمة أو موضوع، ووضّح المطلوب بتعليمات مباشرة ومحدّدة.",
+    m4_tag: "المحور الرابع",
+    m4_h: 'كيف تعمل <span class="hot">أدوات الذكاء الاصطناعي؟</span>',
+    m4_p1: "تخيّل النموذج (مثل Gemini أو GPT) كمحرك السيارة: هو مصدر القوة، لكن تفاعلك الفعلي يتم عبر «السيارة» نفسها — أي التطبيق أو الموقع — وأنت من يقود. والنماذج لا توجد في تطبيق واحد فقط؛ بل تُدمج داخل منتجات كثيرة مثل محركات البحث والخرائط والهواتف.",
+    m4_c1t: "اختر النموذج المناسب للمهمة", m4_c1p: "لكل نموذج نقاط قوة: بعضها سريع للمساعدة العامة، وبعضها أفضل للأبحاث والبرمجة والقرارات المعقّدة. كلما زاد تعقيد المهمة، زاد الوقت اللازم لإنجازها.",
+    m4_c2t: "درجة العشوائية (Temperature)", m4_c2p: "إعداد متقدّم يتحكم بمستوى الإبداع: خفضها يعطي نتائج ثابتة ومتوقعة، ورفعها يعطي نتائج أكثر ابتكاراً وأقل قابلية للتوقع.",
+    m5_tag: "المحور الخامس — الأهم عملياً",
+    m5_h: 'مهارة إنشاء الطلبات <span class="hot">(Prompting)</span>',
+    m5_p1: "الطلب (Prompt) هو التعليمات التي تعطيها للذكاء الاصطناعي للحصول على ما تريد. التواصل الواضح هو أفضل طريقة للحصول على نتائج ممتازة — تماماً كما توضّح طلب غدائك لزميلك. إليك المنهجية الذهبية المكوّنة من 4 عناصر:",
+    m5_c1t: "1. الشخصية", m5_c1p: "صف الخبرة التي يجب أن يتبنّاها: «أنت قائد فريق ذو خبرة في إدارة المشاريع الكبيرة».",
+    m5_c2t: "2. المهمة", m5_c2p: "وصف واضح للمطلوب تحديداً: «أعطني نصائح لإقامة اجتماعات أكثر فعالية».",
+    m5_c3t: "3. التنسيق", m5_c3p: "حدّد شكل النتيجة النهائي: قائمة نقطية، جدول، نص بطول معيّن... إلخ.",
+    m5_c4t: "4. السياق", m5_c4p: "المعلومات الإضافية اللازمة للدقة: حجم الشركة، التحديات، القيود...",
+    m5_note: "💬 ملاحظة: ترتيب هذه العناصر داخل الطلب لا يهم — المهم أن يكون مضمونها موجوداً وشاملاً.",
+    m5_rules_h: "القواعد الثلاث لكتابة الطلبات",
+    m5_r1: "الإيجاز: طلبات بسيطة ومباشرة — لا تحشو مهاماً كثيرة في طلب واحد.",
+    m5_r2: "الوضوح: تعليمات دقيقة غير غامضة — تجنّب عبارات مثل «حسّن ذلك».",
+    m5_r3: "الاتساق: استخدم المصطلح نفسه للمفهوم نفسه طوال المحادثة.",
+    m5_f1s: "🔍 كيف تقيّم النتيجة قبل استخدامها؟",
+    m5_f1p: "اسأل نفسك أربعة أسئلة: الدقة — هل المعلومات صحيحة وقائمة على الحقائق؟ التحيّز — هل تفضّل وجهة نظر واحدة بشكل غير عادل؟ الصلة — هل تجيب مباشرة على الطلب؟ الاتساق — هل النبرة والأسلوب والجودة ثابتة طوال الرد؟",
+    m5_f2s: "🔁 حسّن نتائجك بالتكرار التحسيني",
+    m5_f2p: "أعد النظر في عناصر الشخصية أو المهمة أو التنسيق أو السياق · قسّم المهام المعقّدة إلى أجزاء أصغر تُطلب تباعاً · أضف قيوداً واضحة تحدّد نطاق الإجابة · استخدم مراجع (نص، صورة، صوت) لتوضيح شكل النتيجة المطلوبة.",
+    m5_tip: "💡 نصيحتان ذهبيتان: ابدأ محادثة جديدة عند الانتقال لموضوع مختلف تماماً (لأن للمحادثة قدرة استيعابية محدودة تسبب تشويش السياق)، واحتفظ بمكتبة لطلباتك الناجحة لإعادة استخدامها لاحقاً.",
+    m6_tag: "المحور السادس",
+    m6_h: 'تقنيات <span class="hot">متقدّمة</span> في الطلبات',
+    m6_p1: "عبارات الطلب الفعالة هي لغة دقيقة داخل الطلب توجّه الذكاء الاصطناعي حول «كيف» يحقق المطلوب، وليس فقط «ما هو» المطلوب:",
+    m6_l1: "مسار عملي: «فكّر خطوة بخطوة» / «أولاً... ثانياً... أخيراً...»",
+    m6_l2: "الجمهور والنبرة: «اكتب لجمهور من المدراء» / «اجعل النبرة ودّية».",
+    m6_l3: "شروط دقيقة: «ملخص من فقرة واحدة» / «ركّز حصرياً على كذا ولا تذكر كذا».",
+    m6_l4: "طلب نقد: «قدّم نقداً من منظور عميل محتمل» / «تقمّص دور محامي الشيطان».",
+    m6_l5: "بدائل وتعمّق: «أعطني ثلاثة اقتراحات مختلفة» / «فصّل النقطة الثانية».",
+    m6_p2: "تسلسل الطلبات (Prompt Chaining): تقنية تقسّم المهمة الكبيرة إلى سلسلة طلبات صغيرة مترابطة ضمن المحادثة نفسها — نتيجة كل طلب تصبح أساس الطلب التالي، تماماً كخط تجميع في مصنع.",
+    m6_ex: '<strong>✈️ مثال عملي — التخطيط لرحلة إلى باريس:</strong> الطلب 1: اقترح أماكن زيارة حسب اهتماماتي ← الطلب 2: حوّل الأماكن إلى برنامج يومي يقلّل وقت التنقل ← الطلب 3: اقترح مطاعم قريبة من كل موقع.',
+    m7_tag: "المحور السابع",
+    m7_h: 'تعدد الوسائط <span class="hot">(Multimodality)</span>',
+    m7_p1: "تعدد الوسائط يعني قدرة الذكاء الاصطناعي على فهم وإنشاء أنواع مختلفة من المحتوى: نص، صورة، صوت، وفيديو. بدل وصف طلبك بالكلمات فقط، أثرِ تعليماتك بالصور أو التسجيلات الصوتية أو الفيديوهات لإعطاء سياق أدق.",
+    m7_ex: "💡 أمثلة تطبيقية: إنشاء فيديو من جملة واحدة · صياغة رسالة تسويقية بناءً على صور المنتج · إعداد عرض تقديمي كامل من تسجيل صوتي.",
+    m8_tag: "المحور الثامن",
+    m8_h: 'الاستخدام <span class="hot">المسؤول</span> للذكاء الاصطناعي',
+    m8_p1: "الهلوسة (Hallucination): أن يقدّم الذكاء الاصطناعي معلومات غير صحيحة بثقة تامة. أسبابها: أخطاء في بيانات التدريب، أو مواجهة مشكلة لم يتعامل معها من قبل، أو الاعتماد على التخمين. لذلك تحقّق من النتائج دائماً قبل استخدامها — حتى لو بدت واثقة. وتذكّر: الذكاء الاصطناعي لا يختبر العالم كما تفعل أنت، فمسؤولية الإشراف على كل خطوة تقع عليك («المشاركة البشرية»).",
+    m8_c1t: "A — التساؤل Ask", m8_c1p: "هل تستدعي هذه الحالة فعلاً استخدام الذكاء الاصطناعي؟ لا يُعتمد عليه في الاستشارات الطبية والقانونية والمالية، وراعِ حساسية البيانات وسياسات مؤسستك.",
+    m8_c2t: "C — التحقّق Check", m8_c2p: "راجع الموضوعية (أي تحيّز أو صور نمطية)، وتحقّق من دقة المعلومات المقدَّمة كحقائق، وتأكّد من ملاءمة النتيجة للغرض.",
+    m8_c3t: "T — التصريح Tell", m8_c3p: "كن شفافاً وأفصح عن استخدامك للذكاء الاصطناعي عند مشاركة النتائج مع الآخرين.",
+    m8_synth: "🔎 من أدوات الشفافية: SynthID — أداة تضيف علامات مائية رقمية للمحتوى الذي ينشئه الذكاء الاصطناعي (كالفيديوهات) لتسهيل كشفه.",
+    m9_tag: "المحور التاسع",
+    m9_h: 'وكلاء الذكاء الاصطناعي <span class="hot">(AI Agents)</span>',
+    m9_p1: "على عكس روبوتات الدردشة التي تنفّذ مهمة واحدة، يستطيع الوكيل الذكي التعامل باستقلالية مع سير عمل كامل متعدد الخطوات: تعطيه هدفاً عاماً بدل مهمة واحدة، وتمنحه وصولاً لأدوات مثل البريد والتقويم — وكل ذلك تحت إشرافك وسيطرتك. أمثلة: تحليل المنافسين وتلخيص مراجعات العملاء أسبوعياً، إنشاء إدخالات CRM تلقائياً من البريد الوارد، أو تحليل المبيعات والمخزون وطلب النواقص.",
+    m9_c1t: "النماذج", m9_c1p: "تستخدم تدريبها للتنبؤ بالمهام اللازمة وكيفية استخدام الأدوات المتاحة.",
+    m9_c2t: "الأذونات", m9_c2p: "تحدّد نطاق وصول الوكيل للبرامج والأدوات — وتعمل كحواجز أمان.",
+    m9_c3t: "الأهداف", m9_c3p: "الهدف العام المكلَّف به، ويعمل على تحقيقه ضمن حلقة مستمرة.",
+    m9_p2: "يعمل الوكيل في حلقة من ثلاث خطوات:",
+    m9_s1: "التحليل: تحديد المهمة الأولى الضرورية.",
+    m9_s2: "التنفيذ: تنفيذ المهمة بعد منح الأذونات اللازمة.",
+    m9_s3: "التحقّق: مراجعة النتيجة ومطابقتها مع الهدف قبل المهمة التالية.",
+    m9_warn: "⚖️ قبل تكليف وكيل بأي هدف اسأل: ما تأثير الخطأ المحتمل (المخاطر)؟ وما مدى سهولة التراجع عن الإجراء (قابلية التراجع)؟ كلما زادت المخاطر أو صعُب التراجع، أحكِم السيطرة عبر «المشاركة البشرية»: حدود واضحة، معايير مقبولة، وإشراف على كل خطوة مهمة.",
+    m9_b1: "ابدأ بهدف واضح ومحدد وقابل للتنفيذ — لا هدفاً غامضاً.",
+    m9_b2: "أدر الأذونات بحكمة: امنح الحد الأدنى اللازم فقط.",
+    m9_b3: "قيّم باستمرار: راجع عمل الوكيل دائماً، خاصة في المهام عالية المخاطر.",
+    m9_b4: "كرّر وحسّن: تعامل معه كشريك تعاوني وطوّر تعليماتك باستمرار.",
+    m9_tip: "🌱 أفضل بداية مسؤولة: ابحث عن ميزات الوكلاء في الأدوات التي تستخدمها فعلاً، وابدأ بهدف بسيط ومنخفض المخاطر.",
+    cta_h: 'جاهز <span class="hot">للخطوة التالية؟</span>',
+    cta_p: "هذا الدليل هو البداية فقط. في دوراتي وورش العمل نطبّق كل ذلك عملياً على مهامك أنت — خطوة بخطوة وبلغة بسيطة.",
+    cta_wa: "💬 تواصل معي عبر واتساب", cta_site: "استكشف الدورات وورش العمل",
+    footer_c: "© 2026 أحمد مهنا · دبي، الإمارات العربية المتحدة",
+    footer_top: "العودة للأعلى ↑",
+  },
+
+  en: {
+    dir: "ltr",
+    pageTitle: "Introduction to Artificial Intelligence — A Simple Learning Guide | Ahmad Muhanna",
+    logo1: "Ahmad", logo2: "Muhanna",
+    nav_back: "← Main website", nav_cta: "Book a full course",
+    kicker: "📖 Free training guide · by Ahmad Muhanna",
+    h1: 'Introduction to <span class="hot">Artificial Intelligence</span>',
+    lead: "A structured, simplified guide to building the core skills for using AI responsibly and effectively — no technical background needed, in language everyone understands.",
+    cta_start: "🚀 Start learning now", cta_course: "Book a full training course",
+    stat1: "Learning modules", stat2: "Minutes reading time", stat3: "Free & jargon-free",
+    toc_h: 'What will you <span class="hot">learn?</span>',
+    toc1: "Why AI?", toc2: "AI as a collaborative partner", toc3: "AI fundamentals",
+    toc4: "How AI tools work", toc5: "The skill of prompting", toc6: "Advanced prompting techniques",
+    toc7: "Multimodality", toc8: "Responsible use", toc9: "AI Agents",
+    m1_tag: "Module 1",
+    m1_h: 'Why <span class="hot">AI?</span>',
+    m1_p1: "Most people use AI every day without realizing it — from finding the best driving route to getting personalized video suggestions. AI opens new ways of working and running a business, but like any new technology, it just needs a small shift in how you think to get the most out of it.",
+    m1_goals: '<strong>🎯 Goals of this guide:</strong> understand the core pillars of AI · learn to use it in your daily work · master using it responsibly.',
+    m2_tag: "Module 2",
+    m2_h: 'AI as a <span class="hot">collaborative partner</span>',
+    m2_p1: "The real value is not in one-off tasks (like writing an email), but in collaborating with AI as a work partner: exchanging ideas, testing assumptions, and exploring scenarios before the final decision. The final decision always stays with you — because context, emotional intelligence and personal experience are things AI does not have.",
+    m2_c1t: "Organize & understand information", m2_c1p: "Simplify complex information and summarize trending topics.",
+    m2_c2t: "Unlock creativity", m2_c2p: "Write copy, turn data into charts, and create first drafts.",
+    m2_c3t: "Refine & improve your work", m2_c3p: "Review writing, catch mistakes, and make presentations more persuasive.",
+    m2_p2: "When is AI not the right choice? For sensitive or high-stakes topics — like financial, legal or compliance advice — talk to a qualified expert instead of relying on AI.",
+    m2_warn: "⚠️ Important: never enter sensitive information (like credit card numbers or passwords) into public AI tools.",
+    m3_tag: "Module 3",
+    m3_h: 'AI <span class="hot">fundamentals</span>',
+    m3_p1: "Artificial Intelligence (AI) is a broad field focused on building tools that perform tasks usually associated with human intelligence. Machine Learning is the most common technique for training AI models: it lets a tool discover patterns and learn from data on its own, without programming every possible scenario. A model's ability to handle new examples it has never seen is called inference.",
+    m3_c1t: "Supervised learning", m3_c1p: "Training on data pre-labeled by people — used when the desired outcome is known.",
+    m3_c2t: "Unsupervised learning", m3_c2p: "Training on unlabeled data so the model discovers patterns and structures by itself.",
+    m3_c3t: "Reinforcement learning", m3_c3p: "Trial and error with rewards and penalties to gradually improve performance.",
+    m3_p2: "A Large Language Model (LLM) is an advanced type of model that can infer from patterns well enough to create entirely new content — this is called Generative AI (GenAI). Some assistants are multimodal: they process and create text, images, video and audio.",
+    m3_t1: "🔑 Inference", m3_t2: "🔑 Large Language Model (LLM)", m3_t3: "🔑 Generative AI (GenAI)", m3_t4: "🔑 Multimodal",
+    m3_f1s: "⚖️ Bias in AI — and how to avoid it",
+    m3_f1p: "Data bias happens when training data is skewed, incomplete, or reflects societal biases — and those biases carry into the model's output. To avoid it: clearly define the outcome you want with context about the target audience, and use follow-up prompts to correct any output that seems biased or inaccurate.",
+    m3_f2s: "📅 Knowledge cutoff — and how to handle it",
+    m3_f2p: "The knowledge cutoff is the date a model's training data stops — it will not know what happened after that date unless it uses live web search. To handle it: look up your tool's cutoff date, verify time-sensitive facts with an external source, specify exact timeframes in your prompt (e.g. 'summer 2025' instead of 'this summer'), and use follow-up prompts to refresh outdated answers.",
+    m3_f3s: "📉 Performance drift over time — and how to limit it",
+    m3_f3p: "Two types: factual drift (accuracy drops due to the knowledge cutoff) and behavioral drift (the tool's style or tone changes after updates). To limit it: give precise, current context in your prompts, start a new chat for each task or topic, and state exactly what you want with direct, specific instructions.",
+    m4_tag: "Module 4",
+    m4_h: 'How do <span class="hot">AI tools work?</span>',
+    m4_p1: "Think of the model (like Gemini or GPT) as a car engine: it is the source of power, but your actual interaction happens through the 'car' — the app or website — and you are the driver. Models do not live in one app only; they are embedded across many products like search engines, maps and phones.",
+    m4_c1t: "Choose the right model for the task", m4_c1p: "Each model has strengths: some are fast for general help, others are better for research, coding and complex decisions. The more complex the task, the more time it takes.",
+    m4_c2t: "Temperature", m4_c2p: "An advanced setting that controls creativity: lower it for stable, predictable results — raise it for more inventive, less predictable ones.",
+    m5_tag: "Module 5 — the most practical one",
+    m5_h: 'The skill of <span class="hot">prompting</span>',
+    m5_p1: "A prompt is the instruction you give AI to get what you want. Clear communication is the best way to get great results — exactly like explaining your lunch order to a colleague. Here is the golden 4-element framework:",
+    m5_c1t: "1. Persona", m5_c1p: "Describe the expertise AI should adopt: 'You are a team leader experienced in managing large projects.'",
+    m5_c2t: "2. Task", m5_c2p: "State clearly and specifically what you want: 'Give me tips for running more effective meetings.'",
+    m5_c3t: "3. Format", m5_c3p: "Define the final shape of the output: bullet list, table, text of a certain length, etc.",
+    m5_c4t: "4. Context", m5_c4p: "The extra information needed for accuracy: company size, challenges, constraints...",
+    m5_note: "💬 Note: the order of these elements inside the prompt does not matter — what matters is that their content is present and complete.",
+    m5_rules_h: "The three rules of writing prompts",
+    m5_r1: "Brevity: simple, direct prompts — do not cram many tasks into one prompt.",
+    m5_r2: "Clarity: precise, unambiguous instructions — avoid phrases like 'make it better'.",
+    m5_r3: "Consistency: use the same term for the same concept throughout the conversation.",
+    m5_f1s: "🔍 How to evaluate an output before using it",
+    m5_f1p: "Ask yourself four questions: Accuracy — is the information correct and fact-based? Bias — does it unfairly favor one viewpoint? Relevance — does it directly answer the prompt and stay on topic? Consistency — are tone, style and quality steady throughout?",
+    m5_f2s: "🔁 Improve results with iterative refinement",
+    m5_f2p: "Revisit the persona, task, format or context · break complex tasks into smaller parts requested one after another · add clear constraints that scope the answer · use references (text, image, audio) to show what you want the result to look like.",
+    m5_tip: "💡 Two golden tips: start a new chat when switching to a completely different topic (a conversation has a limited context window and old context causes confusion), and keep a library of your successful prompts to reuse later.",
+    m6_tag: "Module 6",
+    m6_h: '<span class="hot">Advanced</span> prompting techniques',
+    m6_p1: "Effective prompt phrases are precise language inside a single prompt that guide AI on HOW to achieve the goal, not just WHAT the goal is:",
+    m6_l1: "Set a working path: 'Think step by step' / 'First... second... finally...'",
+    m6_l2: "Audience & tone: 'Write for an audience of managers' / 'Keep the tone friendly.'",
+    m6_l3: "Precise constraints: 'A one-paragraph summary' / 'Focus only on X and do not mention Y.'",
+    m6_l4: "Ask for critique: 'Critique this from a potential customer's perspective' / 'Play devil's advocate.'",
+    m6_l5: "Alternatives & depth: 'Give me three different suggestions' / 'Expand on point 2.'",
+    m6_p2: "Prompt Chaining: a technique that splits a big task into a series of small, connected prompts within the same conversation — each output becomes the foundation for the next prompt, just like an assembly line.",
+    m6_ex: '<strong>✈️ Practical example — planning a trip to Paris:</strong> Prompt 1: suggest places to visit based on my interests → Prompt 2: turn them into a daily itinerary that minimizes travel time → Prompt 3: suggest restaurants near each stop.',
+    m7_tag: "Module 7",
+    m7_h: '<span class="hot">Multimodality</span>',
+    m7_p1: "Multimodality means AI can understand and create different types of content: text, images, audio and video. Instead of describing your request in words only, enrich your instructions with images, voice recordings or videos to give more detailed context.",
+    m7_ex: "💡 Practical examples: create a video from a single sentence · draft a marketing email based on product photos · build a full presentation from a voice recording.",
+    m8_tag: "Module 8",
+    m8_h: '<span class="hot">Responsible</span> use of AI',
+    m8_p1: "Hallucination: when AI confidently presents incorrect information. Causes include errors in training data, facing a problem it has never handled, or relying on guesswork. So always verify outputs before using them — even when they sound confident. And remember: AI does not experience the world the way you do, so supervising every step is your responsibility ('human in the loop').",
+    m8_c1t: "A — Ask", m8_c1p: "Does this situation really call for AI? Do not rely on it for medical, legal or financial advice, and consider data sensitivity and your organization's policies.",
+    m8_c2t: "C — Check", m8_c2p: "Review objectivity (any bias or stereotypes), verify facts presented as facts, and confirm the output fits its intended purpose.",
+    m8_c3t: "T — Tell", m8_c3p: "Be transparent and disclose your use of AI when sharing the results with others.",
+    m8_synth: "🔎 A transparency tool: SynthID — adds digital watermarks to AI-generated content (like videos) so it can be detected.",
+    m9_tag: "Module 9",
+    m9_h: '<span class="hot">AI Agents</span>',
+    m9_p1: "Unlike chatbots that handle a single task, an AI agent can independently manage a complex multi-step workflow: you give it an overall goal instead of one task, and access to tools like email or a calendar — all under your supervision and control. Examples: analyzing competitors and summarizing customer reviews weekly, auto-creating CRM entries from your inbox, or analyzing sales and inventory and ordering what is missing.",
+    m9_c1t: "Models", m9_c1p: "Use their training to predict the needed tasks and how to use the available tools.",
+    m9_c2t: "Permissions", m9_c2p: "Define what software and tools the agent can access — acting as safety guardrails.",
+    m9_c3t: "Goals", m9_c3p: "The overall objective the agent is assigned, pursued in a continuous loop.",
+    m9_p2: "An agent works in a loop of three steps:",
+    m9_s1: "Analyze: determine the first necessary task.",
+    m9_s2: "Execute: perform that task after the needed permissions are granted.",
+    m9_s3: "Verify: review the result against the goal before moving to the next task.",
+    m9_warn: "⚖️ Before giving an agent any goal, ask: what is the impact of a potential mistake (risk)? And how easy is it to undo the action (reversibility)? The higher the risk or the harder the undo, the tighter your human-in-the-loop control should be: clear limits, acceptable criteria, and oversight of every important step.",
+    m9_b1: "Start with a clear, specific, actionable goal — not a vague one.",
+    m9_b2: "Manage permissions wisely: grant only the minimum needed.",
+    m9_b3: "Evaluate continuously: always review the agent's work, especially in high-risk tasks.",
+    m9_b4: "Iterate and improve: treat the agent as a collaborative partner and keep refining your instructions.",
+    m9_tip: "🌱 The best responsible start: look for agent features in the tools you already use, and begin with a simple, low-risk goal.",
+    cta_h: 'Ready for the <span class="hot">next step?</span>',
+    cta_p: "This guide is just the beginning. In my courses and workshops we apply all of this hands-on, to YOUR tasks — step by step and in plain language.",
+    cta_wa: "💬 Contact me on WhatsApp", cta_site: "Explore courses & workshops",
+    footer_c: "© 2026 Ahmad Muhanna · Dubai, United Arab Emirates",
+    footer_top: "Back to top ↑",
+  }
+};
+
+/* ═══════════ نهاية منطقة التعديل — END OF EDIT ZONE ═══════════ */
+
+function setHref(id, href){ const el = document.getElementById(id); if(el) el.href = href; }
+function applyConfig(){
+  setHref('link_main', CONFIG.mainSite);
+  setHref('link_main2', CONFIG.mainSite);
+  setHref('link_course', CONFIG.whatsapp);
+  setHref('link_course2', CONFIG.whatsapp);
+  setHref('link_wa_cta', CONFIG.whatsapp);
+  setHref('link_wa_float', CONFIG.whatsapp);
+}
+
+let lang = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'ar';
+function applyLang(){
+  const t = CONTENT[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.pageTitle;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n');
+    if(t[k] !== undefined) el.textContent = t[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k = el.getAttribute('data-i18n-html');
+    if(t[k] !== undefined) el.innerHTML = t[k];
+  });
+  document.getElementById('langBtn').textContent = (lang === 'ar') ? 'EN' : 'عربي';
+}
+document.getElementById('langBtn').addEventListener('click', ()=>{ lang = (lang==='ar')?'en':'ar'; applyLang(); });
+
+// reading progress + hide-on-scroll header
+(function(){
+  const bar = document.getElementById('progress');
+  const hdr = document.querySelector('header');
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (y/h)*100 : 0) + '%';
+    if(y > 120 && y > lastY + 4){ hdr.classList.add('hide'); }
+    else if(y < lastY - 4 || y <= 120){ hdr.classList.remove('hide'); }
+    lastY = y;
+  }, {passive:true});
+})();
+
+// scroll reveal
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+applyConfig();
+applyLang();
+</script>
+</body>
+</html>
