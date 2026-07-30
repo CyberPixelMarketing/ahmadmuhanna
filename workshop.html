@@ -81,7 +81,7 @@ header.hide{transform:translateY(-110%)}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
 .kicker{display:inline-block;background:rgba(139,195,74,.16);border:1px solid rgba(79,157,45,.4);color:var(--green-dark);font-weight:800;font-size:.85rem;padding:9px 18px;border-radius:999px;margin-bottom:20px}
 .free-chip{display:inline-block;background:rgba(110,170,215,.16);border:1px solid rgba(60,130,180,.45);color:var(--blue);font-weight:800;font-size:.85rem;padding:9px 18px;border-radius:999px;margin-bottom:20px;margin-inline-start:8px}
-.sup{font-family:var(--display);font-weight:900;font-size:1.15rem;color:var(--green-dark);margin-bottom:8px}
+.sup{font-weight:800;font-size:1rem;color:var(--green-dark);margin-bottom:10px;line-height:1.9;max-width:36rem}
 h1{font-family:var(--display);font-size:clamp(1.8rem,4.2vw,2.8rem);line-height:1.32;text-transform:var(--h-transform)}
 .hero .lead{margin:18px 0 24px;color:var(--muted);font-size:1.1rem;max-width:34rem}
 .chips3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 30px}
@@ -89,7 +89,7 @@ h1{font-family:var(--display);font-size:clamp(1.8rem,4.2vw,2.8rem);line-height:1
 .chips3 em{font-style:normal;font-size:1.4rem;display:block;margin-bottom:6px}
 .chips3 b{display:block;font-family:var(--display);font-weight:900;font-size:.98rem}
 .chips3 span{color:var(--muted);font-size:.83rem;font-weight:600}
-.meta2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.meta2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0 26px}
 .meta2 div{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
 .meta2 em{font-style:normal;font-size:1.3rem;display:block;margin-bottom:4px}
 .meta2 b{display:block;font-family:var(--display);font-weight:900;font-size:1rem}
@@ -174,15 +174,9 @@ footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
     <div class="wrap hero-grid">
 
       <div class="reveal in">
-        <span class="kicker" data-i18n="kicker">🎓 ورشة عمل مجانية · أونلاين</span><span class="free-chip" data-i18n="free_chip">0 درهم</span>
-        <div class="sup" data-i18n="sup">مدخل إلى الذكاء الاصطناعي</div>
-        <h1 data-i18n-html="h1">كيف يساعدك الـ <span class="hot">AI</span> في البزنس بأقل عدد من التطبيقات</h1>
-        <p class="lead" data-i18n="lead">ورشة عملية مكثّفة تتعرف فيها على أهم استخدامات الذكاء الاصطناعي في أعمالك — بأبسط الأدوات، وبدون أي خلفية تقنية.</p>
-        <div class="chips3">
-          <div><em>⏱️</em><b data-i18n="c1t">ساعة واحدة</b><span data-i18n="c1s">محتوى عملي ومكثّف</span></div>
-          <div><em>🎁</em><b data-i18n="c2t">مجاناً بالكامل</b><span data-i18n="c2s">بدون أي رسوم</span></div>
-          <div><em>💼</em><b data-i18n="c3t">لأصحاب البزنس</b><span data-i18n="c3s">وللمبتدئين</span></div>
-        </div>
+        <span class="kicker" data-i18n="kicker">🎓 ورشة عمل مجانية · أونلاين</span>
+        <div class="sup" data-i18n="sup">دعماً لمبادرة دبي العالمية "مليون خبير لأوامر الذكاء الاصطناعي"، يسعدنا أن نعلن عن إطلاق ورشة العمل بعنوان:</div>
+        <h1 data-i18n-html="h1">كيف يساعدك الـ <span class="hot">AI</span> في البزنس بأقل عدد من التطبيقات بدون خلفية تقنية</h1>
         <div class="meta2">
           <div><em>📅</em><b id="ev_date">—</b><span data-i18n="meta_date">تاريخ الورشة</span></div>
           <div><em>🕔</em><b id="ev_time">—</b><span data-i18n="meta_time">بتوقيت الإمارات</span></div>
@@ -244,7 +238,7 @@ footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
             <div class="err" data-i18n="e_exp">الرجاء اختيار مستوى الخبرة</div>
           </div>
 
-          <button class="btn btn-green" id="submitBtn" data-i18n="f_submit">تسجيل — مجاناً</button>
+          <button class="btn btn-green" id="submitBtn" data-i18n="f_submit">تسجيل</button>
           <p class="consent" data-i18n="f_consent">بالتسجيل أنت توافق على تواصلنا معك بخصوص الورشة فقط.</p>
           <div class="form-fail" id="formFail" data-i18n="f_fail">⚠️ تعذّر الإرسال، يرجى المحاولة مرة أخرى أو التواصل معنا عبر واتساب.</div>
         </div>
@@ -277,7 +271,6 @@ footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
     <div class="wrap">
       <h2 class="sec reveal" data-i18n-html="tr_h">عن <span class="hot">المدرّب</span></h2>
       <div class="trainer reveal">
-        <div class="avatar">AM</div>
         <div>
           <b data-i18n="tr_name">أحمد مهنا</b>
           <span data-i18n="tr_bio">مدرب ذكاء اصطناعي في الإمارات · شريك مؤسس في Cyber Pixel · مؤسس منصة WATSIN.NET · مدير المشاريع في Dune AI — خبرة تتجاوز 13 عاماً في التقنية والتسويق الرقمي.</span>
@@ -334,13 +327,9 @@ const CONTENT = {
     pageTitle: "ورشة عمل مجانية: مدخل إلى الذكاء الاصطناعي — كيف يساعدك الـ AI في البزنس | أحمد مهنا",
     logo1: "أحمد", logo2: "مهنا",
     nav_back: "← الموقع الرئيسي", nav_cta: "سجّل مجاناً",
-    kicker: "🎓 ورشة عمل مجانية · أونلاين", free_chip: "0 درهم",
-    sup: "مدخل إلى الذكاء الاصطناعي",
-    h1: 'كيف يساعدك الـ <span class="hot">AI</span> في البزنس بأقل عدد من التطبيقات',
-    lead: "ورشة عملية مكثّفة تتعرف فيها على أهم استخدامات الذكاء الاصطناعي في أعمالك — بأبسط الأدوات، وبدون أي خلفية تقنية.",
-    c1t: "ساعة واحدة", c1s: "محتوى عملي ومكثّف",
-    c2t: "مجاناً بالكامل", c2s: "بدون أي رسوم",
-    c3t: "لأصحاب البزنس", c3s: "وللمبتدئين",
+    kicker: "🎓 ورشة عمل مجانية · أونلاين",
+    sup: 'دعماً لمبادرة دبي العالمية "مليون خبير لأوامر الذكاء الاصطناعي"، يسعدنا أن نعلن عن إطلاق ورشة العمل بعنوان:',
+    h1: 'كيف يساعدك الـ <span class="hot">AI</span> في البزنس بأقل عدد من التطبيقات بدون خلفية تقنية',
     meta_date: "تاريخ الورشة", meta_time: "بتوقيت الإمارات",
     count_h: "⏳ الوقت المتبقي على بدء الورشة:",
     cd_d: "يوم", cd_h: "ساعة", cd_m: "دقيقة", cd_s: "ثانية",
@@ -355,7 +344,7 @@ const CONTENT = {
     f_web: "ويبسايت أو انستاغرام",
     f_exp: "الخبرة في الـ AI *", e_exp: "الرجاء اختيار مستوى الخبرة",
     exp0: "— اختر —", exp1: "مبتدئ", exp2: "متوسط", exp3: "خبير",
-    f_submit: "تسجيل — مجاناً",
+    f_submit: "تسجيل",
     f_consent: "بالتسجيل أنت توافق على تواصلنا معك بخصوص الورشة فقط.",
     f_fail: "⚠️ تعذّر الإرسال، يرجى المحاولة مرة أخرى أو التواصل معنا عبر واتساب.",
     ok_h: "شكراً لتسجيلك!",
@@ -378,13 +367,9 @@ const CONTENT = {
     pageTitle: "Free Workshop: Introduction to AI — How AI Helps Your Business | Ahmad Muhanna",
     logo1: "Ahmad", logo2: "Muhanna",
     nav_back: "← Main website", nav_cta: "Register free",
-    kicker: "🎓 Free Online Workshop", free_chip: "AED 0",
-    sup: "Introduction to Artificial Intelligence",
-    h1: 'How <span class="hot">AI</span> Helps Your Business — With the Fewest Possible Apps',
-    lead: "A practical, focused workshop where you discover the most useful ways AI can serve your business — with the simplest tools, and no technical background needed.",
-    c1t: "One hour", c1s: "Practical, focused content",
-    c2t: "Completely free", c2s: "No fees at all",
-    c3t: "For business owners", c3s: "And beginners",
+    kicker: "🎓 Free Online Workshop",
+    sup: 'In support of Dubai\'s global initiative "One Million Prompters", we are delighted to announce the launch of our workshop:',
+    h1: 'How <span class="hot">AI</span> Helps Your Business — With the Fewest Possible Apps, No Technical Background Needed',
     meta_date: "Workshop date", meta_time: "UAE time (GST)",
     count_h: "⏳ Time left until the workshop starts:",
     cd_d: "Days", cd_h: "Hours", cd_m: "Minutes", cd_s: "Seconds",
@@ -399,7 +384,7 @@ const CONTENT = {
     f_web: "Website or Instagram",
     f_exp: "AI experience *", e_exp: "Please choose your experience level",
     exp0: "— Choose —", exp1: "Beginner", exp2: "Intermediate", exp3: "Expert",
-    f_submit: "Register — Free",
+    f_submit: "Register",
     f_consent: "By registering you agree to be contacted about this workshop only.",
     f_fail: "⚠️ Submission failed — please try again or contact us on WhatsApp.",
     ok_h: "Thank you for registering!",
