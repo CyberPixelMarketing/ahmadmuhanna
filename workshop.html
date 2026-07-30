@@ -223,9 +223,10 @@ footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
             <input type="email" id="in_email" dir="ltr" autocomplete="email">
             <div class="err" data-i18n="e_email">الرجاء إدخال بريد إلكتروني صحيح</div>
           </div>
-          <div class="field">
-            <label data-i18n="f_web">ويبسايت أو انستاغرام</label>
+          <div class="field" id="fw_web">
+            <label data-i18n="f_web">ويبسايت أو انستاغرام <span class="req">*</span></label>
             <input type="text" id="in_web" dir="ltr">
+            <div class="err" data-i18n="e_web">الرجاء إدخال الويبسايت أو حساب الانستاغرام</div>
           </div>
           <div class="field" id="fw_exp">
             <label data-i18n="f_exp">الخبرة في الـ AI <span class="req">*</span></label>
@@ -341,7 +342,7 @@ const CONTENT = {
     f_biztype: "نوع البزنس *", e_biztype: "الرجاء إدخال نوع البزنس",
     f_phone: "رقم الهاتف *", e_phone: "الرجاء إدخال رقم هاتف صحيح",
     f_email: "الإيميل *", e_email: "الرجاء إدخال بريد إلكتروني صحيح",
-    f_web: "ويبسايت أو انستاغرام",
+    f_web: "ويبسايت أو انستاغرام *", e_web: "الرجاء إدخال الويبسايت أو حساب الانستاغرام",
     f_exp: "الخبرة في الـ AI *", e_exp: "الرجاء اختيار مستوى الخبرة",
     exp0: "— اختر —", exp1: "مبتدئ", exp2: "متوسط", exp3: "خبير",
     f_submit: "تسجيل",
@@ -350,7 +351,7 @@ const CONTENT = {
     ok_h: "شكراً لتسجيلك!",
     ok_p: "تم تأكيد تسجيلك، وأرسلنا رابط الحضور إلى بريدك الإلكتروني. يمكنك أيضاً إضافة الورشة إلى تقويمك مباشرة من هنا:",
     ok_btn: "📅 رابط حضور الورشة",
-    mail_subject: "تسجيل جديد — ورشة مدخل إلى الذكاء الاصطناعي",
+    mail_subject: "مشترك جديد بالورشة المجانية",
     mail_reply: "شكراً لتسجيلك في ورشة «مدخل إلى الذكاء الاصطناعي — كيف يساعدك الـ AI في البزنس بأقل عدد من التطبيقات»!\n\nرابط حضور الورشة وإضافتها إلى تقويمك:\n{link}\n\nنراك في الورشة!\nأحمد مهنا",
     learn_h: 'ماذا ستستفيد من <span class="hot">الورشة؟</span>',
     l1: "كيف تستخدم الذكاء الاصطناعي في مهامك اليومية بالبزنس — بدون تعقيد وبأقل عدد من التطبيقات.",
@@ -381,7 +382,7 @@ const CONTENT = {
     f_biztype: "Business type *", e_biztype: "Please enter your business type",
     f_phone: "Phone number *", e_phone: "Please enter a valid phone number",
     f_email: "Email *", e_email: "Please enter a valid email",
-    f_web: "Website or Instagram",
+    f_web: "Website or Instagram *", e_web: "Please enter your website or Instagram account",
     f_exp: "AI experience *", e_exp: "Please choose your experience level",
     exp0: "— Choose —", exp1: "Beginner", exp2: "Intermediate", exp3: "Expert",
     f_submit: "Register",
@@ -390,7 +391,7 @@ const CONTENT = {
     ok_h: "Thank you for registering!",
     ok_p: "Your registration is confirmed, and the attendance link has been sent to your email. You can also add the workshop to your calendar directly here:",
     ok_btn: "📅 Workshop attendance link",
-    mail_subject: "New registration — Introduction to AI Workshop",
+    mail_subject: "مشترك جديد بالورشة المجانية",
     mail_reply: "Thank you for registering for the workshop 'Introduction to AI — How AI Helps Your Business With the Fewest Possible Apps'!\n\nYour attendance link (add it to your calendar):\n{link}\n\nSee you at the workshop!\nAhmad Muhanna",
     learn_h: 'What will you get from <span class="hot">the workshop?</span>',
     l1: "How to use AI in your daily business tasks — no complexity, with the fewest possible apps.",
@@ -494,8 +495,9 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
   markInvalid('fw_biztype', !btype);
   markInvalid('fw_phone', !phoneOk);
   markInvalid('fw_email', !emailOk);
+  markInvalid('fw_web', !web);
   markInvalid('fw_exp', !exp);
-  if(!name || !biz || !btype || !phoneOk || !emailOk || !exp) return;
+  if(!name || !biz || !btype || !phoneOk || !emailOk || !web || !exp) return;
 
   const btn = document.getElementById('submitBtn');
   const fail = document.getElementById('formFail');
@@ -516,7 +518,7 @@ document.getElementById('submitBtn').addEventListener('click', async ()=>{
         "نوع البزنس / Business type": btype,
         "رقم الهاتف / Phone": phone,
         "email": email,
-        "ويبسايت أو انستاغرام / Website-Instagram": web || '-',
+        "ويبسايت أو انستاغرام / Website-Instagram": web,
         "الخبرة في AI / Experience": expTxt
       })
     });
