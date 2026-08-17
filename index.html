@@ -298,11 +298,24 @@ footer .logo{font-size:1.05rem}
 }
 @media (max-width:600px){.wa-float{width:56px;height:56px;bottom:20px;inset-inline-end:18px}}
 
-/* stacked workshops + price chip */
-.ws-stack{display:flex;flex-direction:column;gap:26px}
-.price-chip{display:inline-block;background:rgba(110,170,215,.16);border:1px solid rgba(60,130,180,.45);color:#1D6FA5;font-weight:800;font-size:.85rem;padding:9px 16px;border-radius:999px;margin-bottom:22px}
-.featured .visual img.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.courses-cta{text-align:center;margin-top:40px}
+/* workshops portfolio */
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pf-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.pf-card:hover{transform:translateY(-5px);border-color:var(--border-hot);box-shadow:0 22px 60px -24px rgba(79,157,45,.3)}
+.pf-img{position:relative;height:190px;background:radial-gradient(320px 160px at 50% 20%, rgba(139,195,74,.35), transparent 75%),var(--card-2);border-bottom:1px solid var(--border)}
+.pf-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pf-num{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:3.2rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pf-body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.pf-body h3{font-family:var(--display);font-weight:900;font-size:1.15rem;line-height:1.45;text-transform:var(--h-transform)}
+.pf-body > p{color:var(--muted);font-size:.98rem;flex:1}
+details.fold summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-weight:800;color:#2E7D32;font-size:.95rem}
+details.fold summary::-webkit-details-marker{display:none}
+details.fold summary::after{content:"+";font-weight:900;font-size:1.15rem;transition:transform .2s ease}
+details.fold[open] summary::after{transform:rotate(45deg)}
+details.fold .fold-body{margin-top:14px;border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:11px}
+.d-row b{display:block;font-weight:800;font-size:.9rem;margin-bottom:2px}
+.d-row span{color:var(--muted);font-size:.93rem;line-height:1.8}
+.pf-book{align-self:flex-start;margin-top:6px;font-size:.92rem;padding:12px 22px}
 .bg-grid.bg-single{grid-template-columns:1fr;max-width:840px;margin:0 auto}
 
 /* booking modal */
@@ -346,6 +359,7 @@ footer .logo{font-size:1.05rem}
   .menu-toggle{display:block}
 }
 @media (max-width:600px){
+  .pf-grid{grid-template-columns:1fr}
   section{padding:70px 0}
   .hero{padding:54px 0 46px}
   .socials{grid-template-columns:1fr}
@@ -361,10 +375,9 @@ footer .logo{font-size:1.05rem}
   <div class="wrap nav">
     <a class="logo" id="logoHeader" href="#top"><span data-i18n="logo1">أحمد</span><span class="ai" data-i18n="logo2">مهنا</span></a>
     <nav class="nav-links" id="navLinks">
-      <a href="#programs" data-i18n="nav_courses">الدورات</a>
       <a href="#workshops" data-i18n="nav_workshops">ورش العمل</a>
       <a href="#background" data-i18n="nav_about">من أنا</a>
-      <a class="btn btn-orange" href="#contact" data-i18n="nav_cta">تواصل معي</a>
+      <a class="btn btn-orange" href="#contact" data-i18n="nav_cta">اعمل معي</a>
     </nav>
     <div style="display:flex;align-items:center;gap:12px">
       <button class="lang-btn" id="langBtn" aria-label="Switch language">EN</button>
@@ -383,14 +396,15 @@ footer .logo{font-size:1.05rem}
       <div class="hero-grid">
         <div class="reveal in">
           <span class="kicker" data-i18n="kicker">⚡ مدرب ذكاء اصطناعي · دبي، الإمارات</span>
-          <h1 data-i18n-html="h1">نطور ونبني <span class="hot">"جيل جاهز للمستقبل"</span></h1>
+          <h1 data-i18n-html="h1">نطور مهارات الذكاء الاصطناعي ونبني <span class="hot">"جيل جاهز للمستقبل"</span></h1>
           <p class="lead" data-i18n-html="lead">أحمد مهنا، شريك مؤسس في شركة <strong>Cyber Pixel</strong>، مؤسس منصة <strong>WATSIN.NET</strong> لوكلاء الذكاء الاصطناعي، مدير المشاريع في <strong>Dune AI</strong>، ومدرب ذكاء اصطناعي في الإمارات العربية المتحدة. نساعد الأفراد والشركات على إتقان أدوات الذكاء الاصطناعي والتحرر من طرق العمل القديمة.</p>
           <div class="hooks">
-            <span data-i18n="hook1">🚀 هدفي ← تدريب 10,000 محترف في الإمارات والخليج على استخدام الذكاء الاصطناعي — بدون خلفية تقنية.</span>
+            <span data-i18n="hook1">🔥 أكثر من 13 عاماً في بناء البرمجيات والتطبيقات والتسويق الرقمي في دبي.</span>
+            <span data-i18n="hook2">🚀 هدفي ← تدريب 10,000 محترف في الإمارات والخليج على استخدام الذكاء الاصطناعي — بدون خلفية تقنية.</span>
           </div>
           <div class="hero-ctas">
-            <a class="btn btn-orange" href="https://www.ahmadmuhanna.com/workshop.html" data-book="workshop" data-i18n="cta_book">احجز ورشة عمل</a>
-            <a class="btn btn-dark" href="#programs" data-i18n="cta_courses">استكشف الدورات</a>
+            <a class="btn btn-orange" href="#" data-book="workshop" data-i18n="cta_book">احجز ورشة عمل</a>
+            <a class="btn btn-dark" href="#workshops" data-i18n="cta_courses">استكشف الورش التدريبية</a>
           </div>
         </div>
         <div class="hero-photo reveal in">
@@ -402,93 +416,132 @@ footer .logo{font-size:1.05rem}
       </div>
       <div class="statbar reveal in">
         <div><b>+13</b><span data-i18n="stat1">عاماً في التقنية</span></div>
-        <div><b>2015</b><span data-i18n="stat2">تأسيس Cyber Pixel</span></div>
+        <div><b>2013</b><span data-i18n="stat2">تأسيس Cyber Pixel</span></div>
         <div><b>100%</b><span data-i18n="stat3">تدريب عملي تطبيقي</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ================= WORKSHOPS (KIDS + BUSINESS) ================= -->
+  <!-- ================= WORKSHOPS PORTFOLIO — حقيبة الورش التدريبية ================= -->
   <section id="workshops" style="padding-top:0">
     <div class="wrap">
-      <h2 class="reveal" data-i18n-html="ws_h">ورش <span class="hot">العمل</span></h2>
-      <p class="sec-sub reveal" data-i18n="ws_sub">ورش عمل تفاعلية بأسعار رمزية — احجز مقعدك مسبقاً وسنتواصل معك فور تحديد الموعد.</p>
-      <div class="ws-stack">
-
-        <!-- ورشات الأطفال -->
-        <div class="featured reveal">
-          <div class="txt">
-            <span class="win" data-i18n="k_tag">🧒 فعاليات حضورية</span> <span class="price-chip" data-i18n="k_price">💰 بسعر رمزي</span>
-            <h3 data-i18n-html="k_h">ورشات عمل <span class="hot">الأطفال</span></h3>
-            <p data-i18n-html="k_p1"><strong>نزرع مهارات المستقبل في جيل اليوم.</strong> فعاليات ممتعة وتفاعلية يتعلم فيها الأطفال أساسيات الذكاء الاصطناعي، التفكير الإبداعي، واستخدام الأدوات الذكية بأمان.</p>
-            <p data-i18n-html="k_p2">أنشطة عملية، مشاريع صغيرة، وشهادات مشاركة — تجربة يخرج منها طفلك متحمساً للتعلم.</p>
-            <a class="btn btn-orange" href="#" data-book="kids" data-i18n="k_cta">احجز مقعد طفلك مسبقاً</a>
-          </div>
-          <div class="visual">
-            <img class="cover" src="data:image/jpeg;base64,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" alt="أحمد مهنا في ورشة ذكاء اصطناعي للأطفال — Ahmad Muhanna at a kids AI workshop">
-          </div>
-        </div>
-
-        <!-- ورشة أصحاب البزنس -->
-        <div class="featured reveal">
-          <div class="txt">
-            <span class="win" data-i18n="b_tag">💼 أونلاين مباشر</span> <span class="price-chip" data-i18n="b_price">💰 بسعر رمزي</span>
-            <h3 data-i18n-html="b_h">ورشة الذكاء الاصطناعي <span class="hot">لأصحاب البزنس</span></h3>
-            <p data-i18n-html="b_p1"><strong>قرارات أذكى، تكاليف أقل، نمو أسرع.</strong> ورشة أونلاين مباشرة لأصحاب الأعمال والمدراء: كيف تستخدم الذكاء الاصطناعي في التسويق وخدمة العملاء والعمليات اليومية.</p>
-            <p data-i18n-html="b_p2">أمثلة حقيقية من السوق الخليجي وخطة تطبيق عملية تبدأ بها من اليوم التالي.</p>
-            <a class="btn btn-orange" href="#" data-book="biz" data-i18n="b_cta">احجز مقعدك مسبقاً</a>
-          </div>
-          <div class="visual">
-            <!-- ⚠️ ضع ملف الصورة business_workshop.png بجانب ملف الموقع -->
-            <img class="cover" src="business_workshop.png" onerror="this.remove()" alt="ورشة الذكاء الاصطناعي لأصحاب الأعمال — AI workshop for business owners">
+      <h2 class="reveal" data-i18n-html="ws_h">حقيبة <span class="hot">الورش التدريبية</span></h2>
+      <p class="sec-sub reveal" data-i18n="ws_sub">ست ورش تدريبية متخصصة للأفراد والشركات — اضغط «اعرف المزيد» لعرض التفاصيل الكاملة لكل ورشة.</p>
+      <div class="pf-grid">
+        <!-- ✏️ الورشة 1 — الصورة: ملف باسم w1.jpg بجانب ملف الموقع -->
+        <div class="pf-card reveal">
+          <div class="pf-img"><span class="pf-num">1</span><img src="w1.jpg" alt="الأساسيات في الذكاء الاصطناعي — AI Fundamentals" onerror="this.remove()"></div>
+          <div class="pf-body">
+            <h3 data-i18n="w1_t">الأساسيات في الذكاء الاصطناعي</h3>
+            <p data-i18n="w1_b">تعلّم استخدام الذكاء الاصطناعي بثقة في عملك اليومي وتوفير ساعات كل أسبوع — دون الحاجة لخلفية تقنية.</p>
+            <details class="fold">
+              <summary data-i18n="know_more">اعرف المزيد</summary>
+              <div class="fold-body">
+                <div class="d-row"><b data-i18n="d_aud">🎯 الفئة المستهدفة:</b><span data-i18n="w1_aud">الموظفون والمهنيون في مختلف الإدارات؛ المبتدئون.</span></div>
+                <div class="d-row"><b data-i18n="d_dur">⏱️ المدة المقترحة:</b><span data-i18n="w1_dur">ساعتان — قابلة للتمديد ليوم كامل مع تطبيقات عملية.</span></div>
+                <div class="d-row"><b data-i18n="d_obj">✅ أهداف التعلّم:</b><span data-i18n="w1_obj">فهم ما يمكن وما لا يمكن للذكاء الاصطناعي فعله في العمل · توظيف الأدوات في المهام اليومية: البريد، التلخيص، البحث، التقارير · كتابة أوامر (Prompts) واضحة وفعّالة · الاستخدام المسؤول والآمن.</span></div>
+                <div class="d-row"><b data-i18n="d_mod">📚 المحاور الرئيسية:</b><span data-i18n="w1_mod">الذكاء الاصطناعي التوليدي في بيئة العمل — الأساسيات · أبرز حالات الاستخدام الموفّرة للوقت · أساسيات كتابة الأوامر · تطبيق عملي على الأدوات اليومية · الاستخدام المسؤول والآمن.</span></div>
+                <div class="d-row"><b data-i18n="d_out">🏆 المخرجات:</b><span data-i18n="w1_out">حقيبة أدوات شخصية ومجموعة أوامر جاهزة للاستخدام الفوري.</span></div>
+                <a class="btn btn-orange pf-book" href="#" data-book="ws" data-ws-key="w1_t" data-i18n="book_ws">احجز هذه الورشة</a>
+              </div>
+            </details>
           </div>
         </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= COURSES ================= -->
-  <section id="programs" style="padding-top:0">
-    <div class="wrap">
-      <h2 class="reveal" data-i18n-html="courses_h">الدورات <span class="hot">والتدريب</span></h2>
-      <p class="sec-sub reveal" data-i18n="courses_sub">دورات ذكاء اصطناعي عملية أقدمها أونلاين وحضورياً. بدون حشو نظري — تبني مهارات حقيقية على مهام حقيقية.</p>
-      <div class="tools">
-        <div class="tool reveal">
-          <div class="banner"><em>🤖</em> <span data-i18n="c1_banner">أساسيات الذكاء الاصطناعي</span></div>
-          <div class="body">
-            <h3><span data-i18n="c1_h">أساسيات الذكاء الاصطناعي للمحترفين</span><small data-i18n="c1_fmt">دورة أونلاين · ورشة عمل</small></h3>
-            <p data-i18n="c1_p">🚀 أتقن ChatGPT وClaude وGemini في عملك اليومي. افهم ما يستطيع الذكاء الاصطناعي فعله وما لا يستطيع — وابدأ بتوفير ساعات كل أسبوع.</p>
-            <a class="btn btn-orange tool-btn" href="#" data-book="course" data-course-key="c1_h" data-i18n="c1_cta">👈 انضم للدفعة القادمة</a>
+        <!-- ✏️ الورشة 2 — الصورة: ملف باسم w2.jpg بجانب ملف الموقع -->
+        <div class="pf-card reveal">
+          <div class="pf-img"><span class="pf-num">2</span><img src="w2.jpg" alt="احتراف هندسة الأوامر (Prompt Engineering) — Prompt Engineering Mastery" onerror="this.remove()"></div>
+          <div class="pf-body">
+            <h3 data-i18n="w2_t">احتراف هندسة الأوامر (Prompt Engineering)</h3>
+            <p data-i18n="w2_b">إتقان كتابة الأوامر والخروج بمكتبة أوامر جاهزة تعطي نتائج احترافية وثابتة.</p>
+            <details class="fold">
+              <summary data-i18n="know_more">اعرف المزيد</summary>
+              <div class="fold-body">
+                <div class="d-row"><b data-i18n="d_aud">🎯 الفئة المستهدفة:</b><span data-i18n="w2_aud">كل من يستخدم أدوات الذكاء الاصطناعي ويرغب في نتائج موثوقة وعالية الجودة.</span></div>
+                <div class="d-row"><b data-i18n="d_dur">⏱️ المدة المقترحة:</b><span data-i18n="w2_dur">نصف يوم (3–4 ساعات).</span></div>
+                <div class="d-row"><b data-i18n="d_obj">✅ أهداف التعلّم:</b><span data-i18n="w2_obj">فهم كيف تؤثر الأوامر في مخرجات الذكاء الاصطناعي · إتقان أنماط وهياكل الأوامر الأساسية · ربط الأوامر لحل المهام متعددة الخطوات · بناء مكتبة أوامر شخصية قابلة لإعادة الاستخدام.</span></div>
+                <div class="d-row"><b data-i18n="d_mod">📚 المحاور الرئيسية:</b><span data-i18n="w2_mod">كيف تصنع الأوامر النتائج · أنماط الأوامر الأساسية · ربط الأوامر للمهام المعقّدة · بناء مكتبة أوامرك الجاهزة · الاختبار والتحسين ومعالجة الأخطاء.</span></div>
+                <div class="d-row"><b data-i18n="d_out">🏆 المخرجات:</b><span data-i18n="w2_out">مكتبة أوامر شخصية جاهزة ومصمّمة لطبيعة عمل المشارك.</span></div>
+                <a class="btn btn-orange pf-book" href="#" data-book="ws" data-ws-key="w2_t" data-i18n="book_ws">احجز هذه الورشة</a>
+              </div>
+            </details>
           </div>
         </div>
-        <div class="tool reveal">
-          <div class="banner"><em>✍️</em> <span data-i18n="c2_banner">هندسة الأوامر</span></div>
-          <div class="body">
-            <h3><span data-i18n="c2_h">احتراف هندسة الأوامر (Prompt Engineering)</span><small data-i18n="c2_fmt">دورة أونلاين · ورشة عمل</small></h3>
-            <p data-i18n="c2_p">🔥 اكتب أوامر تعطيك نتائج احترافية وثابتة. أُطر عمل مجربة، مكتبة أوامر جاهزة، وتطبيق مباشر على مهامك الخاصة.</p>
-            <a class="btn btn-orange tool-btn" href="#" data-book="course" data-course-key="c2_h" data-i18n="c2_cta">👈 تعلّم تكتب أوامر كالمحترفين</a>
+        <!-- ✏️ الورشة 3 — الصورة: ملف باسم w3.jpg بجانب ملف الموقع -->
+        <div class="pf-card reveal">
+          <div class="pf-img"><span class="pf-num">3</span><img src="w3.jpg" alt="الذكاء الاصطناعي للتسويق والمحتوى — AI for Marketing & Content" onerror="this.remove()"></div>
+          <div class="pf-body">
+            <h3 data-i18n="w3_t">الذكاء الاصطناعي للتسويق والمحتوى</h3>
+            <p data-i18n="w3_b">إنشاء حملات متكاملة — نصوص وصور وفيديو — بسرعة وباتساق مع هوية العلامة باستخدام الذكاء الاصطناعي.</p>
+            <details class="fold">
+              <summary data-i18n="know_more">اعرف المزيد</summary>
+              <div class="fold-body">
+                <div class="d-row"><b data-i18n="d_aud">🎯 الفئة المستهدفة:</b><span data-i18n="w3_aud">المسوّقون، صنّاع المحتوى، مديرو التواصل الاجتماعي، وأصحاب الأعمال.</span></div>
+                <div class="d-row"><b data-i18n="d_dur">⏱️ المدة المقترحة:</b><span data-i18n="w3_dur">ساعتان.</span></div>
+                <div class="d-row"><b data-i18n="d_obj">✅ أهداف التعلّم:</b><span data-i18n="w3_obj">توليد النصوص التسويقية وأفكار الحملات بالذكاء الاصطناعي · إنشاء الصور والفيديوهات القصيرة بأدوات الذكاء الاصطناعي · الحفاظ على اتساق المحتوى مع صوت العلامة · بناء سير عمل متكرر لإنتاج المحتوى.</span></div>
+                <div class="d-row"><b data-i18n="d_mod">📚 المحاور الرئيسية:</b><span data-i18n="w3_mod">كتابة النصوص وابتكار الحملات بالذكاء الاصطناعي · توليد الصور · توليد الفيديو · محتوى متسق مع الهوية · سير عمل متكامل لإنتاج المحتوى.</span></div>
+                <div class="d-row"><b data-i18n="d_out">🏆 المخرجات:</b><span data-i18n="w3_out">أصول حملة جاهزة للاستخدام وسير عمل متكرر لإنتاج المحتوى.</span></div>
+                <a class="btn btn-orange pf-book" href="#" data-book="ws" data-ws-key="w3_t" data-i18n="book_ws">احجز هذه الورشة</a>
+              </div>
+            </details>
           </div>
         </div>
-        <div class="tool reveal">
-          <div class="banner"><em>📣</em> <span data-i18n="c3_banner">التسويق بالذكاء الاصطناعي</span></div>
-          <div class="body">
-            <h3><span data-i18n="c3_h">الذكاء الاصطناعي للتسويق والمحتوى</span><small data-i18n="c3_fmt">دورة أونلاين · ورشة عمل</small></h3>
-            <p data-i18n="c3_p">🎯 أنشئ حملات ونصوص وصور وفيديوهات بالذكاء الاصطناعي — من خبرة 10 سنوات في إدارة حملات حقيقية للعملاء في Cyber Pixel.</p>
-            <a class="btn btn-orange tool-btn" href="#" data-book="course" data-course-key="c3_h" data-i18n="c3_cta">👈 ضاعف قوة تسويقك</a>
+        <!-- ✏️ الورشة 4 — الصورة: ملف باسم w4.jpg بجانب ملف الموقع -->
+        <div class="pf-card reveal">
+          <div class="pf-img"><span class="pf-num">4</span><img src="w4.jpg" alt="الأتمتة ووكلاء الذكاء الاصطناعي — Automation & AI Agents" onerror="this.remove()"></div>
+          <div class="pf-body">
+            <h3 data-i18n="w4_t">الأتمتة ووكلاء الذكاء الاصطناعي</h3>
+            <p data-i18n="w4_b">ربط الذكاء الاصطناعي بأدواتك اليومية وبناء وكلاء ينجزون مهاماً حقيقية — دون برمجة.</p>
+            <details class="fold">
+              <summary data-i18n="know_more">اعرف المزيد</summary>
+              <div class="fold-body">
+                <div class="d-row"><b data-i18n="d_aud">🎯 الفئة المستهدفة:</b><span data-i18n="w4_aud">فرق العمليات، المهنيون، ورواد الأعمال الراغبون في أتمتة سير العمل.</span></div>
+                <div class="d-row"><b data-i18n="d_dur">⏱️ المدة المقترحة:</b><span data-i18n="w4_dur">نصف يوم (3–4 ساعات).</span></div>
+                <div class="d-row"><b data-i18n="d_obj">✅ أهداف التعلّم:</b><span data-i18n="w4_obj">فهم ماهية وكلاء الذكاء الاصطناعي وطريقة عملهم · ربط الذكاء الاصطناعي بأدوات مثل n8n وMake وZapier · بناء أتمتة دون كتابة أكواد · تشغيل وكيل ينجز مهمة حقيقية.</span></div>
+                <div class="d-row"><b data-i18n="d_mod">📚 المحاور الرئيسية:</b><span data-i18n="w4_mod">من الأوامر إلى الوكلاء المستقلين · منصات الأتمتة بدون كود · ربط التطبيقات وواجهات البرمجة (APIs) · بناء وكيل عملي · التشغيل الآمن والمتابعة.</span></div>
+                <div class="d-row"><b data-i18n="d_out">🏆 المخرجات:</b><span data-i18n="w4_out">أتمتة أو وكيل يعمل فعلياً على مهمة حقيقية من عمل المشارك.</span></div>
+                <a class="btn btn-orange pf-book" href="#" data-book="ws" data-ws-key="w4_t" data-i18n="book_ws">احجز هذه الورشة</a>
+              </div>
+            </details>
           </div>
         </div>
-        <div class="tool reveal">
-          <div class="banner"><em>⚙️</em> <span data-i18n="c4_banner">الأتمتة والوكلاء الأذكياء</span></div>
-          <div class="body">
-            <h3><span data-i18n="c4_h">الأتمتة ووكلاء الذكاء الاصطناعي</span><small data-i18n="c4_fmt">ورشة عمل · استشارات</small></h3>
-            <p data-i18n="c4_p">🤖 اربط الذكاء الاصطناعي بأدواتك بدون برمجة. ابنِ وكلاء وأنظمة أتمتة تتولى المهام المتكررة بينما يركز فريقك على النمو.</p>
-            <a class="btn btn-orange tool-btn" href="#" data-book="course" data-course-key="c4_h" data-i18n="c4_cta">👈 أتمت أعمالك الآن</a>
+        <!-- ✏️ الورشة 5 — الصورة: ملف باسم w5.jpg بجانب ملف الموقع -->
+        <div class="pf-card reveal">
+          <div class="pf-img"><span class="pf-num">5</span><img src="w5.jpg" alt="الذكاء الاصطناعي لأصحاب الأعمال والمدراء — AI for Business Owners & Managers" onerror="this.remove()"></div>
+          <div class="pf-body">
+            <h3 data-i18n="w5_t">الذكاء الاصطناعي لأصحاب الأعمال والمدراء</h3>
+            <p data-i18n="w5_b">توظيف الذكاء الاصطناعي لاتخاذ قرارات أذكى وخفض التكاليف ونمو أسرع — دليل عملي للقادة.</p>
+            <details class="fold">
+              <summary data-i18n="know_more">اعرف المزيد</summary>
+              <div class="fold-body">
+                <div class="d-row"><b data-i18n="d_aud">🎯 الفئة المستهدفة:</b><span data-i18n="w5_aud">أصحاب الأعمال، التنفيذيون، المدراء، وقادة الفرق.</span></div>
+                <div class="d-row"><b data-i18n="d_dur">⏱️ المدة المقترحة:</b><span data-i18n="w5_dur">ساعتان.</span></div>
+                <div class="d-row"><b data-i18n="d_obj">✅ أهداف التعلّم:</b><span data-i18n="w5_obj">تحديد فرص الذكاء الاصطناعي عالية القيمة في المنشأة · استخدام الذكاء الاصطناعي في القرارات والتخطيط والتواصل · تقدير العائد على الاستثمار وترتيب أولويات حالات الاستخدام · قيادة التبنّي المسؤول عبر الفرق.</span></div>
+                <div class="d-row"><b data-i18n="d_mod">📚 المحاور الرئيسية:</b><span data-i18n="w5_mod">أين يصنع الذكاء الاصطناعي القيمة في الأعمال · الذكاء الاصطناعي في اتخاذ القرار والتحليل · العمليات وخفض التكاليف · قيادة عملية التبنّي · الاستخدام المسؤول والأخلاقي.</span></div>
+                <div class="d-row"><b data-i18n="d_out">🏆 المخرجات:</b><span data-i18n="w5_out">خطة عمل مخصّصة لتبنّي الذكاء الاصطناعي في منشأة المشارك.</span></div>
+                <a class="btn btn-orange pf-book" href="#" data-book="ws" data-ws-key="w5_t" data-i18n="book_ws">احجز هذه الورشة</a>
+              </div>
+            </details>
           </div>
         </div>
-      </div>
-      <div class="courses-cta reveal">
-        <a class="btn btn-orange" href="#" data-book="course" data-i18n="courses_book">📚 احجز مقعدك في الدورة القادمة</a>
+        <!-- ✏️ الورشة 6 — الصورة: ملف باسم w6.jpg بجانب ملف الموقع -->
+        <div class="pf-card reveal">
+          <div class="pf-img"><span class="pf-num">6</span><img src="w6.jpg" alt="ورش الذكاء الاصطناعي للأطفال — Kids AI Workshops" onerror="this.remove()"></div>
+          <div class="pf-body">
+            <h3 data-i18n="w6_t">ورش الذكاء الاصطناعي للأطفال</h3>
+            <p data-i18n="w6_b">مقدمة ممتعة وآمنة وتطبيقية للذكاء الاصطناعي للأطفال — التعلّم عبر الإبداع.</p>
+            <details class="fold">
+              <summary data-i18n="know_more">اعرف المزيد</summary>
+              <div class="fold-body">
+                <div class="d-row"><b data-i18n="d_aud">🎯 الفئة المستهدفة:</b><span data-i18n="w6_aud">الأطفال (8–14 سنة تقريباً)؛ يمكن إشراك الأهل والمعلمين.</span></div>
+                <div class="d-row"><b data-i18n="d_dur">⏱️ المدة المقترحة:</b><span data-i18n="w6_dur">ساعتان لكل جلسة؛ يمكن تقديمها كسلسلة جلسات.</span></div>
+                <div class="d-row"><b data-i18n="d_obj">✅ أهداف التعلّم:</b><span data-i18n="w6_obj">فهم ماهية الذكاء الاصطناعي بأسلوب بسيط وقريب · استخدام الذكاء الاصطناعي بإبداع وأمان · تنفيذ مشاريع صغيرة ممتعة (قصص، صور، ألعاب) · التفكير النقدي تجاه الذكاء الاصطناعي.</span></div>
+                <div class="d-row"><b data-i18n="d_mod">📚 المحاور الرئيسية:</b><span data-i18n="w6_mod">ما هو الذكاء الاصطناعي؟ (ببساطة ومتعة) · الإبداع بالذكاء الاصطناعي: صور وقصص وألعاب · الاستخدام الآمن والذكي · عرض المشاريع الصغيرة.</span></div>
+                <div class="d-row"><b data-i18n="d_out">🏆 المخرجات:</b><span data-i18n="w6_out">ينجز كل طفل مشروعاً إبداعياً بالذكاء الاصطناعي مع وعي بالاستخدام الآمن.</span></div>
+                <a class="btn btn-orange pf-book" href="#" data-book="ws" data-ws-key="w6_t" data-i18n="book_ws">احجز هذه الورشة</a>
+              </div>
+            </details>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -498,9 +551,9 @@ footer .logo{font-size:1.05rem}
     <div class="wrap bg-grid bg-single">
       <div class="reveal">
         <h2 data-i18n-html="bg_h">من <span class="hot">أنا</span></h2>
-        <p data-i18n-html="bg_p1">بخبرة تتجاوز <strong>13 عاماً</strong> في التقنية، أنا شريك مؤسس في <strong>Cyber Pixel</strong> بدبي منذ 2015 — شركة نمت من البرمجيات إلى تطوير المواقع والتطبيقات ثم التسويق الرقمي الشامل، بمشاريع لشركات ناشئة ومؤسسات كبرى في المنطقة.</p>
+        <p data-i18n-html="bg_p1">بخبرة تتجاوز <strong>13 عاماً</strong> في التقنية، أنا شريك مؤسس في <strong>Cyber Pixel</strong> بدبي منذ 2013 — شركة نمت من البرمجيات إلى تطوير المواقع والتطبيقات ثم التسويق الرقمي الشامل، بمشاريع لشركات ناشئة ومؤسسات كبرى في المنطقة.</p>
         <p data-i18n-html="bg_p2">أنا أيضاً مؤسس منصة <strong>WATSIN.NET</strong> لوكلاء الذكاء الاصطناعي، ومدير المشاريع في <strong>Dune AI</strong>. واليوم تركيزي على <strong>تدريب الأفراد والشركات</strong> ليستخدموا الذكاء الاصطناعي عملياً، تطبيقياً، وبلغة بسيطة. 🚀</p>
-        <a class="btn btn-orange" href="#contact" data-i18n="bg_cta">تواصل معي</a>
+        <a class="btn btn-orange" href="#contact" data-i18n="bg_cta">اعمل معي</a>
       </div>
     </div>
   </section>
@@ -508,7 +561,7 @@ footer .logo{font-size:1.05rem}
   <!-- ================= WORK WITH ME ================= -->
   <section class="work" id="contact">
     <div class="wrap">
-      <h2 class="reveal" data-i18n-html="work_h">تواصل<span class="hot">معي</span></h2>
+      <h2 class="reveal" data-i18n-html="work_h">اعمل <span class="hot">معي</span></h2>
       <p class="reveal" data-i18n="work_p">تخطط لورشة ذكاء اصطناعي لفريقك؟ برنامج تدريبي لشركتك؟ أو مستعد لتطوير مهاراتك بنفسك؟ تواصل معي ولننجزها معاً! 🚀</p>
       <div class="work-ctas reveal">
         <a class="btn btn-orange" id="link_email" href="#">✉️ <span id="email_text"></span></a>
@@ -609,36 +662,61 @@ const CONTENT = {
     pageTitle: "أحمد مهنا | مدرب ذكاء اصطناعي — دورات وورش عمل AI في دبي والإمارات",
 
     logo1: "أحمد", logo2: "مهنا",
-    nav_courses: "الدورات", nav_workshops: "ورش العمل",
-    nav_about: "من أنا", nav_cta: "تواصل معي",
+    nav_workshops: "ورش العمل",
+    nav_about: "من أنا", nav_cta: "اعمل معي",
 
     kicker: "⚡ مدرب ذكاء اصطناعي · دبي، الإمارات",
-    h1: 'نطور ونبني <span class="hot">"جيل جاهز للمستقبل"</span>',
-    lead: 'أحمد مهنا، شريك مؤسس في شركة <strong>Cyber Pixel</strong>، مؤسس منصة <strong>WATSIN.NET</strong> لوكلاء الذكاء الاصطناعي، مدير المشاريع في <strong>Dune AI</strong>، ومدرب ذكاء اصطناعي في الإمارات العربية المتحدة. ',
-    hook1: "🚀 هدفي ← تدريب 10,000 محترف في الإمارات والخليج على استخدام الذكاء الاصطناعي — بدون خلفية تقنية.",
-    cta_book: "احجز ورشة عمل", cta_courses: "استكشف الدورات",
+    h1: 'نطور مهارات الذكاء الاصطناعي ونبني <span class="hot">"جيل جاهز للمستقبل"</span>',
+    lead: 'أحمد مهنا، شريك مؤسس في شركة <strong>Cyber Pixel</strong>، مؤسس منصة <strong>WATSIN.NET</strong> لوكلاء الذكاء الاصطناعي، مدير المشاريع في <strong>Dune AI</strong>، ومدرب ذكاء اصطناعي في الإمارات العربية المتحدة. نساعد الأفراد والشركات على إتقان أدوات الذكاء الاصطناعي والتحرر من طرق العمل القديمة.',
+    hook1: "🔥 أكثر من 13 عاماً في بناء البرمجيات والتطبيقات والتسويق الرقمي في دبي.",
+    hook2: "🚀 هدفي ← تدريب 10,000 محترف في الإمارات والخليج على استخدام الذكاء الاصطناعي — بدون خلفية تقنية.",
+    cta_book: "احجز ورشة عمل", cta_courses: "استكشف الورش التدريبية",
     badge: "شريك مؤسس · Cyber Pixel",
     stat1: "عاماً في التقنية", stat2: "تأسيس Cyber Pixel", stat3: "تدريب عملي تطبيقي",
 
-    ws_h: 'ورش <span class="hot">العمل</span>',
-    ws_sub: "ورش عمل تفاعلية بأسعار رمزية — احجز مقعدك مسبقاً وسنتواصل معك فور تحديد الموعد.",
-    k_tag: "🧒 فعاليات حضورية",
-    k_price: "💰 بسعر رمزي",
-    k_h: 'ورشات عمل <span class="hot">الأطفال</span>',
-    k_p1: '<strong>نزرع مهارات المستقبل في جيل اليوم.</strong> فعاليات ممتعة وتفاعلية يتعلم فيها الأطفال أساسيات الذكاء الاصطناعي، التفكير الإبداعي، واستخدام الأدوات الذكية بأمان.',
-    k_p2: 'أنشطة عملية، مشاريع صغيرة، وشهادات مشاركة — تجربة يخرج منها طفلك متحمساً للتعلم.',
-    k_cta: "احجز مقعد طفلك مسبقاً",
-    b_tag: "💼 أونلاين مباشر",
-    b_price: "💰 بسعر رمزي",
-    b_h: 'ورشة الذكاء الاصطناعي <span class="hot">لأصحاب البزنس</span>',
-    b_p1: '<strong>قرارات أذكى، تكاليف أقل، نمو أسرع.</strong> ورشة أونلاين مباشرة لأصحاب الأعمال والمدراء: كيف تستخدم الذكاء الاصطناعي في التسويق وخدمة العملاء والعمليات اليومية.',
-    b_p2: 'أمثلة حقيقية من السوق الخليجي وخطة تطبيق عملية تبدأ بها من اليوم التالي.',
-    b_cta: "احجز مقعدك مسبقاً",
-    courses_book: "📚 احجز مقعدك في الدورة القادمة",
+    ws_h: 'حقيبة <span class="hot">الورش التدريبية</span>',
+    ws_sub: "ست ورش تدريبية متخصصة للأفراد والشركات — اضغط «اعرف المزيد» لعرض التفاصيل الكاملة لكل ورشة.",
+    know_more: "اعرف المزيد",
+    book_ws: "احجز هذه الورشة",
+    d_aud: "🎯 الفئة المستهدفة:", d_dur: "⏱️ المدة المقترحة:", d_obj: "✅ أهداف التعلّم:", d_mod: "📚 المحاور الرئيسية:", d_out: "🏆 المخرجات:",
+    w1_t: "الأساسيات في الذكاء الاصطناعي",
+    w1_b: "تعلّم استخدام الذكاء الاصطناعي بثقة في عملك اليومي وتوفير ساعات كل أسبوع — دون الحاجة لخلفية تقنية.",
+    w1_aud: "الموظفون والمهنيون في مختلف الإدارات؛ المبتدئون.", w1_dur: "ساعتان — قابلة للتمديد ليوم كامل مع تطبيقات عملية.",
+    w1_obj: "فهم ما يمكن وما لا يمكن للذكاء الاصطناعي فعله في العمل · توظيف الأدوات في المهام اليومية: البريد، التلخيص، البحث، التقارير · كتابة أوامر (Prompts) واضحة وفعّالة · الاستخدام المسؤول والآمن.",
+    w1_mod: "الذكاء الاصطناعي التوليدي في بيئة العمل — الأساسيات · أبرز حالات الاستخدام الموفّرة للوقت · أساسيات كتابة الأوامر · تطبيق عملي على الأدوات اليومية · الاستخدام المسؤول والآمن.",
+    w1_out: "حقيبة أدوات شخصية ومجموعة أوامر جاهزة للاستخدام الفوري.",
+    w2_t: "احتراف هندسة الأوامر (Prompt Engineering)",
+    w2_b: "إتقان كتابة الأوامر والخروج بمكتبة أوامر جاهزة تعطي نتائج احترافية وثابتة.",
+    w2_aud: "كل من يستخدم أدوات الذكاء الاصطناعي ويرغب في نتائج موثوقة وعالية الجودة.", w2_dur: "نصف يوم (3–4 ساعات).",
+    w2_obj: "فهم كيف تؤثر الأوامر في مخرجات الذكاء الاصطناعي · إتقان أنماط وهياكل الأوامر الأساسية · ربط الأوامر لحل المهام متعددة الخطوات · بناء مكتبة أوامر شخصية قابلة لإعادة الاستخدام.",
+    w2_mod: "كيف تصنع الأوامر النتائج · أنماط الأوامر الأساسية · ربط الأوامر للمهام المعقّدة · بناء مكتبة أوامرك الجاهزة · الاختبار والتحسين ومعالجة الأخطاء.",
+    w2_out: "مكتبة أوامر شخصية جاهزة ومصمّمة لطبيعة عمل المشارك.",
+    w3_t: "الذكاء الاصطناعي للتسويق والمحتوى",
+    w3_b: "إنشاء حملات متكاملة — نصوص وصور وفيديو — بسرعة وباتساق مع هوية العلامة باستخدام الذكاء الاصطناعي.",
+    w3_aud: "المسوّقون، صنّاع المحتوى، مديرو التواصل الاجتماعي، وأصحاب الأعمال.", w3_dur: "ساعتان.",
+    w3_obj: "توليد النصوص التسويقية وأفكار الحملات بالذكاء الاصطناعي · إنشاء الصور والفيديوهات القصيرة بأدوات الذكاء الاصطناعي · الحفاظ على اتساق المحتوى مع صوت العلامة · بناء سير عمل متكرر لإنتاج المحتوى.",
+    w3_mod: "كتابة النصوص وابتكار الحملات بالذكاء الاصطناعي · توليد الصور · توليد الفيديو · محتوى متسق مع الهوية · سير عمل متكامل لإنتاج المحتوى.",
+    w3_out: "أصول حملة جاهزة للاستخدام وسير عمل متكرر لإنتاج المحتوى.",
+    w4_t: "الأتمتة ووكلاء الذكاء الاصطناعي",
+    w4_b: "ربط الذكاء الاصطناعي بأدواتك اليومية وبناء وكلاء ينجزون مهاماً حقيقية — دون برمجة.",
+    w4_aud: "فرق العمليات، المهنيون، ورواد الأعمال الراغبون في أتمتة سير العمل.", w4_dur: "نصف يوم (3–4 ساعات).",
+    w4_obj: "فهم ماهية وكلاء الذكاء الاصطناعي وطريقة عملهم · ربط الذكاء الاصطناعي بأدوات مثل n8n وMake وZapier · بناء أتمتة دون كتابة أكواد · تشغيل وكيل ينجز مهمة حقيقية.",
+    w4_mod: "من الأوامر إلى الوكلاء المستقلين · منصات الأتمتة بدون كود · ربط التطبيقات وواجهات البرمجة (APIs) · بناء وكيل عملي · التشغيل الآمن والمتابعة.",
+    w4_out: "أتمتة أو وكيل يعمل فعلياً على مهمة حقيقية من عمل المشارك.",
+    w5_t: "الذكاء الاصطناعي لأصحاب الأعمال والمدراء",
+    w5_b: "توظيف الذكاء الاصطناعي لاتخاذ قرارات أذكى وخفض التكاليف ونمو أسرع — دليل عملي للقادة.",
+    w5_aud: "أصحاب الأعمال، التنفيذيون، المدراء، وقادة الفرق.", w5_dur: "ساعتان.",
+    w5_obj: "تحديد فرص الذكاء الاصطناعي عالية القيمة في المنشأة · استخدام الذكاء الاصطناعي في القرارات والتخطيط والتواصل · تقدير العائد على الاستثمار وترتيب أولويات حالات الاستخدام · قيادة التبنّي المسؤول عبر الفرق.",
+    w5_mod: "أين يصنع الذكاء الاصطناعي القيمة في الأعمال · الذكاء الاصطناعي في اتخاذ القرار والتحليل · العمليات وخفض التكاليف · قيادة عملية التبنّي · الاستخدام المسؤول والأخلاقي.",
+    w5_out: "خطة عمل مخصّصة لتبنّي الذكاء الاصطناعي في منشأة المشارك.",
+    w6_t: "ورش الذكاء الاصطناعي للأطفال",
+    w6_b: "مقدمة ممتعة وآمنة وتطبيقية للذكاء الاصطناعي للأطفال — التعلّم عبر الإبداع.",
+    w6_aud: "الأطفال (8–14 سنة تقريباً)؛ يمكن إشراك الأهل والمعلمين.", w6_dur: "ساعتان لكل جلسة؛ يمكن تقديمها كسلسلة جلسات.",
+    w6_obj: "فهم ماهية الذكاء الاصطناعي بأسلوب بسيط وقريب · استخدام الذكاء الاصطناعي بإبداع وأمان · تنفيذ مشاريع صغيرة ممتعة (قصص، صور، ألعاب) · التفكير النقدي تجاه الذكاء الاصطناعي.",
+    w6_mod: "ما هو الذكاء الاصطناعي؟ (ببساطة ومتعة) · الإبداع بالذكاء الاصطناعي: صور وقصص وألعاب · الاستخدام الآمن والذكي · عرض المشاريع الصغيرة.",
+    w6_out: "ينجز كل طفل مشروعاً إبداعياً بالذكاء الاصطناعي مع وعي بالاستخدام الآمن.",
     m_t_workshop: "حجز ورشة عمل",
-    m_t_kids: "حجز مسبق — ورشات عمل الأطفال",
-    m_t_biz: "حجز مسبق — ورشة أصحاب البزنس",
-    m_t_course: "حجز مقعد في الدورة القادمة",
+    m_t_ws: "حجز ورشة",
     m_sub: "املأ بياناتك وسيتم إرسال طلبك عبر واتساب، وسنتواصل معك للتأكيد.",
     m_name: "الاسم الكامل",
     m_phone: "رقم الهاتف",
@@ -650,35 +728,17 @@ const CONTENT = {
     m_required: "الرجاء إدخال الاسم ورقم الهاتف",
     m_request: "طلب جديد من الموقع",
 
-    courses_h: 'الدورات <span class="hot">والتدريب</span>',
-    courses_sub: "دورات ذكاء اصطناعي عملية أقدمها أونلاين وحضورياً. بدون حشو نظري — تبني مهارات حقيقية على مهام حقيقية.",
-    c1_banner: "أساسيات الذكاء الاصطناعي",
-    c1_h: "أساسيات الذكاء الاصطناعي للمحترفين", c1_fmt: "دورة أونلاين · ورشة عمل",
-    c1_p: "🚀 أتقن ChatGPT وClaude وGemini في عملك اليومي. افهم ما يستطيع الذكاء الاصطناعي فعله وما لا يستطيع — وابدأ بتوفير ساعات كل أسبوع.",
-    c1_cta: "👈 انضم للدفعة القادمة",
-    c2_banner: "هندسة الأوامر",
-    c2_h: "احتراف هندسة الأوامر (Prompt Engineering)", c2_fmt: "دورة أونلاين · ورشة عمل",
-    c2_p: "🔥 اكتب أوامر تعطيك نتائج احترافية وثابتة. أُطر عمل مجربة، مكتبة أوامر جاهزة، وتطبيق مباشر على مهامك الخاصة.",
-    c2_cta: "👈 تعلّم تكتب أوامر كالمحترفين",
-    c3_banner: "التسويق بالذكاء الاصطناعي",
-    c3_h: "الذكاء الاصطناعي للتسويق والمحتوى", c3_fmt: "دورة أونلاين · ورشة عمل",
-    c3_p: "🎯 أنشئ حملات ونصوص وصور وفيديوهات بالذكاء الاصطناعي — من خبرة 10 سنوات في إدارة حملات حقيقية للعملاء في Cyber Pixel.",
-    c3_cta: "👈 ضاعف قوة تسويقك",
-    c4_banner: "الأتمتة والوكلاء الأذكياء",
-    c4_h: "الأتمتة ووكلاء الذكاء الاصطناعي", c4_fmt: "ورشة عمل · استشارات",
-    c4_p: "🤖 اربط الذكاء الاصطناعي بأدواتك بدون برمجة. ابنِ وكلاء وأنظمة أتمتة تتولى المهام المتكررة بينما يركز فريقك على النمو.",
-    c4_cta: "👈 أتمت أعمالك الآن",
 
     bg_h: 'من <span class="hot">أنا</span>',
-    bg_p1: 'بخبرة تتجاوز <strong>13 عاماً</strong> في التقنية، أنا شريك مؤسس في <strong>Cyber Pixel</strong> بدبي منذ 2015 — شركة نمت من البرمجيات إلى تطوير المواقع والتطبيقات ثم التسويق الرقمي الشامل، بمشاريع لشركات ناشئة ومؤسسات كبرى في المنطقة.',
+    bg_p1: 'بخبرة تتجاوز <strong>13 عاماً</strong> في التقنية، أنا شريك مؤسس في <strong>Cyber Pixel</strong> بدبي منذ 2013 — شركة نمت من البرمجيات إلى تطوير المواقع والتطبيقات ثم التسويق الرقمي الشامل، بمشاريع لشركات ناشئة ومؤسسات كبرى في المنطقة.',
     bg_p2: 'أنا أيضاً مؤسس منصة <strong>WATSIN.NET</strong> لوكلاء الذكاء الاصطناعي، ومدير المشاريع في <strong>Dune AI</strong>. واليوم تركيزي على <strong>تدريب الأفراد والشركات</strong> ليستخدموا الذكاء الاصطناعي عملياً، تطبيقياً، وبلغة بسيطة. 🚀',
-    bg_cta: "تواصل معي",
+    bg_cta: "اعمل معي",
 
-    work_h: 'تواصل <span class="hot">معي</span>',
+    work_h: 'اعمل <span class="hot">معي</span>',
     work_p: "تخطط لورشة ذكاء اصطناعي لفريقك؟ برنامج تدريبي لشركتك؟ أو مستعد لتطوير مهاراتك بنفسك؟ تواصل معي ولننجزها معاً! 🚀",
     work_wa: "واتساب", work_li: "تواصل عبر LinkedIn",
 
-    footer_c: "© 2026 سيبوس لخدمات تطوير الذكاء الصناعي - رخصة رقم: 1609170 ",
+    footer_c: "© 2026 أحمد مهنا · دبي، الإمارات العربية المتحدة",
     footer_top: "العودة للأعلى ↑",
   },
 
@@ -688,36 +748,61 @@ const CONTENT = {
     pageTitle: "Ahmad Muhanna | AI Trainer — AI Courses & Workshops in Dubai, UAE",
 
     logo1: "Ahmad", logo2: "Muhanna",
-    nav_courses: "Courses", nav_workshops: "Workshops",
+    nav_workshops: "Workshops",
     nav_about: "About", nav_cta: "Work With Me",
 
     kicker: "⚡ AI Trainer · Dubai, UAE",
     h1: 'Teaching AI Skills & Empowering the <span class="hot">"AI-Ready Army"</span>',
-    lead: "Ahmad Muhanna — co-founder of <strong>Cyber Pixel</strong>, founder of <strong>WATSIN.NET</strong>, an AI-agents platform, Project Manager at <strong>Dune AI</strong>, and AI trainer in the United Arab Emirates.",
+    lead: "Ahmad Muhanna — co-founder of <strong>Cyber Pixel</strong>, founder of <strong>WATSIN.NET</strong>, an AI-agents platform, Project Manager at <strong>Dune AI</strong>, and AI trainer in the United Arab Emirates. We help individuals and companies master AI tools and break free from outdated ways of working.",
+    hook1: "🔥 13+ years building software, apps & digital marketing in Dubai.",
     hook2: "🚀 Mission → Train 10,000 professionals across the UAE & GCC to use AI — no tech background required.",
-    cta_book: "Book a Workshop", cta_courses: "Explore Courses",
+    cta_book: "Book a Workshop", cta_courses: "Explore the Workshops",
     badge: "Co-Founder · Cyber Pixel",
     stat1: "Years in Tech", stat2: "Founded Cyber Pixel", stat3: "Hands-On Training",
 
-    ws_h: 'Featured <span class="hot">Workshops</span>',
-    ws_sub: "Interactive workshops at a nominal price — reserve your seat in advance and we'll contact you once the date is set.",
-    k_tag: "🧒 In-Person Events",
-    k_price: "💰 Nominal price",
-    k_h: 'Kids <span class="hot">Workshops</span>',
-    k_p1: "<strong>Planting future skills in today's generation.</strong> Fun, interactive events where kids learn AI basics, creative thinking, and how to use smart tools safely.",
-    k_p2: "Hands-on activities, mini projects and participation certificates — your child leaves excited to learn more.",
-    k_cta: "Reserve your child's seat",
-    b_tag: "💼 Live Online",
-    b_price: "💰 Nominal price",
-    b_h: 'AI Workshop for <span class="hot">Business Owners</span>',
-    b_p1: "<strong>Smarter decisions, lower costs, faster growth.</strong> A live online workshop for business owners and managers: how to use AI in marketing, customer service and daily operations.",
-    b_p2: "Real examples from the Gulf market and a practical action plan you can start applying the next day.",
-    b_cta: "Reserve your seat in advance",
-    courses_book: "📚 Book a place in the next course",
+    ws_h: 'Workshops <span class="hot">Portfolio</span>',
+    ws_sub: "Six specialized training workshops for individuals and companies — press 'Know more' to expand the full details of each workshop.",
+    know_more: "Know more",
+    book_ws: "Book this workshop",
+    d_aud: "🎯 Target audience:", d_dur: "⏱️ Suggested duration:", d_obj: "✅ Learning objectives:", d_mod: "📚 Key modules:", d_out: "🏆 Outcomes:",
+    w1_t: "AI Fundamentals",
+    w1_b: "Learn to use AI confidently in your daily work and save hours every week — no technical background needed.",
+    w1_aud: "Employees and professionals across all departments; beginners.", w1_dur: "2 hours — expandable to a full day with hands-on labs.",
+    w1_obj: "Understand what generative AI can and cannot do at work · Apply AI to everyday tasks: emails, summaries, research, reports · Write clear, effective prompts · Use AI responsibly and safely.",
+    w1_mod: "Generative AI in the workplace — the essentials · Top time-saving use cases · Prompting foundations · Hands-on with everyday AI tools · Responsible and safe use.",
+    w1_out: "A personal AI toolkit and a starter prompt set participants can use immediately.",
+    w2_t: "Prompt Engineering Mastery",
+    w2_b: "Master prompt writing and walk away with a ready-to-use prompt library that delivers professional, consistent results.",
+    w2_aud: "Anyone using AI tools who wants reliable, high-quality outputs.", w2_dur: "Half-day (3–4 hours).",
+    w2_obj: "Understand how prompts shape AI outputs · Master core prompt patterns and structures · Chain prompts to solve multi-step tasks · Build and reuse a personal prompt library.",
+    w2_mod: "How prompts drive results · Core prompt patterns · Prompt chaining for complex tasks · Building your reusable prompt library · Testing, refining, and troubleshooting.",
+    w2_out: "A personalized, ready-to-use prompt library tailored to the participant's work.",
+    w3_t: "AI for Marketing & Content",
+    w3_b: "Create full campaigns — copy, images, and video — faster and on-brand using AI.",
+    w3_aud: "Marketers, content creators, social media managers, and business owners.", w3_dur: "2 hours.",
+    w3_obj: "Generate marketing copy and campaign ideas with AI · Create images and short videos with AI tools · Keep content consistent with the brand voice · Build a repeatable AI content workflow.",
+    w3_mod: "AI copywriting and campaign ideation · AI image generation · AI video generation · Brand-consistent content · End-to-end content workflow.",
+    w3_out: "Ready-to-use campaign assets and a repeatable content production workflow.",
+    w4_t: "Automation & AI Agents",
+    w4_b: "Connect AI to your everyday tools and build agents that handle real tasks — no coding required.",
+    w4_aud: "Operations teams, professionals, and entrepreneurs looking to automate workflows.", w4_dur: "Half-day (3–4 hours).",
+    w4_obj: "Understand what AI agents are and how they work · Connect AI to tools like n8n, Make, and Zapier · Build no-code automations · Deploy an agent that handles a real task.",
+    w4_mod: "From prompts to autonomous agents · No-code automation platforms · Connecting apps and APIs · Building a working agent · Safe deployment and monitoring.",
+    w4_out: "A live automation or agent handling a real task from the participant's work.",
+    w5_t: "AI for Business Owners & Managers",
+    w5_b: "Use AI to make smarter decisions, lower costs, and grow faster — a practical playbook for leaders.",
+    w5_aud: "Business owners, executives, managers, and team leads.", w5_dur: "2 hours.",
+    w5_obj: "Identify high-value AI opportunities in the business · Use AI for decisions, planning, and communication · Estimate ROI and prioritize use cases · Lead responsible AI adoption across teams.",
+    w5_mod: "Where AI creates value in business · AI for decision-making and analysis · Operations and cost reduction · Leading AI adoption · Responsible and ethical use.",
+    w5_out: "A tailored AI adoption action plan for the participant's organization.",
+    w6_t: "Kids AI Workshops",
+    w6_b: "A fun, safe, hands-on introduction to AI for children — learning by creating.",
+    w6_aud: "Children (ages ~8–14); can include parents and teachers.", w6_dur: "2 hours per session; can run as a multi-session series.",
+    w6_obj: "Understand what AI is in simple, relatable terms · Use AI creatively and safely · Build fun mini-projects (stories, images, games) · Think critically about AI and its use.",
+    w6_mod: "What is AI? (simple and fun) · Creating with AI: images, stories, and games · Safe and smart use · Mini-project showcase.",
+    w6_out: "Each child completes a creative AI project and gains safe-use awareness.",
     m_t_workshop: "Book a Workshop",
-    m_t_kids: "Advance Reservation — Kids Workshops",
-    m_t_biz: "Advance Reservation — Business Owners Workshop",
-    m_t_course: "Book a place in the next course",
+    m_t_ws: "Book workshop",
     m_sub: "Fill in your details — your request will be sent via WhatsApp and we'll contact you to confirm.",
     m_name: "Full name",
     m_phone: "Phone number",
@@ -729,27 +814,9 @@ const CONTENT = {
     m_required: "Please enter your name and phone number",
     m_request: "New request from the website",
 
-    courses_h: 'Courses & <span class="hot">Training</span>',
-    courses_sub: "Practical AI courses I teach online and in person. No fluff, no theory dumps — you build real skills on real tasks.",
-    c1_banner: "AI Fundamentals",
-    c1_h: "AI Fundamentals for Professionals", c1_fmt: "Online course · Workshop",
-    c1_p: "🚀 Master ChatGPT, Claude & Gemini for daily work. Understand what today's AI can and can't do — and start saving hours every single week.",
-    c1_cta: "👉 Join the next cohort",
-    c2_banner: "Prompting",
-    c2_h: "Prompt Engineering Mastery", c2_fmt: "Online course · Workshop",
-    c2_p: "🔥 Write prompts that get consistent, professional results. Proven frameworks, a ready-to-use prompt library, and live practice on your own tasks.",
-    c2_cta: "👉 Learn to prompt like a pro",
-    c3_banner: "Marketing",
-    c3_h: "AI for Marketing & Content", c3_fmt: "Online course · Workshop",
-    c3_p: "🎯 Create campaigns, copy, visuals and video with AI — taught from a decade of running real client campaigns at Cyber Pixel.",
-    c3_cta: "👉 Supercharge your marketing",
-    c4_banner: "Automation",
-    c4_h: "Automation & AI Agents", c4_fmt: "Workshop · Consulting",
-    c4_p: "🤖 Connect AI to your tools with no-code automation. Build agents and workflows that handle the repetitive work while your team focuses on growth.",
-    c4_cta: "👉 Automate your business",
 
     bg_h: 'My <span class="hot">Background</span>',
-    bg_p1: "With over <strong>13 years of experience</strong> in tech, I'm a co-founder of <strong>Cyber Pixel</strong> in Dubai (since 2015) — a company that grew from software into web & app development and then full digital marketing, delivering projects for startups and large enterprises across the region.",
+    bg_p1: "With over <strong>13 years of experience</strong> in tech, I'm a co-founder of <strong>Cyber Pixel</strong> in Dubai (since 2013) — a company that grew from software into web & app development and then full digital marketing, delivering projects for startups and large enterprises across the region.",
     bg_p2: "I'm also the founder of <strong>WATSIN.NET</strong>, an AI-agents platform, and Project Manager at <strong>Dune AI</strong>. Today my focus is on <strong>training people and companies</strong> to use AI practically, hands-on, and in plain language. 🚀",
     bg_cta: "Work With Me",
 
@@ -757,7 +824,7 @@ const CONTENT = {
     work_p: "Planning an AI workshop for your team, a training program for your company, or ready to level up your own skills? Hit me up, and let's make it happen! 🚀",
     work_wa: "WhatsApp", work_li: "Connect on LinkedIn",
 
-    footer_c: "© 2026 CPOS AI Development Services, License No. 1609170 ",
+    footer_c: "© 2026 Ahmad Muhanna · Dubai, United Arab Emirates",
     footer_top: "Back to top ↑",
   }
 };
@@ -844,10 +911,10 @@ let modalType = 'workshop', modalExtra = '';
 function openModal(type, extra){
   modalType = type; modalExtra = extra || '';
   const t = CONTENT[lang];
-  const titles = {workshop:t.m_t_workshop, kids:t.m_t_kids, biz:t.m_t_biz, course:t.m_t_course};
+  const titles = {workshop:t.m_t_workshop, ws:t.m_t_ws};
   document.getElementById('modalTitle').textContent = titles[type] + (modalExtra ? ' — ' + modalExtra : '');
   document.getElementById('modalSub').textContent = t.m_sub;
-  document.getElementById('row_people').classList.toggle('hidden', type === 'course');
+  document.getElementById('row_people').classList.remove('hidden');
   document.getElementById('row_location').classList.toggle('hidden', type !== 'workshop');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -862,7 +929,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal();
 
 document.querySelectorAll('[data-book]').forEach(b => b.addEventListener('click', e => {
   e.preventDefault();
-  const key = b.getAttribute('data-course-key');
+  const key = b.getAttribute('data-ws-key');
   const t = CONTENT[lang];
   openModal(b.getAttribute('data-book'), key ? (t[key] || '') : '');
 }));
@@ -875,7 +942,7 @@ document.getElementById('modalSubmit').addEventListener('click', () => {
   const people = document.getElementById('f_people').value.trim();
   const loc = document.getElementById('f_location').value.trim();
   if(!name || !phone){ alert(t.m_required); return; }
-  const titles = {workshop:t.m_t_workshop, kids:t.m_t_kids, biz:t.m_t_biz, course:t.m_t_course};
+  const titles = {workshop:t.m_t_workshop, ws:t.m_t_ws};
   const lines = [
     '📩 ' + t.m_request,
     '🗂️ ' + titles[modalType] + (modalExtra ? ' — ' + modalExtra : ''),
