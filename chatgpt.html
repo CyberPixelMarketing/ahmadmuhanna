@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>4 أكواد تساعدك في ChatGPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#F4F2EC;--ink:#111;--ink-soft:#9a968f;--bubble:#141414}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Cairo',sans-serif;overflow:hidden;gap:14px;padding:10px}
+
+  .stage{position:relative;aspect-ratio:9/16;height:min(calc(100dvh - 90px),calc(100vw*16/9));max-width:100vw;background:var(--cream);overflow:hidden;container-type:size;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5);-webkit-font-smoothing:antialiased}
+
+  /* dashed graph-paper grid */
+  .grid{position:absolute;inset:0;z-index:0;-webkit-mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent)}
+  .grid svg{width:100%;height:100%;display:block}
+
+  /* big corner logos (plain black knots, bleeding off corners) */
+  .corner{position:absolute;z-index:1;color:#111}
+  .corner svg{width:100%;height:100%;display:block}
+  .corner .knot{stroke:#111;fill:none;stroke-width:6.2;stroke-linecap:round;stroke-linejoin:round}
+  .corner.tl{top:-7cqh;left:-9cqw;width:44cqw;height:44cqw;animation:drift1 9s ease-in-out infinite}
+  .corner.br{bottom:-6cqh;right:-9cqw;width:42cqw;height:42cqw;animation:drift2 10s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(-4deg) translateY(1cqw)}}
+  @keyframes drift2{0%,100%{transform:rotate(10deg) translateY(0)}50%{transform:rotate(6deg) translateY(-1cqw)}}
+
+  .watermark{position:absolute;left:0;right:0;bottom:6cqh;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:5cqw;letter-spacing:.04em;color:rgba(0,0,0,.09);direction:ltr;z-index:1}
+
+  /* ---- scenes / crossfade transition ---- */
+  .scene{position:absolute;inset:0;z-index:3;opacity:0;transform:translateY(1.6cqw) scale(.994);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);pointer-events:none}
+  .scene.active{opacity:1;transform:none}
+  .scene.leaving{opacity:0;transform:translateY(-1.6cqw) scale(.994)}
+  .scene.leaving .anim,.scene.leaving .rise{opacity:1!important;animation:none!important}
+
+  .content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2cqh;padding:15cqh 7cqw 12cqh}
+
+  .anim{opacity:0}
+  .scene.active .anim{animation:pop .6s cubic-bezier(.18,.86,.24,1) forwards;animation-delay:var(--d,0s)}
+  .scene.active .rise{opacity:0;animation:rise .72s cubic-bezier(.18,.86,.24,1) forwards;animation-delay:var(--d,0s)}
+  @keyframes pop{0%{opacity:0;transform:translateY(2.6cqw) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes rise{0%{opacity:0;transform:translateY(7cqw) scale(.985)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+  /* title */
+  .title{text-align:center;line-height:1}
+  .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:7cqw;color:var(--ink);direction:ltr}
+  .cmd{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12cqw;color:var(--ink);direction:ltr;letter-spacing:-.015em;margin-top:.2cqw}
+  .cmd.sm{font-size:9.4cqw}
+
+  /* command chip + curl arrow */
+  .chiprow{position:relative;width:84cqw;height:13cqh}
+  .chip{position:absolute;left:1cqw;top:.5cqh;font-family:'Space Grotesk',sans-serif;font-weight:700;direction:ltr;font-size:5.4cqw;color:#111;background:#fff;border-radius:2.4cqw;padding:1.5cqw 3.4cqw;box-shadow:0 2.4cqw 4.5cqw rgba(0,0,0,.14),0 .6cqw 1.4cqw rgba(0,0,0,.10)}
+  .squig{position:absolute;left:9cqw;top:5.4cqh;width:12cqw;height:8cqh}
+  .squig svg{width:100%;height:100%}
+
+  /* wide input-pill bubble */
+  .bubble{width:84cqw;background:var(--bubble);border-radius:4.4cqw;padding:3.6cqw 4cqw;color:#ededed;
+    box-shadow:0 7cqw 16cqw rgba(0,0,0,.20),0 2.6cqw 6cqw rgba(0,0,0,.16),0 1cqw 2cqw rgba(0,0,0,.10)}
+  .bubble .lbl{color:#8ab4ff;font-family:'Space Grotesk',sans-serif;font-weight:700;direction:ltr;text-align:right;font-size:3.9cqw;margin-bottom:1.6cqw}
+  .bubble .txt{font-size:3.95cqw;line-height:1.62;text-align:right;color:#e9e9e9}
+  .bubble.long .txt{font-size:3.6cqw;line-height:1.56}
+  .bubble .bar{display:flex;align-items:center;gap:2.6cqw;margin-top:3.4cqw}
+  .bubble .plus{width:6cqw;height:6cqw;border-radius:50%;border:.35cqw solid #4a4a4a;display:flex;align-items:center;justify-content:center;color:#9a9a9a;font-size:4.4cqw;line-height:0}
+  .bubble .mic{margin-inline-start:auto;color:#8a8a8a}
+  .bubble .mic svg{width:4.6cqw;height:4.6cqw;display:block}
+  .bubble .send{width:7cqw;height:7cqw;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#111;font-size:4.4cqw;font-weight:700}
+
+  /* caption lines */
+  .caps{text-align:center;line-height:1.16}
+  .caps .sm{font-weight:600;font-size:6.2cqw;color:var(--ink)}
+  .caps .lg{font-weight:900;font-size:9.6cqw;color:var(--ink);margin:.3cqh 0}
+  .caps .md{font-weight:500;font-size:6.4cqw;color:var(--ink)}
+  .caps .soft{color:var(--ink-soft)}
+  .caps .gp{font-family:'Space Grotesk',sans-serif;font-weight:700}
+
+  /* intro */
+  .intro .lg{font-size:12cqw}
+
+  /* progress + controls */
+  .progress{position:absolute;top:0;left:0;height:1cqw;background:var(--ink);width:0;border-radius:0 2px 2px 0;z-index:15}
+  .progress.run{transition:width linear}
+  .overlay{position:absolute;inset:0;background:rgba(244,242,236,.88);display:flex;align-items:center;justify-content:center;z-index:20;cursor:pointer}
+  .overlay.hide{display:none}
+  .playbtn{width:22cqw;height:22cqw;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;box-shadow:0 4cqw 12cqw rgba(0,0,0,.3)}
+  .playbtn::after{content:"";border-style:solid;border-width:5cqw 0 5cqw 8.5cqw;border-color:transparent transparent transparent #fff;margin-inline-start:1.6cqw}
+  .controls{display:flex;gap:10px;align-items:center;color:#bbb;font-family:'Cairo';font-size:13px}
+  .controls button{font-family:'Cairo';font-weight:700;font-size:13px;color:#111;background:#eee;border:none;border-radius:999px;padding:9px 18px;cursor:pointer}
+  .controls button:hover{background:#fff}
+  .hint{font-size:12px;color:#777;text-align:center;max-width:460px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="grid" id="grid"></div>
+  <div class="corner tl"></div>
+  <div class="corner br"></div>
+  <div class="progress" id="progress"></div>
+  <div class="watermark">ahmadmuhanna.com</div>
+
+  <!-- SCENE 0 : INTRO -->
+  <section class="scene" data-i="0">
+    <div class="content intro">
+      <div class="caps">
+        <div class="lg anim" style="--d:.1s">٥ أكواد تساعدك</div>
+        <div class="md anim" style="--d:.32s">في <span class="gp">ChatGPT</span></div>
+        <div class="md anim" style="--d:.32s">اكتبها <span class="gp"> قبل الطلب</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 1 : /pulse -->
+  <section class="scene" data-i="1">
+    <div class="content">
+      <div class="title anim" style="--d:.05s"><div class="num">#1</div><div class="cmd">/pulse</div></div>
+      <div class="chiprow"><div class="chip anim" style="--d:.35s">/pulse</div><div class="squig anim" style="--d:.5s"></div></div>
+      <div class="bubble rise" style="--d:.6s">
+        <div class="lbl">/pulse</div>
+        <div class="txt">تتسللُ رائحة القهوة بعمق في أرجاءِ المكانِ , وتَسري دفعةُ الكافيينِ في الوريدِ لتعيد ترتيبَ النَّبض..</div>
+        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+      </div>
+      <div class="caps">
+        <div class="sm anim" style="--d:1s">يكتب بإيقاعٍ</div>
+        <div class="lg anim" style="--d:1.15s">وطاقةٍ وإحساس</div>
+        <div class="md soft anim" style="--d:1.3s">لا مجرّد كلماتٍ باردة</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 2 : /eli5 -->
+  <section class="scene" data-i="2">
+    <div class="content">
+      <div class="title anim" style="--d:.05s"><div class="num">#2</div><div class="cmd">/eli5</div></div>
+      <div class="chiprow"><div class="chip anim" style="--d:.35s">/eli5</div><div class="squig anim" style="--d:.5s"></div></div>
+      <div class="bubble rise" style="--d:.6s">
+        <div class="lbl">/eli5</div>
+        <div class="txt">فيزياء الكم، يمكن تخيلها مثل كرة في الملعب؛ يمكنها أن تكون في مكانين في نفس الوقت، وتمر عبر الجدار دون أن تصطدم به..</div>
+        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+      </div>
+      <div class="caps">
+        <div class="sm anim" style="--d:1s">يشرح لك</div>
+        <div class="lg anim" style="--d:1.15s"> ببساطة </div>
+        <div class="md soft anim" style="--d:1.3s">اي موضوع <span class="gp"></span> تريده</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 : /x10 -->
+  <section class="scene" data-i="3">
+    <div class="content">
+      <div class="title anim" style="--d:.05s"><div class="num">#3</div><div class="cmd">/x10</div></div>
+      <div class="chiprow"><div class="chip anim" style="--d:.35s">/x10</div><div class="squig anim" style="--d:.5s"></div></div>
+      <div class="bubble rise" style="--d:.6s">
+        <div class="lbl">/x10</div>
+        <div class="txt">سوف أحلّل مفهوم إدارة الوقت وافكّكه إلى مكوّناته الأساسية، وانظر إليه من منظور الفلسفة وعلم الأعصاب.</div>
+        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+      </div>
+      <div class="caps">
+        <div class="sm anim" style="--d:1s">يفكّر</div>
+        <div class="lg anim" style="--d:1.15s">أعمق ١٠ مرّات</div>
+        <div class="md soft anim" style="--d:1.3s">قبل أن يجيبك</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 : /killcritic -->
+  <section class="scene" data-i="4">
+    <div class="content">
+      <div class="title anim" style="--d:.05s"><div class="num">#4</div><div class="cmd sm">/killcritic</div></div>
+      <div class="chiprow"><div class="chip anim" style="--d:.35s">/killcritic</div><div class="squig anim" style="--d:.5s"></div></div>
+      <div class="bubble long rise" style="--d:.6s">
+        <div class="lbl">/killcritic</div>
+        <div class="txt">النص اللذي كتبته ليس سوى تجميعٍ مدرسيّ مفلس ومبتذل لتعاريف المعاجم المستهلكة، يفتقر لأي بصمة أسلوبية.</div>
+        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+      </div>
+      <div class="caps">
+        <div class="lg anim" style="--d:1s">يتوقّف عن مجاملتك</div>
+        <div class="md soft anim" style="--d:1.18s">ويقول لك الحقيقة كاملةً</div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <div class="overlay" id="overlay"><div class="playbtn"></div></div>
+</div>
+
+<div class="controls">
+  <button id="replay">▶ إعادة التشغيل</button>
+  <span id="clock">00:00</span>
+</div>
+<p class="hint">شغّل الملف بملء الشاشة ثم سجّل الشاشة عموديًا (9:16). الشعار الحالي مؤقّت — استبدله بشعار ChatGPT الرسمي لأعلى دقة، وغيّر العلامة المائية إن أردت.</p>
+
+<script>
+  // dashed graph-paper grid
+  document.getElementById('grid').innerHTML =
+   `<svg viewBox="0 0 1080 1920" preserveAspectRatio="none"><defs>
+      <pattern id="gp" width="132" height="132" patternUnits="userSpaceOnUse">
+        <path d="M0 0 H132" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="1.4" stroke-dasharray="5 10"/>
+        <path d="M0 0 V132" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="1.4" stroke-dasharray="5 10"/>
+      </pattern></defs>
+      <rect width="1080" height="1920" fill="url(#gp)"/></svg>`;
+
+  // knot logo (placeholder — swap for the official ChatGPT logo)
+  const knot = `<svg viewBox="0 0 100 100" aria-hidden="true">${[0,60,120,180,240,300].map(a=>`<ellipse class="knot" cx="50" cy="30" rx="8.5" ry="27" transform="rotate(${a} 50 50)"/>`).join('')}</svg>`;
+document.querySelectorAll('.corner').forEach(c=>
+  c.innerHTML='<img src="chatgpt-logo.png" style="width:100%;height:100%;object-fit:contain">');
+
+  // curl arrow
+  const squig = `<svg viewBox="0 0 60 60" fill="none" stroke="#111" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M8 54 C 32 56 36 30 20 26 C 9 23 15 13 27 16 C 37 18.5 41 12 45 6"/>
+     <path d="M45 6 l -10 1.5 M45 6 l 2.2 10"/></svg>`;
+  document.querySelectorAll('.squig').forEach(s=>s.innerHTML=squig);
+
+  // mic icon
+  const mic = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+     <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg>`;
+  document.querySelectorAll('.mic').forEach(m=>m.innerHTML=mic);
+
+  // ---- timeline with crossfade ----
+  const scenes=[...document.querySelectorAll('.scene')];
+  const durations=[4500,10000,9500,10000,10000,9500];
+  const total=durations.reduce((a,b)=>a+b,0);
+  const progress=document.getElementById('progress'),overlay=document.getElementById('overlay'),clock=document.getElementById('clock');
+  let timers=[],clockTimer,startTs;
+  const fmt=ms=>{const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+  const stopAll=()=>{timers.forEach(clearTimeout);timers=[];clearInterval(clockTimer);};
+
+  function show(idx){
+    scenes.forEach((s,i)=>{
+      if(i===idx){s.classList.remove('leaving');s.classList.add('active');}
+      else if(s.classList.contains('active')){
+        s.classList.remove('active');s.classList.add('leaving');
+        setTimeout(()=>s.classList.remove('leaving'),650);
+      }
+    });
+  }
+  function play(){
+    stopAll();
+    scenes.forEach(s=>s.classList.remove('active','leaving'));
+    overlay.classList.add('hide');
+    progress.classList.remove('run');progress.style.width='0%';void progress.offsetWidth;
+    progress.classList.add('run');progress.style.transitionDuration=total+'ms';progress.style.width='100%';
+    startTs=performance.now();
+    clockTimer=setInterval(()=>{clock.textContent=fmt(Math.min(total,performance.now()-startTs));},200);
+    let t=0;
+    scenes.forEach((sc,idx)=>{timers.push(setTimeout(()=>show(idx),t));t+=durations[idx];});
+    timers.push(setTimeout(()=>{clearInterval(clockTimer);clock.textContent=fmt(total);},total));
+  }
+  overlay.addEventListener('click',play);
+  document.getElementById('replay').addEventListener('click',play);
+</script>
+</body>
+</html>
