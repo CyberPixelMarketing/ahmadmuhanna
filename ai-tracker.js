@@ -7,7 +7,7 @@
    اتبع تعليمات ملف tracking-apps-script.gs (5 دقائق)
    ثم الصق رابط النشر هنا بين علامتي التنصيص:
 ═══════════════════════════════════════════════════════════════ */
-const TRACKER_URL = "";
+const TRACKER_URL = "https://script.google.com/macros/s/AKfycbzcJ0agnABb_GvGBWGJKbRa1NSrs_GxICWMB8nsWEMP1WVrQhi672DHSnXxWSMy6TnkBQ/exec";
 
 (function () {
   if (!TRACKER_URL) return; // التتبع متوقف حتى تضع الرابط
