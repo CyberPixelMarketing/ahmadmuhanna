@@ -1,256 +1,434 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>4 أكواد تساعدك في ChatGPT</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>4 أكواد تساعدك في ChatGPT · أحمد مهنا</title>
+<meta name="description" content="قصة عمودية 9:16 عن أربعة اختصارات تكتبها في بداية طلبك في ChatGPT: /pulse و/eli5 و/x10 و/killcritic.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#111214">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
 <style>
-  :root{--cream:#F4F2EC;--ink:#111;--ink-soft:#9a968f;--bubble:#141414}
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
-  body{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Cairo',sans-serif;overflow:hidden;gap:14px;padding:10px}
+/* chatgpt.html · 9:16 story reel (dark only; recordable as a vertical video).
+   Tokens come from site.css. Everything else lives here. */
+:root { color-scheme: dark; }
+html, body { height: 100%; }
+body { background: var(--c-sunken); display: grid; justify-items: center; align-content: start; gap: var(--s-4); padding: var(--s-4) var(--s-4) var(--s-8); }
 
-  .stage{position:relative;aspect-ratio:9/16;height:min(calc(100dvh - 90px),calc(100vw*16/9));max-width:100vw;background:var(--cream);overflow:hidden;container-type:size;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5);-webkit-font-smoothing:antialiased}
+/* ---------- Stage ---------- */
+.stage {
+  position: relative; aspect-ratio: 9 / 16; width: min(100%, calc((100dvh - 7.5rem) * 9 / 16)); min-width: 280px;
+  background: var(--c-bg); border: var(--bw) solid var(--c-line); border-radius: var(--r-lg);
+  overflow: hidden; container-type: size; color: var(--c-ink);
+}
+.record body, html.record body { padding: 0; align-content: center; min-height: 100dvh; }
+html.record .stage { width: min(100vw, calc(100dvh * 9 / 16)); border: 0; border-radius: 0; }
+html.record .chrome, html.record .codes, html.record .reel-foot { display: none; }
 
-  /* dashed graph-paper grid */
-  .grid{position:absolute;inset:0;z-index:0;-webkit-mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent)}
-  .grid svg{width:100%;height:100%;display:block}
+/* Story segments + running head */
+.segs { position: absolute; inset-block-start: 3.2cqw; inset-inline: 5cqw; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2cqw; z-index: 5; direction: ltr; }
+.seg { height: .7cqw; min-height: 2px; background: var(--c-line-strong); overflow: hidden; }
+.seg i { display: block; height: 100%; background: var(--c-signal); transform: scaleX(var(--p, 0)); transform-origin: left center; }
+.head { position: absolute; inset-block-start: 6.6cqw; inset-inline: 5cqw; display: flex; justify-content: space-between; align-items: center; z-index: 5; direction: ltr;
+  font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: 2.6cqw; color: var(--c-ink-3); letter-spacing: .02em; }
+.head b { font-weight: 500; color: var(--c-ink-2); }
+.tail { position: absolute; inset-block-end: 5cqw; inset-inline: 0; text-align: center; z-index: 5; direction: ltr;
+  font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: 2.6cqw; color: var(--c-ink-3); }
 
-  /* big corner logos (plain black knots, bleeding off corners) */
-  .corner{position:absolute;z-index:1;color:#111}
-  .corner svg{width:100%;height:100%;display:block}
-  .corner .knot{stroke:#111;fill:none;stroke-width:6.2;stroke-linecap:round;stroke-linejoin:round}
-  .corner.tl{top:-7cqh;left:-9cqw;width:44cqw;height:44cqw;animation:drift1 9s ease-in-out infinite}
-  .corner.br{bottom:-6cqh;right:-9cqw;width:42cqw;height:42cqw;animation:drift2 10s ease-in-out infinite}
-  @keyframes drift1{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(-4deg) translateY(1cqw)}}
-  @keyframes drift2{0%,100%{transform:rotate(10deg) translateY(0)}50%{transform:rotate(6deg) translateY(-1cqw)}}
+/* Scenes */
+.scene { position: absolute; inset: 0; z-index: 3; opacity: 0; visibility: hidden; transition: opacity 450ms var(--ease-out), visibility 0s 450ms; }
+.scene.is-on { opacity: 1; visibility: visible; transition: opacity 450ms var(--ease-out), visibility 0s; }
+.scene__in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5.2cqw; padding: 18cqw 7cqw 15cqw; text-align: center; }
+.a { opacity: 0; translate: 0 3cqw; }
+.scene.is-on .a { animation: rise 650ms var(--ease-out) forwards; animation-delay: var(--d, 0s); }
+@keyframes rise { to { opacity: 1; translate: 0 0; } }
 
-  .watermark{position:absolute;left:0;right:0;bottom:6cqh;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:5cqw;letter-spacing:.04em;color:rgba(0,0,0,.09);direction:ltr;z-index:1}
+.n { font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: 3.6cqw; color: var(--c-ink-3); direction: ltr; }
+.code { font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-weight: 500; font-size: 12.5cqw; line-height: 1; color: var(--c-signal); direction: ltr; letter-spacing: -.01em; }
+.code--sm { font-size: 9.6cqw; }
 
-  /* ---- scenes / crossfade transition ---- */
-  .scene{position:absolute;inset:0;z-index:3;opacity:0;transform:translateY(1.6cqw) scale(.994);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);pointer-events:none}
-  .scene.active{opacity:1;transform:none}
-  .scene.leaving{opacity:0;transform:translateY(-1.6cqw) scale(.994)}
-  .scene.leaving .anim,.scene.leaving .rise{opacity:1!important;animation:none!important}
+/* Composer bubble (a generic chat input; not a copy of any app) */
+.composer { width: 86cqw; padding: 4cqw 4.4cqw 3.4cqw; background: var(--c-sunken); border: var(--bw) solid var(--c-line-strong); border-radius: 4cqw; text-align: start; display: grid; gap: 2.4cqw; }
+.composer__code { font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: 3.6cqw; color: var(--c-signal); direction: ltr; text-align: end; min-height: 1.4em; }
+[lang="en"] .composer__code { text-align: start; }
+.composer__text { font-family: var(--font-text); font-size: 3.9cqw; line-height: 1.75; color: var(--c-ink); min-height: 5.25em; }
+[lang="en"] .composer__text { line-height: 1.5; }
+.caret { display: inline-block; width: .5em; height: 1.05em; margin-inline-start: .1em; vertical-align: text-bottom; background: var(--c-signal); }
+.composer__bar { display: flex; align-items: center; gap: 2.6cqw; color: var(--c-ink-3); }
+.composer__bar svg { width: 4.6cqw; height: 4.6cqw; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.composer__send { margin-inline-start: auto; width: 7.4cqw; height: 7.4cqw; border-radius: 50%; background: var(--c-ink); color: var(--c-bg); display: grid; place-items: center; }
+.composer__send svg { width: 4cqw; height: 4cqw; stroke-width: 2.2; }
 
-  .content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2cqh;padding:15cqh 7cqw 12cqh}
+.caps { display: grid; gap: .8cqw; line-height: 1.2; }
+.caps .sm { font-family: var(--font-text); font-weight: 500; font-size: 5.6cqw; color: var(--c-ink-2); }
+.caps .lg { font-family: var(--font-display); font-weight: 700; font-size: 9.6cqw; line-height: 1.25; color: var(--c-ink); }
+.caps .md { font-family: var(--font-text); font-weight: 500; font-size: 5.6cqw; color: var(--c-ink-3); }
+[lang="en"] .caps .lg { font-weight: 600; letter-spacing: -.02em; line-height: 1.05; }
 
-  .anim{opacity:0}
-  .scene.active .anim{animation:pop .6s cubic-bezier(.18,.86,.24,1) forwards;animation-delay:var(--d,0s)}
-  .scene.active .rise{opacity:0;animation:rise .72s cubic-bezier(.18,.86,.24,1) forwards;animation-delay:var(--d,0s)}
-  @keyframes pop{0%{opacity:0;transform:translateY(2.6cqw) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
-  @keyframes rise{0%{opacity:0;transform:translateY(7cqw) scale(.985)}100%{opacity:1;transform:translateY(0) scale(1)}}
+/* Intro */
+.intro .lg { font-size: 15cqw; }
+.intro__codes { list-style: none; padding: 0; margin: 2cqw 0 0; display: grid; gap: 2.2cqw; direction: ltr; }
+.intro__codes li { font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: 5cqw; color: var(--c-ink-2); }
+.intro__codes li b { font-weight: 500; color: var(--c-signal); }
 
-  /* title */
-  .title{text-align:center;line-height:1}
-  .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:7cqw;color:var(--ink);direction:ltr}
-  .cmd{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12cqw;color:var(--ink);direction:ltr;letter-spacing:-.015em;margin-top:.2cqw}
-  .cmd.sm{font-size:9.4cqw}
+/* Play overlay */
+.overlay { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; background: var(--c-bg); cursor: pointer; border: 0; color: var(--c-on-signal); width: 100%; }
+.overlay[hidden] { display: none; }
+.overlay__btn { width: 20cqw; height: 20cqw; border-radius: 50%; background: var(--c-signal); display: grid; place-items: center; }
+.overlay__btn svg { width: 8cqw; height: 8cqw; fill: currentColor; margin-inline-start: 1.2cqw; }
+[dir="rtl"] .overlay__btn svg { margin-inline-start: 0; margin-inline-end: 1.2cqw; }
+.overlay:focus-visible { outline-offset: -4px; }
 
-  /* command chip + curl arrow */
-  .chiprow{position:relative;width:84cqw;height:13cqh}
-  .chip{position:absolute;left:1cqw;top:.5cqh;font-family:'Space Grotesk',sans-serif;font-weight:700;direction:ltr;font-size:5.4cqw;color:#111;background:#fff;border-radius:2.4cqw;padding:1.5cqw 3.4cqw;box-shadow:0 2.4cqw 4.5cqw rgba(0,0,0,.14),0 .6cqw 1.4cqw rgba(0,0,0,.10)}
-  .squig{position:absolute;left:9cqw;top:5.4cqh;width:12cqw;height:8cqh}
-  .squig svg{width:100%;height:100%}
+/* ---------- Chrome under the stage (not recorded) ---------- */
+.chrome { width: min(100%, 34rem); display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+.chrome .btn--primary .icon { fill: currentColor; stroke: none; }
+.clock { font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: .8125rem; color: var(--c-ink-2); direction: ltr; font-variant-numeric: tabular-nums; }
+.chrome__end { margin-inline-start: auto; display: flex; align-items: center; gap: var(--s-2); }
+.hint { width: min(100%, 34rem); font-size: var(--fs-small); line-height: 1.6; color: var(--c-ink-3); }
+.hint kbd { font-size: .75rem; padding: .05rem .35rem; border: var(--bw) solid var(--c-line-strong); border-radius: var(--r-xs); color: var(--c-ink-2); }
 
-  /* wide input-pill bubble */
-  .bubble{width:84cqw;background:var(--bubble);border-radius:4.4cqw;padding:3.6cqw 4cqw;color:#ededed;
-    box-shadow:0 7cqw 16cqw rgba(0,0,0,.20),0 2.6cqw 6cqw rgba(0,0,0,.16),0 1cqw 2cqw rgba(0,0,0,.10)}
-  .bubble .lbl{color:#8ab4ff;font-family:'Space Grotesk',sans-serif;font-weight:700;direction:ltr;text-align:right;font-size:3.9cqw;margin-bottom:1.6cqw}
-  .bubble .txt{font-size:3.95cqw;line-height:1.62;text-align:right;color:#e9e9e9}
-  .bubble.long .txt{font-size:3.6cqw;line-height:1.56}
-  .bubble .bar{display:flex;align-items:center;gap:2.6cqw;margin-top:3.4cqw}
-  .bubble .plus{width:6cqw;height:6cqw;border-radius:50%;border:.35cqw solid #4a4a4a;display:flex;align-items:center;justify-content:center;color:#9a9a9a;font-size:4.4cqw;line-height:0}
-  .bubble .mic{margin-inline-start:auto;color:#8a8a8a}
-  .bubble .mic svg{width:4.6cqw;height:4.6cqw;display:block}
-  .bubble .send{width:7cqw;height:7cqw;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#111;font-size:4.4cqw;font-weight:700}
+.codes { width: min(100%, 34rem); margin-block-start: var(--s-6); display: grid; gap: var(--s-4); }
+.codes h2 { font-size: var(--fs-h3); line-height: var(--lh-h3); }
+.codes__list { list-style: none; padding: 0; margin: 0; border-block-start: var(--bw) solid var(--c-line); }
+.codes__list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--s-1) var(--s-4); padding-block: var(--s-3); border-block-end: var(--bw) solid var(--c-line); }
+.codes__code { font-family: var(--font-mono); font-stretch: var(--mono-stretch); font-size: .9375rem; font-weight: 500; color: var(--c-ink); direction: ltr; unicode-bidi: isolate; }
+.codes__desc { grid-column: 1; font-size: var(--fs-small); line-height: 1.5; color: var(--c-ink-2); }
+.codes__list .copy-btn { grid-column: 2; grid-row: 1 / span 2; }
+.codes__note { font-size: var(--fs-small); line-height: 1.65; color: var(--c-ink-3); }
+.reel-foot { width: min(100%, 34rem); margin-block-start: var(--s-4); padding-block-start: var(--s-4); border-block-start: var(--bw) solid var(--c-line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-4); align-items: center; }
+.reel-foot .link { font-size: var(--fs-small); }
 
-  /* caption lines */
-  .caps{text-align:center;line-height:1.16}
-  .caps .sm{font-weight:600;font-size:6.2cqw;color:var(--ink)}
-  .caps .lg{font-weight:900;font-size:9.6cqw;color:var(--ink);margin:.3cqh 0}
-  .caps .md{font-weight:500;font-size:6.4cqw;color:var(--ink)}
-  .caps .soft{color:var(--ink-soft)}
-  .caps .gp{font-family:'Space Grotesk',sans-serif;font-weight:700}
 
-  /* intro */
-  .intro .lg{font-size:12cqw}
+/* Code chips: hover and press feedback (transform/opacity only) */
+.codes__list li { position: relative; transition: transform 220ms var(--ease-out); }
+.codes__list .copy-btn { transition: transform 150ms var(--ease-out), color var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out); }
+.codes__list .copy-btn:active { transform: scale(.95); }
+.codes__list .copy-btn.is-done .icon { animation: chip-pop 320ms var(--ease-out); }
+@keyframes chip-pop { 0% { transform: scale(.5) rotate(-30deg); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: none; } }
+.codes__code { transition: transform 220ms var(--ease-out); display: inline-block; }
+@media (hover: hover) and (pointer: fine) { .codes__list li:hover .codes__code { transform: translateX(4px); } }
+.chrome .btn:active { transform: scale(.97); }
+@media (prefers-reduced-motion: reduce) { .codes__list li:hover .codes__code, .codes__list .copy-btn:active { transform: none; } .codes__list .copy-btn.is-done .icon { animation: none; } }
 
-  /* progress + controls */
-  .progress{position:absolute;top:0;left:0;height:1cqw;background:var(--ink);width:0;border-radius:0 2px 2px 0;z-index:15}
-  .progress.run{transition:width linear}
-  .overlay{position:absolute;inset:0;background:rgba(244,242,236,.88);display:flex;align-items:center;justify-content:center;z-index:20;cursor:pointer}
-  .overlay.hide{display:none}
-  .playbtn{width:22cqw;height:22cqw;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;box-shadow:0 4cqw 12cqw rgba(0,0,0,.3)}
-  .playbtn::after{content:"";border-style:solid;border-width:5cqw 0 5cqw 8.5cqw;border-color:transparent transparent transparent #fff;margin-inline-start:1.6cqw}
-  .controls{display:flex;gap:10px;align-items:center;color:#bbb;font-family:'Cairo';font-size:13px}
-  .controls button{font-family:'Cairo';font-weight:700;font-size:13px;color:#111;background:#eee;border:none;border-radius:999px;padding:9px 18px;cursor:pointer}
-  .controls button:hover{background:#fff}
-  .hint{font-size:12px;color:#777;text-align:center;max-width:460px;line-height:1.5}
+@media (prefers-reduced-motion: reduce) {
+  .a { opacity: 1; translate: none; }
+  .scene, .scene.is-on { transition: none; }
+}
 </style>
 </head>
 <body>
 
-<div class="stage" id="stage">
-  <div class="grid" id="grid"></div>
-  <div class="corner tl"></div>
-  <div class="corner br"></div>
-  <div class="progress" id="progress"></div>
-  <div class="watermark">ahmadmuhanna.com</div>
+<div class="stage" id="stage" aria-roledescription="قصة" aria-label="4 أكواد تساعدك في ChatGPT" data-i18n-attr="aria-label:stage_label">
+  <div class="segs" aria-hidden="true"><span class="seg"><i></i></span><span class="seg"><i></i></span><span class="seg"><i></i></span><span class="seg"><i></i></span><span class="seg"><i></i></span></div>
+  <div class="head" aria-hidden="true"><b>@ahmadmuhanna.ai</b><span data-counter>00 / 04</span></div>
 
-  <!-- SCENE 0 : INTRO -->
-  <section class="scene" data-i="0">
-    <div class="content intro">
+  <!-- Scene 0: intro -->
+  <section class="scene intro is-on" data-scene="0">
+    <div class="scene__in">
       <div class="caps">
-        <div class="lg anim" style="--d:.1s">٥ أكواد تساعدك</div>
-        <div class="md anim" style="--d:.32s">في <span class="gp">ChatGPT</span></div>
-        <div class="md anim" style="--d:.32s">اكتبها <span class="gp"> قبل الطلب</span></div>
+        <p class="lg a" style="--d:.05s" data-i18n="s0_lg">4 أكواد</p>
+        <p class="sm a" style="--d:.25s" data-i18n-html="s0_sm">تساعدك في <bdi>ChatGPT</bdi></p>
+        <p class="md a" style="--d:.4s" data-i18n="s0_md">اكتبها في بداية طلبك</p>
+      </div>
+      <ul class="intro__codes">
+        <li class="a" style="--d:.7s"><b>/pulse</b></li>
+        <li class="a" style="--d:.82s"><b>/eli5</b></li>
+        <li class="a" style="--d:.94s"><b>/x10</b></li>
+        <li class="a" style="--d:1.06s"><b>/killcritic</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Scene 1: /pulse -->
+  <section class="scene" data-scene="1">
+    <div class="scene__in">
+      <div class="a" style="--d:.05s"><p class="n">#1</p><p class="code">/pulse</p></div>
+      <div class="composer a" style="--d:.3s">
+        <p class="composer__code" data-type="/pulse"></p>
+        <p class="composer__text" data-stream data-i18n="s1_text">تتسلّل رائحة القهوة إلى أرجاء المكان، وتسري دفعة الكافيين في الوريد لتعيد ترتيب النبض…</p>
+        <div class="composer__bar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg><span class="composer__send"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span></div>
+      </div>
+      <div class="caps">
+        <p class="sm a" style="--d:3.4s" data-i18n="s1_sm">يكتب بإيقاع</p>
+        <p class="lg a" style="--d:3.55s" data-i18n="s1_lg">وطاقة وإحساس</p>
+        <p class="md a" style="--d:3.7s" data-i18n="s1_md">لا مجرّد كلمات باردة</p>
       </div>
     </div>
   </section>
 
-  <!-- SCENE 1 : /pulse -->
-  <section class="scene" data-i="1">
-    <div class="content">
-      <div class="title anim" style="--d:.05s"><div class="num">#1</div><div class="cmd">/pulse</div></div>
-      <div class="chiprow"><div class="chip anim" style="--d:.35s">/pulse</div><div class="squig anim" style="--d:.5s"></div></div>
-      <div class="bubble rise" style="--d:.6s">
-        <div class="lbl">/pulse</div>
-        <div class="txt">تتسللُ رائحة القهوة بعمق في أرجاءِ المكانِ , وتَسري دفعةُ الكافيينِ في الوريدِ لتعيد ترتيبَ النَّبض..</div>
-        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+  <!-- Scene 2: /eli5 -->
+  <section class="scene" data-scene="2">
+    <div class="scene__in">
+      <div class="a" style="--d:.05s"><p class="n">#2</p><p class="code">/eli5</p></div>
+      <div class="composer a" style="--d:.3s">
+        <p class="composer__code" data-type="/eli5"></p>
+        <p class="composer__text" data-stream data-i18n="s2_text">فيزياء الكم؟ تخيّلها كرة في الملعب: يمكن أن تكون في مكانين في الوقت نفسه، وتعبر الجدار دون أن تصطدم به…</p>
+        <div class="composer__bar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg><span class="composer__send"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span></div>
       </div>
       <div class="caps">
-        <div class="sm anim" style="--d:1s">يكتب بإيقاعٍ</div>
-        <div class="lg anim" style="--d:1.15s">وطاقةٍ وإحساس</div>
-        <div class="md soft anim" style="--d:1.3s">لا مجرّد كلماتٍ باردة</div>
+        <p class="sm a" style="--d:3.4s" data-i18n="s2_sm">يشرح لك</p>
+        <p class="lg a" style="--d:3.55s" data-i18n="s2_lg">ببساطة</p>
+        <p class="md a" style="--d:3.7s" data-i18n="s2_md">أي موضوع تريده</p>
       </div>
     </div>
   </section>
 
-  <!-- SCENE 2 : /eli5 -->
-  <section class="scene" data-i="2">
-    <div class="content">
-      <div class="title anim" style="--d:.05s"><div class="num">#2</div><div class="cmd">/eli5</div></div>
-      <div class="chiprow"><div class="chip anim" style="--d:.35s">/eli5</div><div class="squig anim" style="--d:.5s"></div></div>
-      <div class="bubble rise" style="--d:.6s">
-        <div class="lbl">/eli5</div>
-        <div class="txt">فيزياء الكم، يمكن تخيلها مثل كرة في الملعب؛ يمكنها أن تكون في مكانين في نفس الوقت، وتمر عبر الجدار دون أن تصطدم به..</div>
-        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+  <!-- Scene 3: /x10 -->
+  <section class="scene" data-scene="3">
+    <div class="scene__in">
+      <div class="a" style="--d:.05s"><p class="n">#3</p><p class="code">/x10</p></div>
+      <div class="composer a" style="--d:.3s">
+        <p class="composer__code" data-type="/x10"></p>
+        <p class="composer__text" data-stream data-i18n="s3_text">سأحلّل مفهوم إدارة الوقت وأفكّكه إلى مكوّناته الأساسية، ثم أنظر إليه من منظور الفلسفة وعلم الأعصاب.</p>
+        <div class="composer__bar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg><span class="composer__send"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span></div>
       </div>
       <div class="caps">
-        <div class="sm anim" style="--d:1s">يشرح لك</div>
-        <div class="lg anim" style="--d:1.15s"> ببساطة </div>
-        <div class="md soft anim" style="--d:1.3s">اي موضوع <span class="gp"></span> تريده</div>
+        <p class="sm a" style="--d:3.4s" data-i18n="s3_sm">يفكّر</p>
+        <p class="lg a" style="--d:3.55s" data-i18n="s3_lg">أعمق 10 مرات</p>
+        <p class="md a" style="--d:3.7s" data-i18n="s3_md">قبل أن يجيبك</p>
       </div>
     </div>
   </section>
 
-  <!-- SCENE 3 : /x10 -->
-  <section class="scene" data-i="3">
-    <div class="content">
-      <div class="title anim" style="--d:.05s"><div class="num">#3</div><div class="cmd">/x10</div></div>
-      <div class="chiprow"><div class="chip anim" style="--d:.35s">/x10</div><div class="squig anim" style="--d:.5s"></div></div>
-      <div class="bubble rise" style="--d:.6s">
-        <div class="lbl">/x10</div>
-        <div class="txt">سوف أحلّل مفهوم إدارة الوقت وافكّكه إلى مكوّناته الأساسية، وانظر إليه من منظور الفلسفة وعلم الأعصاب.</div>
-        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
+  <!-- Scene 4: /killcritic -->
+  <section class="scene" data-scene="4">
+    <div class="scene__in">
+      <div class="a" style="--d:.05s"><p class="n">#4</p><p class="code code--sm">/killcritic</p></div>
+      <div class="composer a" style="--d:.3s">
+        <p class="composer__code" data-type="/killcritic"></p>
+        <p class="composer__text" data-stream data-i18n="s4_text">النص الذي كتبته تجميعٌ مدرسيّ مبتذل لتعريفات المعاجم المستهلكة، ويفتقر إلى أي بصمة أسلوبية.</p>
+        <div class="composer__bar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg><span class="composer__send"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span></div>
       </div>
       <div class="caps">
-        <div class="sm anim" style="--d:1s">يفكّر</div>
-        <div class="lg anim" style="--d:1.15s">أعمق ١٠ مرّات</div>
-        <div class="md soft anim" style="--d:1.3s">قبل أن يجيبك</div>
+        <p class="lg a" style="--d:3.4s" data-i18n="s4_lg">يتوقّف عن مجاملتك</p>
+        <p class="md a" style="--d:3.6s" data-i18n="s4_md">ويقول لك الحقيقة كاملة</p>
       </div>
     </div>
   </section>
 
-  <!-- SCENE 4 : /killcritic -->
-  <section class="scene" data-i="4">
-    <div class="content">
-      <div class="title anim" style="--d:.05s"><div class="num">#4</div><div class="cmd sm">/killcritic</div></div>
-      <div class="chiprow"><div class="chip anim" style="--d:.35s">/killcritic</div><div class="squig anim" style="--d:.5s"></div></div>
-      <div class="bubble long rise" style="--d:.6s">
-        <div class="lbl">/killcritic</div>
-        <div class="txt">النص اللذي كتبته ليس سوى تجميعٍ مدرسيّ مفلس ومبتذل لتعاريف المعاجم المستهلكة، يفتقر لأي بصمة أسلوبية.</div>
-        <div class="bar"><span class="plus">+</span><span class="mic"></span><span class="send">↑</span></div>
-      </div>
-      <div class="caps">
-        <div class="lg anim" style="--d:1s">يتوقّف عن مجاملتك</div>
-        <div class="md soft anim" style="--d:1.18s">ويقول لك الحقيقة كاملةً</div>
-      </div>
-    </div>
-  </section>
+  <p class="tail" aria-hidden="true">ahmadmuhanna.com/learn-ai</p>
 
- 
-  <div class="overlay" id="overlay"><div class="playbtn"></div></div>
+  <button class="overlay" type="button" data-play aria-label="تشغيل القصة" data-i18n-attr="aria-label:play_label">
+    <span class="overlay__btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></span>
+  </button>
 </div>
 
-<div class="controls">
-  <button id="replay">▶ إعادة التشغيل</button>
-  <span id="clock">00:00</span>
+<div class="chrome">
+  <button class="btn btn--primary btn--sm" type="button" data-play>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg><span data-i18n="replay">شغّل من البداية</span>
+  </button>
+  <span class="clock" data-clock aria-live="off">00:00 / 00:43</span>
+  <div class="chrome__end">
+    <a class="btn btn--ghost btn--sm" href="?record=1" data-record data-i18n="record">وضع التسجيل</a>
+    <a class="lang-switch" href="?lang=en" data-lang-switch lang="en" hreflang="en">English</a>
+  </div>
 </div>
-<p class="hint">شغّل الملف بملء الشاشة ثم سجّل الشاشة عموديًا (9:16). الشعار الحالي مؤقّت — استبدله بشعار ChatGPT الرسمي لأعلى دقة، وغيّر العلامة المائية إن أردت.</p>
+<p class="hint" data-i18n-html="hint">سجّل الشاشة عمودياً بنسبة 9:16. في «وضع التسجيل» تختفي هذه الأدوات وتملأ القصة ارتفاع الشاشة؛ اضغط <kbd>Space</kbd> للتشغيل و<kbd>Esc</kbd> للخروج.</p>
+
+<section class="codes" aria-labelledby="codes-h">
+  <h2 id="codes-h" data-i18n="codes_h">الأكواد الأربعة: انسخها وجرّبها</h2>
+  <ul class="codes__list">
+    <li><span class="codes__code">/pulse</span><span class="codes__desc" data-i18n="c1">للكتابة بإيقاع وإحساس، لا بنبرة باردة.</span>
+      <button class="copy-btn" type="button" data-copy="/pulse" aria-label="انسخ /pulse" data-i18n-attr="aria-label:copy_pulse"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span class="copy-btn__label" data-i18n="copy">انسخ</span></button></li>
+    <li><span class="codes__code">/eli5</span><span class="codes__desc" data-i18n="c2">«اشرح لي كأني في الخامسة»: شرح مبسّط لأي موضوع.</span>
+      <button class="copy-btn" type="button" data-copy="/eli5" aria-label="انسخ /eli5" data-i18n-attr="aria-label:copy_eli5"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span class="copy-btn__label" data-i18n="copy">انسخ</span></button></li>
+    <li><span class="codes__code">/x10</span><span class="codes__desc" data-i18n="c3">تفكير أعمق وتحليل من أكثر من زاوية قبل الإجابة.</span>
+      <button class="copy-btn" type="button" data-copy="/x10" aria-label="انسخ /x10" data-i18n-attr="aria-label:copy_x10"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span class="copy-btn__label" data-i18n="copy">انسخ</span></button></li>
+    <li><span class="codes__code">/killcritic</span><span class="codes__desc" data-i18n="c4">نقد صريح بلا مجاملة.</span>
+      <button class="copy-btn" type="button" data-copy="/killcritic" aria-label="انسخ /killcritic" data-i18n-attr="aria-label:copy_kill"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg><span class="copy-btn__label" data-i18n="copy">انسخ</span></button></li>
+  </ul>
+  <p class="codes__note" data-i18n-html="codes_note">هذه اختصارات يكتبها المستخدمون في بداية الطلب، وليست أوامر رسمية في <bdi>ChatGPT</bdi>. يفهمها النموذج من سياقها، والنتيجة تختلف من مرة لأخرى. لنتيجة أدق، اكتب ما تريده صراحة بطريقة العناصر الأربعة.</p>
+</section>
+
+<footer class="reel-foot">
+  <a class="link" href="learn-ai.html#m5">
+    <span data-i18n="foot_link">تعلّم كتابة الطلبات خطوة بخطوة في الدليل المجاني</span>
+    <svg class="icon icon--dir" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+  </a>
+  <span class="small faint">© 2026 <span data-i18n="brand">أحمد مهنا</span></span>
+</footer>
+
+<div class="toast-region" aria-live="polite" data-toasts></div>
 
 <script>
-  // dashed graph-paper grid
-  document.getElementById('grid').innerHTML =
-   `<svg viewBox="0 0 1080 1920" preserveAspectRatio="none"><defs>
-      <pattern id="gp" width="132" height="132" patternUnits="userSpaceOnUse">
-        <path d="M0 0 H132" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="1.4" stroke-dasharray="5 10"/>
-        <path d="M0 0 V132" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="1.4" stroke-dasharray="5 10"/>
-      </pattern></defs>
-      <rect width="1080" height="1920" fill="url(#gp)"/></svg>`;
+/* Edit here: scene timings and AR/EN text */
+const CONFIG = {
+  durations: [4500, 9000, 9000, 9000, 9500] // ms per scene: intro + 4 codes
+};
+const CONTENT = {
+  ar: {
+    dir: 'rtl', pageTitle: '4 أكواد تساعدك في ChatGPT · أحمد مهنا',
+    stage_label: '4 أكواد تساعدك في ChatGPT', play_label: 'تشغيل القصة',
+    s0_lg: '4 أكواد', s0_sm: 'تساعدك في <bdi>ChatGPT</bdi>', s0_md: 'اكتبها في بداية طلبك',
+    s1_text: 'تتسلّل رائحة القهوة إلى أرجاء المكان، وتسري دفعة الكافيين في الوريد لتعيد ترتيب النبض…',
+    s1_sm: 'يكتب بإيقاع', s1_lg: 'وطاقة وإحساس', s1_md: 'لا مجرّد كلمات باردة',
+    s2_text: 'فيزياء الكم؟ تخيّلها كرة في الملعب: يمكن أن تكون في مكانين في الوقت نفسه، وتعبر الجدار دون أن تصطدم به…',
+    s2_sm: 'يشرح لك', s2_lg: 'ببساطة', s2_md: 'أي موضوع تريده',
+    s3_text: 'سأحلّل مفهوم إدارة الوقت وأفكّكه إلى مكوّناته الأساسية، ثم أنظر إليه من منظور الفلسفة وعلم الأعصاب.',
+    s3_sm: 'يفكّر', s3_lg: 'أعمق 10 مرات', s3_md: 'قبل أن يجيبك',
+    s4_text: 'النص الذي كتبته تجميعٌ مدرسيّ مبتذل لتعريفات المعاجم المستهلكة، ويفتقر إلى أي بصمة أسلوبية.',
+    s4_lg: 'يتوقّف عن مجاملتك', s4_md: 'ويقول لك الحقيقة كاملة',
+    replay: 'شغّل من البداية', record: 'وضع التسجيل', copy: 'انسخ', copied: 'تم النسخ',
+    copied_toast: 'تم النسخ إلى الحافظة.', copy_failed: 'تعذّر النسخ. حدّد النص وانسخه يدوياً.',
+    hint: 'سجّل الشاشة عمودياً بنسبة 9:16. في «وضع التسجيل» تختفي هذه الأدوات وتملأ القصة ارتفاع الشاشة؛ اضغط <kbd>Space</kbd> للتشغيل و<kbd>Esc</kbd> للخروج.',
+    codes_h: 'الأكواد الأربعة: انسخها وجرّبها',
+    c1: 'للكتابة بإيقاع وإحساس، لا بنبرة باردة.', c2: '«اشرح لي كأني في الخامسة»: شرح مبسّط لأي موضوع.',
+    c3: 'تفكير أعمق وتحليل من أكثر من زاوية قبل الإجابة.', c4: 'نقد صريح بلا مجاملة.',
+    copy_pulse: 'انسخ /pulse', copy_eli5: 'انسخ /eli5', copy_x10: 'انسخ /x10', copy_kill: 'انسخ /killcritic',
+    codes_note: 'هذه اختصارات يكتبها المستخدمون في بداية الطلب، وليست أوامر رسمية في <bdi>ChatGPT</bdi>. يفهمها النموذج من سياقها، والنتيجة تختلف من مرة لأخرى. لنتيجة أدق، اكتب ما تريده صراحة بطريقة العناصر الأربعة.',
+    foot_link: 'تعلّم كتابة الطلبات خطوة بخطوة في الدليل المجاني', brand: 'أحمد مهنا', lang_label: 'English'
+  },
+  en: {
+    dir: 'ltr', pageTitle: '4 codes that help in ChatGPT · Ahmad Muhanna',
+    stage_label: '4 codes that help in ChatGPT', play_label: 'Play the story',
+    s0_lg: '4 codes', s0_sm: 'that help in ChatGPT', s0_md: 'type them at the start of your prompt',
+    s1_text: 'The smell of coffee drifts through the room, and the caffeine hits, putting your pulse back in order…',
+    s1_sm: 'It writes with rhythm', s1_lg: 'energy and feeling', s1_md: 'not just cold words',
+    s2_text: 'Quantum physics? Picture a ball on a pitch that can be in two places at once, and pass through a wall without hitting it…',
+    s2_sm: 'It explains', s2_lg: 'simply', s2_md: 'any topic you want',
+    s3_text: 'I’ll break time management down into its core parts, then look at it through philosophy and neuroscience.',
+    s3_sm: 'It thinks', s3_lg: '10× deeper', s3_md: 'before it answers',
+    s4_text: 'What you wrote is a school-level stack of worn-out dictionary definitions, with no voice of its own.',
+    s4_lg: 'It stops flattering you', s4_md: 'and tells you the whole truth',
+    replay: 'Play from the start', record: 'Record mode', copy: 'Copy', copied: 'Copied',
+    copied_toast: 'Copied to clipboard.', copy_failed: 'Couldn’t copy. Select the text and copy it manually.',
+    hint: 'Record your screen vertically at 9:16. In record mode these controls disappear and the story fills the screen height; press <kbd>Space</kbd> to play and <kbd>Esc</kbd> to exit.',
+    codes_h: 'The four codes: copy and try them',
+    c1: 'Writing with rhythm and feeling, not a flat tone.', c2: '“Explain like I’m five”: a simple explanation of any topic.',
+    c3: 'Deeper thinking, from more than one angle, before it answers.', c4: 'Blunt critique, no flattery.',
+    copy_pulse: 'Copy /pulse', copy_eli5: 'Copy /eli5', copy_x10: 'Copy /x10', copy_kill: 'Copy /killcritic',
+    codes_note: 'These are shorthands people type at the start of a prompt, not official ChatGPT commands. The model reads them from context, and results vary from one try to the next. For a more precise result, say exactly what you want with the four-part method.',
+    foot_link: 'Learn to write prompts step by step in the free guide', brand: 'Ahmad Muhanna', lang_label: 'عربي'
+  }
+};
 
-  // knot logo (placeholder — swap for the official ChatGPT logo)
-  const knot = `<svg viewBox="0 0 100 100" aria-hidden="true">${[0,60,120,180,240,300].map(a=>`<ellipse class="knot" cx="50" cy="30" rx="8.5" ry="27" transform="rotate(${a} 50 50)"/>`).join('')}</svg>`;
-document.querySelectorAll('.corner').forEach(c=>
-  c.innerHTML='<img src="chatgpt-logo.png" style="width:100%;height:100%;object-fit:contain">');
+(function () {
+  'use strict';
+  var d = document, root = d.documentElement;
+  var q = new URLSearchParams(location.search);
+  var lang = q.get('lang') === 'en' || q.get('lang') === 'ar' ? q.get('lang') : (function () { try { return localStorage.getItem('am_lang') === 'en' ? 'en' : 'ar'; } catch (e) { return 'ar'; } })();
+  try { if (q.get('lang')) localStorage.setItem('am_lang', lang); } catch (e) { }
+  var T = CONTENT[lang];
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || q.get('motion') === 'reduced';
+  if (q.get('record') === '1') root.classList.add('record');
 
-  // curl arrow
-  const squig = `<svg viewBox="0 0 60 60" fill="none" stroke="#111" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-     <path d="M8 54 C 32 56 36 30 20 26 C 9 23 15 13 27 16 C 37 18.5 41 12 45 6"/>
-     <path d="M45 6 l -10 1.5 M45 6 l 2.2 10"/></svg>`;
-  document.querySelectorAll('.squig').forEach(s=>s.innerHTML=squig);
+  /* i18n */
+  root.lang = lang; root.dir = T.dir; d.title = T.pageTitle;
+  d.querySelectorAll('[data-i18n]').forEach(function (el) { var v = T[el.getAttribute('data-i18n')]; if (typeof v === 'string') el.textContent = v; });
+  d.querySelectorAll('[data-i18n-html]').forEach(function (el) { var v = T[el.getAttribute('data-i18n-html')]; if (typeof v === 'string') el.innerHTML = v; });
+  d.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
+    el.getAttribute('data-i18n-attr').split(';').forEach(function (p) { var b = p.split(':'); var v = T[(b[1] || '').trim()]; if (v) el.setAttribute(b[0].trim(), v); });
+  });
+  d.querySelectorAll('[data-lang-switch]').forEach(function (a) {
+    var to = lang === 'ar' ? 'en' : 'ar', u = new URL(location.href); u.searchParams.set('lang', to);
+    a.href = u.pathname + u.search; a.lang = to; a.hreflang = to; a.textContent = T.lang_label;
+  });
+  d.querySelectorAll('a[href^="learn-ai.html"]').forEach(function (a) { if (lang === 'en') a.href = 'learn-ai.html?lang=en#m5'; });
+  var rec = d.querySelector('[data-record]');
+  if (rec) { var ru = new URL(location.href); ru.searchParams.set('record', '1'); rec.href = ru.pathname + ru.search; }
 
-  // mic icon
-  const mic = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-     <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg>`;
-  document.querySelectorAll('.mic').forEach(m=>m.innerHTML=mic);
+  /* Timeline */
+  var scenes = [].slice.call(d.querySelectorAll('[data-scene]'));
+  var segs = [].slice.call(d.querySelectorAll('.seg i'));
+  var counter = d.querySelector('[data-counter]'), clock = d.querySelector('[data-clock]');
+  var overlay = d.querySelector('.overlay');
+  var dur = CONFIG.durations, total = dur.reduce(function (a, b) { return a + b; }, 0);
+  var raf = 0, t0 = 0, cur = -1, typers = [];
+  function fmt(ms) { var s = Math.floor(ms / 1000); return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + s % 60).slice(-2); }
+  clock.textContent = '00:00 / ' + fmt(total);
 
-  // ---- timeline with crossfade ----
-  const scenes=[...document.querySelectorAll('.scene')];
-  const durations=[4500,10000,9500,10000,10000,9500];
-  const total=durations.reduce((a,b)=>a+b,0);
-  const progress=document.getElementById('progress'),overlay=document.getElementById('overlay'),clock=document.getElementById('clock');
-  let timers=[],clockTimer,startTs;
-  const fmt=ms=>{const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
-  const stopAll=()=>{timers.forEach(clearTimeout);timers=[];clearInterval(clockTimer);};
+  /* Each scene types its code into the composer, then streams the answer in words */
+  var streams = scenes.map(function (sc) {
+    var code = sc.querySelector('[data-type]'), text = sc.querySelector('[data-stream]');
+    return { code: code, codeStr: code ? code.getAttribute('data-type') : '', text: text, words: text ? text.textContent.split(/(\s+)/) : [] };
+  });
+  var caret = d.createElement('span'); caret.className = 'caret'; caret.setAttribute('aria-hidden', 'true');
+  function renderStream(i, ms) {
+    var s = streams[i]; if (!s.code) return;
+    var TYPE_AT = 500, TYPE_MS = 520, TEXT_AT = 1250, TEXT_MS = 2000;
+    var nc = reduced ? s.codeStr.length : Math.max(0, Math.min(s.codeStr.length, Math.floor((ms - TYPE_AT) / TYPE_MS * s.codeStr.length)));
+    s.code.textContent = s.codeStr.slice(0, nc);
+    var nw = reduced ? s.words.length : Math.max(0, Math.min(s.words.length, Math.ceil((ms - TEXT_AT) / TEXT_MS * s.words.length)));
+    s.text.textContent = s.words.slice(0, nw).join('');
+    var typingCode = !reduced && nc < s.codeStr.length && ms >= TYPE_AT;
+    var typingText = !reduced && nw < s.words.length && ms >= TEXT_AT - 200;
+    if (typingCode) s.code.appendChild(caret); else if (typingText) s.text.appendChild(caret);
+    else if (caret.parentNode && (caret.parentNode === s.code || caret.parentNode === s.text)) caret.remove();
+  }
+  function show(i) {
+    if (i === cur) return;
+    cur = i;
+    scenes.forEach(function (sc, k) {
+      sc.classList.toggle('is-on', k === i);
+      /* restart CSS entrances */
+      if (k === i) sc.querySelectorAll('.a').forEach(function (el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
+    });
+    counter.textContent = '0' + i + ' / 04';
+  }
+  function frame(now) {
+    var el = now - t0;
+    if (el >= total) { el = total; }
+    var acc = 0, i = 0;
+    for (; i < dur.length; i++) { if (el < acc + dur[i] || i === dur.length - 1) break; acc += dur[i]; }
+    show(i);
+    renderStream(i, el - acc);
+    segs.forEach(function (sg, k) {
+      var start = dur.slice(0, k).reduce(function (a, b) { return a + b; }, 0);
+      sg.style.setProperty('--p', Math.max(0, Math.min(1, (el - start) / dur[k])).toFixed(3));
+    });
+    clock.textContent = fmt(el) + ' / ' + fmt(total);
+    if (el < total) raf = requestAnimationFrame(frame); else raf = 0;
+  }
+  function play() {
+    cancelAnimationFrame(raf);
+    overlay.hidden = true;
+    streams.forEach(function (s) { if (s.code) { s.code.textContent = ''; s.text.textContent = ''; } });
+    cur = -1; t0 = performance.now();
+    raf = requestAnimationFrame(frame);
+  }
+  /* Before play: every scene's text is complete in the HTML (no-JS, screen readers) */
+  streams.forEach(function (s) { if (s.code) s.code.textContent = s.codeStr; });
+  d.querySelectorAll('[data-play]').forEach(function (b) { b.addEventListener('click', play); });
+  d.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('button, a, input, textarea')) return;
+    if (e.code === 'Space' || e.key === ' ') { e.preventDefault(); play(); }
+    if (e.key === 'Escape' && root.classList.contains('record')) { var u = new URL(location.href); u.searchParams.delete('record'); location.href = u.pathname + u.search; }
+  });
 
-  function show(idx){
-    scenes.forEach((s,i)=>{
-      if(i===idx){s.classList.remove('leaving');s.classList.add('active');}
-      else if(s.classList.contains('active')){
-        s.classList.remove('active');s.classList.add('leaving');
-        setTimeout(()=>s.classList.remove('leaving'),650);
-      }
+  /* Copy buttons with label swap + toast */
+  var region = d.querySelector('[data-toasts]');
+  function toast(msg, type) {
+    var el = d.createElement('div'); el.className = 'toast toast--' + (type || 'success');
+    if (type === 'error') el.setAttribute('role', 'alert');
+    el.innerHTML = '<svg class="icon toast__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + (type === 'error' ? 'M12 8v4M12 16h.01' : 'M20 6 9 17l-5-5') + '"/></svg><p class="toast__msg"></p>';
+    el.querySelector('p').textContent = msg;
+    while (region.children.length >= 2) region.firstElementChild.remove();
+    region.appendChild(el);
+    setTimeout(function () { el.classList.add('is-leaving'); setTimeout(function () { el.remove(); }, 200); }, 2500);
+  }
+  function copy(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise(function (res, rej) {
+      var ta = d.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; d.body.appendChild(ta); ta.select();
+      try { d.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } ta.remove();
     });
   }
-  function play(){
-    stopAll();
-    scenes.forEach(s=>s.classList.remove('active','leaving'));
-    overlay.classList.add('hide');
-    progress.classList.remove('run');progress.style.width='0%';void progress.offsetWidth;
-    progress.classList.add('run');progress.style.transitionDuration=total+'ms';progress.style.width='100%';
-    startTs=performance.now();
-    clockTimer=setInterval(()=>{clock.textContent=fmt(Math.min(total,performance.now()-startTs));},200);
-    let t=0;
-    scenes.forEach((sc,idx)=>{timers.push(setTimeout(()=>show(idx),t));t+=durations[idx];});
-    timers.push(setTimeout(()=>{clearInterval(clockTimer);clock.textContent=fmt(total);},total));
-  }
-  overlay.addEventListener('click',play);
-  document.getElementById('replay').addEventListener('click',play);
+  d.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-copy]'); if (!b) return;
+    copy(b.getAttribute('data-copy')).then(function () {
+      var lab = b.querySelector('.copy-btn__label');
+      b.classList.add('is-done'); if (lab) lab.textContent = T.copied;
+      var ic = b.querySelector('svg'), prevIc = ic ? ic.innerHTML : ''; if (ic) ic.innerHTML = '<path d="M20 6 9 17l-5-5"/>';
+      setTimeout(function () { if (ic) ic.innerHTML = prevIc; }, 1500);
+      toast(T.copied_toast, 'success');
+      if (typeof window.aiTrack === 'function') window.aiTrack('copy', { source: 'reel', code: b.getAttribute('data-copy') });
+      setTimeout(function () { b.classList.remove('is-done'); if (lab) lab.textContent = T.copy; }, 1500);
+    }, function () { toast(T.copy_failed, 'error'); });
+  });
+})();
 </script>
 </body>
 </html>

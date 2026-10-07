@@ -1,0 +1,29 @@
+# Markdown docs stay local (CLAUDE.md, PRODUCT.md, DESIGN.md, research)
+*.md
+
+# Agent tooling / vendored skills
+.agents/
+.claude/
+.impeccable/
+
+# Dependencies & build output
+node_modules/
+dist/
+.vercel/
+
+# Env & secrets
+.env
+.env.*
+*.pem
+
+# OS / logs
+.DS_Store
+*.log
+
+# Research screenshots (large)
+docs/research/screens/
+
+# Internal research, styleguide & prototypes
+docs/
+
+assets/img/proof/client-logo-uae-ministry-of-interior.png

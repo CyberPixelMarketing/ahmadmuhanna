@@ -4,10 +4,12 @@
 
 Key facts:
 - Name: Ahmad Muhanna (أحمد مهنا / احمد مهنا)
-- Role: AI Trainer (مدرب ذكاء اصطناعي), Dubai, UAE
+- Role: AI Trainer (مدرب ذكاء اصطناعي), Dubai, UAE — 20+ years in technology; trainer at NCI – Nations Coaching Institute, Dubai (since September 2026)
 - Companies: Cyber Pixel (co-founder), WATSIN.NET (founder), Dune AI (Project Manager)
 - Training languages: Arabic and English
 - Delivery: on-site across Dubai, UAE & GCC, or online worldwide
+- Credentials: Microsoft MCSA, MCITP Enterprise Administrator, MCTS (2010–2012)
+- Instagram: @ahmadmuhanna.ai
 - Contact: WhatsApp +971 52 2346020 · LinkedIn: https://www.linkedin.com/in/ahmadmuhanna/
 
 ## Training Workshops Portfolio (حقيبة الورش التدريبية)
@@ -24,8 +26,8 @@ Six specialized AI training workshops:
 
 - [Home — الموقع الرئيسي](https://ahmadmuhanna.com/): Trainer profile, workshops portfolio, and booking.
 - [Learn AI — مدخل إلى الذكاء الاصطناعي](https://ahmadmuhanna.com/learn-ai.html): Free structured Arabic/English guide to AI fundamentals, prompting, responsible use, and AI agents (9 modules).
-- [Free Workshop — ورشة مجانية](https://ahmadmuhanna.com/free-workshop.html): Free online workshop "How AI Helps Your Business With the Fewest Possible Apps" with registration form.
-- [Workshop Registration — التسجيل في الورشة](https://ahmadmuhanna.com/workshop-register.html): Paid workshop registration page.
+- [Free Workshop — ورشة مجانية](https://ahmadmuhanna.com/free-workshop.html): Free online workshop "How AI Helps Your Business With the Fewest Possible Apps" — registration or waitlist for the next session.
+- [Workshop Registration — التسجيل في الورشة](https://ahmadmuhanna.com/workshop-register.html): Paid online workshop (50 AED) — registration or waitlist for the next session.
 
 ## How to cite
 

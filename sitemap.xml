@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- sitemap.xml — ahmadmuhanna.com
-     ⚠️ عدّل أسماء الملفات/الروابط إذا كانت مختلفة عند الرفع -->
+<!-- sitemap.xml — ahmadmuhanna.com (canonical URLs only; learn.html and workshop.html are aliases) -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ahmadmuhanna.com/</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://ahmadmuhanna.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ahmadmuhanna.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ahmadmuhanna.com/"/>
   </url>
   <url>
     <loc>https://ahmadmuhanna.com/learn-ai.html</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://ahmadmuhanna.com/learn-ai.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ahmadmuhanna.com/learn-ai.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ahmadmuhanna.com/learn-ai.html"/>
   </url>
   <url>
     <loc>https://ahmadmuhanna.com/free-workshop.html</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ahmadmuhanna.com/free-workshop.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ahmadmuhanna.com/free-workshop.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ahmadmuhanna.com/free-workshop.html"/>
   </url>
   <url>
     <loc>https://ahmadmuhanna.com/workshop-register.html</loc>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ahmadmuhanna.com/workshop-register.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ahmadmuhanna.com/workshop-register.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ahmadmuhanna.com/workshop-register.html"/>
   </url>
 </urlset>

@@ -1,0 +1,14 @@
+{
+  "derivedFrom": "assets/img/proof (see manifest.json for original sources and rights notes)",
+  "method": "ImageMagick: flatten on white, grayscale, negate, level 14%-72%, circular tile edge masked (radius 438/1000), luminance copied to alpha over #ECEAE4, trimmed, resized to 112px tall; cwebp q92. NCI: trimmed and resized to 96px tall.",
+  "created": "2026-10-07",
+  "files": {
+    "client-logo-shurooq.webp": "client-logo-shurooq.png",
+    "client-logo-adv-advanced-facilities-management.webp": "client-logo-adv-advanced-facilities-management.png",
+    "client-logo-al-bayader-international.webp": "client-logo-al-bayader-international.png",
+    "client-logo-grand-outlet.webp": "client-logo-grand-outlet.png",
+    "client-logo-le-royal-meridien-dubai.webp": "client-logo-le-royal-meridien-dubai.png",
+    "logo-nci-nations-coaching-institute.webp": "logo-nci-nations-coaching-institute.png"
+  },
+  "usage": "Client logos only inside the labelled Cyber Pixel agency block. Never the MOI emblem."
+}
