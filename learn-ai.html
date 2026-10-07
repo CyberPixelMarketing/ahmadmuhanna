@@ -90,8 +90,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
 <script>(function(e){var t;try{t=localStorage.getItem("am-theme")}catch(n){}if(t!="light"&&t!="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";e.setAttribute("data-theme",t);e.classList.add("js")})(document.documentElement)</script>
-<link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/pages/learn-ai.css">
+<link rel="stylesheet" href="assets/css/site.css?v=20261008b">
+<link rel="stylesheet" href="assets/css/pages/learn-ai.css?v=20261008b">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -171,7 +171,7 @@
           <li data-i18n="meta_nosignup">بدون تسجيل</li>
         </ul>
         <p class="lhero__author">
-          <img class="avatar" src="assets/img/Me.webp" width="44" height="44" alt="" decoding="async">
+          <img class="avatar" src="assets/img/Me-160.webp" width="44" height="44" alt="" decoding="async">
           <span data-i18n-html="author">من إعداد <b>أحمد مهنا</b>، مدرّب ذكاء اصطناعي في دبي.</span>
         </p>
 
@@ -981,6 +981,7 @@
         <h2 class="site-footer__h" data-i18n="f_learn">تعلّم</h2>
         <ul>
           <li><a href="free-workshop.html" data-i18n="nav_ws">الورشة الأونلاين</a></li>
+          <li><a href="workshop-register.html" data-i18n="ft_paid">جلسة الورشة المدفوعة</a></li>
           <li><a href="learn-ai.html" data-i18n="nav_guide">الدليل المجاني</a></li>
           <li><a href="#builder" data-i18n="t_builder">أداة بناء الطلبات</a></li>
           <li><a href="index.html#kids" data-i18n="f_kids">ورش الأطفال</a></li>
@@ -1379,6 +1380,7 @@ const CONTENT = {
     faq5_a: "No. It only arranges your prompt with the four-part method; you then copy it into ChatGPT or any other assistant.",
     f_learn: "Learn",
     f_kids: "Kids AI workshops",
+    ft_paid: "Paid workshop session",
     f_contact: "Contact",
     f_ig: "Instagram",
     f_companies: "Companies",
@@ -1878,7 +1880,7 @@ const CONTENT = {
   if (window.AMMotion) holdDemos(); else d.addEventListener('DOMContentLoaded', holdDemos);
 });
 </script>
-<script src="assets/js/site.js" defer></script>
+<script src="assets/js/site.js?v=20261008b" defer></script>
 <script src="assets/js/motion.js" defer></script>
 <script src="ai-tracker.js" defer></script>
 </body>

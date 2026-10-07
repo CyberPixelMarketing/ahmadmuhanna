@@ -24,6 +24,9 @@
     $$('img[data-kids-photo]').forEach(function (img) { img.src = img.src.replace('/proof/blurred/', '/proof/'); });
   }
 
+  /* The featured workshop shows its details open on desktop only */
+  if (!matchMedia('(min-width: 1024px)').matches) $$('.card--feature details[open]').forEach(function (el) { el.open = false; });
+
   /* ---------- Next-session band: state from CONFIG.eventDate ---------- */
   function sessionUI() {
     var ws = AM.session.workshopState();
@@ -281,11 +284,17 @@
   var wipes = $$('[data-wipe]');
   if (wipes.length && !reduced && 'IntersectionObserver' in window) {
     root.classList.add('js-wipe');
+    /* Observe the parent section: a fully clipped target never reports an intersection */
     var wio = new IntersectionObserver(function (en) {
-      en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); wio.unobserve(e.target); } });
-    }, { threshold: .4 });
+      en.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        $$('[data-wipe]', e.target).forEach(function (el) { el.classList.add('is-in'); });
+        wio.unobserve(e.target);
+      });
+    }, { threshold: .25 });
     wipes.forEach(function (el) {
-      if (el.getBoundingClientRect().top < innerHeight * .9) el.classList.add('is-in'); else wio.observe(el);
+      var host = el.closest('section') || el.parentElement;
+      if (host.getBoundingClientRect().top < innerHeight * .75) el.classList.add('is-in'); else wio.observe(host);
     });
   }
 

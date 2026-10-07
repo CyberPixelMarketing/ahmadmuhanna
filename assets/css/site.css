@@ -576,6 +576,18 @@ html:not(.js) .theme-toggle { display: none; }
 html:not(.js) .theme-toggle--row { display: none; }
 .menu__list + .theme-toggle--row { margin-block-start: calc(-1 * var(--s-5)); } /* joins the list rules */
 
+/* Narrow phones (360–479px): brand + theme toggle + language + menu must fit in AR and EN.
+   Tighter gaps, a slimmer language pill and toggle slots, and a brand that can shrink
+   (ellipsis) instead of pushing the row wider than the viewport. Touch targets stay 44px. */
+@media (max-width: 479px) {
+  .site-header__inner { gap: var(--s-3); }
+  .site-header__end { gap: var(--s-1); flex: none; }
+  .brand { display: block; min-width: 0; flex: 0 1 auto; font-size: 1.0625rem; line-height: 44px;
+    overflow: hidden; text-overflow: ellipsis; }
+  .site-header .lang-switch { padding-inline: var(--s-2); }
+  .site-header .theme-toggle__track .icon { padding-inline: .25rem; } /* 24x36 slot */
+}
+
 .site-header__cta { display: none; }
 .menu-toggle { color: var(--c-ink); }
 .menu-toggle .icon-close, .menu-toggle[aria-expanded="true"] .icon-open { display: none; }
@@ -619,6 +631,21 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   padding: var(--s-2) var(--pad); background: var(--c-raised); border-block-end: var(--bw) solid var(--c-line);
   font-size: var(--fs-small); line-height: 1.4; text-align: center;
 }
+
+/* ---------- 09a Site footer (shared base) ----------
+   Three link groups + a bottom row (ux-strategy §3.5). Pages add only their own
+   layout (index: .site-footer__grid with the brand column) and hover flourishes. */
+.site-footer { border-block-start: var(--bw) solid var(--c-line); padding-block: var(--s-8) var(--s-6); }
+.site-footer__cols { display: grid; gap: var(--s-6) var(--gutter); }
+@media (min-width: 768px) { .site-footer__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.site-footer__h { font-size: var(--fs-label); font-weight: 600; color: var(--c-ink-3); margin-block-end: var(--s-2); font-family: var(--font-text); letter-spacing: 0; }
+.site-footer ul { list-style: none; padding: 0; display: grid; }
+.site-footer li a { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; color: var(--c-ink-2); text-decoration: none; font-size: var(--fs-small); }
+.site-footer li a:hover { color: var(--c-ink); }
+.site-footer li a .icon { width: .95rem; height: .95rem; color: var(--c-ink-3); }
+.site-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3) var(--s-5); margin-block-start: var(--s-7); padding-block-start: var(--s-5); border-block-start: var(--bw) solid var(--c-line); }
+.site-footer__bottom .cluster { --cluster: var(--s-4); }
+.to-top .icon { rotate: -90deg; }
 
 /* ---------- 09 Sticky mobile CTA bar (<768px) ---------- */
 .cta-bar {

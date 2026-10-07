@@ -125,15 +125,7 @@ html[lang="en"] .ws-panel__title { font-size: 1.625rem; line-height: 1.15; }
 @media (max-width: 767px) { .ws-down__copy .btn { justify-self: stretch; } }
 
 /* ---------- Footer ---------- */
-.site-footer { border-block-start: var(--bw) solid var(--c-line); padding-block: var(--s-8) var(--s-6); }
-.site-footer__cols { display: grid; gap: var(--s-6) var(--gutter); }
-@media (min-width: 768px) { .site-footer__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.site-footer__h { font-size: var(--fs-label); font-weight: 600; color: var(--c-ink-3); margin-block-end: var(--s-2); }
-.site-footer ul { list-style: none; padding: 0; display: grid; }
-.site-footer li a { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; color: var(--c-ink-2); text-decoration: none; font-size: var(--fs-small); }
 .site-footer li a:hover { color: var(--c-ink); text-decoration: underline; text-decoration-color: var(--c-signal-ink); }
-.site-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3) var(--s-5); margin-block-start: var(--s-7); padding-block-start: var(--s-5); border-block-start: var(--bw) solid var(--c-line); }
-.site-footer__bottom .cluster { --cluster: var(--s-4); }
 
 /* Section rhythm on these pages: a little tighter than the hub */
 .ws-page .section { padding-block: clamp(3.5rem, 2.4rem + 5vw, 7rem); }
@@ -380,9 +372,3 @@ html.reduce-motion .ws-ripple, html.reduce-motion .ws-shake { animation: none !i
   .ws-facts > li + li::before { content: none; }
 }
 
-/* Narrow phones: the header carries brand + theme + language + menu */
-@media (max-width: 400px) {
-  .ws-page .site-header__inner { gap: var(--s-2); }
-  .ws-page .site-header__end { gap: var(--s-1); }
-  .ws-page .brand { font-size: 1.0625rem; }
-}

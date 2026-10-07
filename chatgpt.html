@@ -7,26 +7,34 @@
 <meta name="description" content="قصة عمودية 9:16 عن أربعة اختصارات تكتبها في بداية طلبك في ChatGPT: /pulse و/eli5 و/x10 و/killcritic.">
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#111214">
+<meta property="og:type" content="website">
+<meta property="og:title" content="4 أكواد تساعدك في ChatGPT · أحمد مهنا">
+<meta property="og:image" content="https://ahmadmuhanna.com/assets/img/Me.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ahmadmuhanna.com/assets/img/Me.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site.css?v=20261008b">
 <style>
 /* chatgpt.html · 9:16 story reel (dark only; recordable as a vertical video).
    Tokens come from site.css. Everything else lives here. */
 :root { color-scheme: dark; }
-html, body { height: 100%; }
-body { background: var(--c-sunken); display: grid; justify-items: center; align-content: start; gap: var(--s-4); padding: var(--s-4) var(--s-4) var(--s-8); }
+html { background: var(--c-sunken); }
+body { min-height: 100dvh; }
+body { background: var(--c-sunken); display: flex; flex-direction: column; align-items: center; gap: var(--s-4); padding: var(--s-4) var(--s-4) var(--s-8); }
 
 /* ---------- Stage ---------- */
 .stage {
-  position: relative; aspect-ratio: 9 / 16; width: min(100%, calc((100dvh - 7.5rem) * 9 / 16)); min-width: 280px;
+  /* explicit size: size containment (container-type: size) gives the box no intrinsic height */
+  --w: min(calc(100vw - 2rem), calc((100dvh - 7.5rem) * 9 / 16));
+  position: relative; flex: none; width: max(17.5rem, var(--w)); height: calc(max(17.5rem, var(--w)) * 16 / 9);
   background: var(--c-bg); border: var(--bw) solid var(--c-line); border-radius: var(--r-lg);
   overflow: hidden; container-type: size; color: var(--c-ink);
 }
-.record body, html.record body { padding: 0; align-content: center; min-height: 100dvh; }
-html.record .stage { width: min(100vw, calc(100dvh * 9 / 16)); border: 0; border-radius: 0; }
-html.record .chrome, html.record .codes, html.record .reel-foot { display: none; }
+html.record body { padding: 0; justify-content: center; min-height: 100dvh; }
+html.record .stage { --w: min(100vw, calc(100dvh * 9 / 16)); width: var(--w); height: calc(var(--w) * 16 / 9); border: 0; border-radius: 0; }
+html.record .chrome, html.record .codes, html.record .reel-foot, html.record .hint, html.record .toast-region { display: none; }
 
 /* Story segments + running head */
 .segs { position: absolute; inset-block-start: 3.2cqw; inset-inline: 5cqw; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2cqw; z-index: 5; direction: ltr; }

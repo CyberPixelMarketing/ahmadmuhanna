@@ -315,7 +315,12 @@
     var ui = UI[AM.lang] || {};
     var pick = function (k) { return t[k] !== undefined ? t[k] : ui[k]; };
     $$('[data-i18n]').forEach(function (el) {
-      var v = pick(el.getAttribute('data-i18n')); if (typeof v === 'string') el.textContent = v;
+      var v = pick(el.getAttribute('data-i18n')); if (typeof v !== 'string') return;
+      /* Same text already in place: leave the node alone (re-creating it repaints the
+         hero H1 and pushes Largest Contentful Paint back to script time) */
+      var n = el.firstChild;
+      if (n && n === el.lastChild && n.nodeType === 3 && n.data === v) return;
+      el.textContent = v;
     });
     $$('[data-i18n-html]').forEach(function (el) {
       var v = pick(el.getAttribute('data-i18n-html')); if (typeof v === 'string') el.innerHTML = v;
