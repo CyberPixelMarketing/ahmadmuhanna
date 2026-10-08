@@ -91,8 +91,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
 <script>(function(e){var t;try{t=localStorage.getItem("am-theme")}catch(n){}if(t!="light"&&t!="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";e.setAttribute("data-theme",t);e.classList.add("js")})(document.documentElement)</script>
-<link rel="stylesheet" href="assets/css/site.css?v=20261008b">
-<link rel="stylesheet" href="assets/css/pages/learn-ai.css?v=20261008b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261008c">
+<link rel="stylesheet" href="assets/css/pages/learn-ai.css?v=20261008c">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -199,7 +199,7 @@
       <figure class="term status field-plate" aria-labelledby="status-cap" data-progress-ui>
         <div class="term__bar">
           <span class="status-light" data-status-light aria-hidden="true"></span>
-          <span class="term__title">progress · local</span>
+          <span class="term__title" data-i18n="term_progress">تقدّمك · على هذا الجهاز</span>
           <div class="term__bar-end">
             <button class="demo__replay" type="button" data-reset hidden>
               <svg class="icon icon--sm" aria-hidden="true"><use href="#i-replay"/></svg>
@@ -414,9 +414,9 @@
           <p data-i18n="m4_p1">تخيّل الأداة سيارة. والنماذج لا تعيش في تطبيق واحد؛ فهي مدمجة في منتجات كثيرة مثل محركات البحث والخرائط والهواتف.</p>
         </div>
         <ol class="trio trio--analogy wide" data-reveal>
-          <li><span class="trio__tag">model</span><span class="trio__k" data-i18n="m4_e1k">المحرّك</span><span class="trio__v" data-i18n-html="m4_e1v">النموذج، مثل <bdi>Gemini</bdi> أو <bdi>GPT</bdi>: مصدر القوة.</span></li>
-          <li><span class="trio__tag">app</span><span class="trio__k" data-i18n="m4_e2k">السيارة</span><span class="trio__v" data-i18n="m4_e2v">التطبيق أو الموقع الذي تتعامل معه فعلياً.</span></li>
-          <li><span class="trio__tag">you</span><span class="trio__k" data-i18n="m4_e3k">السائق</span><span class="trio__v" data-i18n="m4_e3v">أنت: تحدّد الوجهة، وتقرّر متى تتوقف.</span></li>
+          <li><span class="trio__tag" data-i18n="tg_model">النموذج</span><span class="trio__k" data-i18n="m4_e1k">المحرّك</span><span class="trio__v" data-i18n-html="m4_e1v">النموذج، مثل <bdi>Gemini</bdi> أو <bdi>GPT</bdi>: مصدر القوة.</span></li>
+          <li><span class="trio__tag" data-i18n="tg_app">التطبيق</span><span class="trio__k" data-i18n="m4_e2k">السيارة</span><span class="trio__v" data-i18n="m4_e2v">التطبيق أو الموقع الذي تتعامل معه فعلياً.</span></li>
+          <li><span class="trio__tag" data-i18n="tg_you">أنت</span><span class="trio__k" data-i18n="m4_e3k">السائق</span><span class="trio__v" data-i18n="m4_e3v">أنت: تحدّد الوجهة، وتقرّر متى تتوقف.</span></li>
         </ol>
         <div class="read">
           <dl class="defs">
@@ -428,7 +428,7 @@
         <figure class="term demo wide" data-prompt-demo="m4_demo" aria-labelledby="m4-demo-cap" data-reveal>
           <div class="term__bar">
             <span class="status-light" aria-hidden="true"></span>
-            <span class="term__title">prompt · m04</span>
+            <span class="term__title" data-i18n="term_m04">طلب · المحور 4</span>
             <div class="term__bar-end">
               <span class="demo__state" data-demo-state data-i18n="demo_ready">جاهز</span>
               <button class="demo__replay" type="button" data-demo-skip hidden><span data-i18n="demo_show_all">اعرض كاملاً</span></button>
@@ -502,7 +502,7 @@
         <figure class="term demo wide" data-prompt-demo="m5_demo" aria-labelledby="m5-demo-cap" data-reveal>
           <div class="term__bar">
             <span class="status-light" aria-hidden="true"></span>
-            <span class="term__title">prompt · m05</span>
+            <span class="term__title" data-i18n="term_m05">طلب · المحور 5</span>
             <div class="term__bar-end">
               <span class="demo__state" data-demo-state data-i18n="demo_ready">جاهز</span>
               <button class="demo__replay" type="button" data-demo-skip hidden><span data-i18n="demo_show_all">اعرض كاملاً</span></button>
@@ -583,7 +583,7 @@
 
           <!-- Without JS: a finished example of the same method -->
           <figure class="term js-hide">
-            <div class="term__bar"><span class="term__title">prompt.txt</span></div>
+            <div class="term__bar"><span class="term__title" data-i18n="term_file">الطلب</span></div>
             <div class="term__body"><pre class="term__pre" id="b-static">أنت قائد فريق خبير في إدارة المشاريع الكبيرة.
 أعطني نصائح لاجتماعات أكثر فعالية.
 التنسيق: قائمة من خمس نقاط، جملة واحدة لكل نقطة.
@@ -618,7 +618,7 @@
               <figure class="term" aria-labelledby="b-out-cap">
                 <div class="term__bar">
                   <span class="status-light" data-b-light aria-hidden="true"></span>
-                  <span class="term__title" id="b-out-cap">prompt.txt</span>
+                  <span class="term__title" id="b-out-cap" data-i18n="term_file">الطلب</span>
                   <div class="term__bar-end"><span class="checks__score" data-b-score>0/4</span></div>
                 </div>
                 <div class="out" data-b-out aria-live="polite" aria-atomic="true">
@@ -723,7 +723,7 @@
         <figure class="term demo wide" data-prompt-demo="m6_demo" aria-labelledby="m6-demo-cap" data-reveal>
           <div class="term__bar">
             <span class="status-light" aria-hidden="true"></span>
-            <span class="term__title">prompt · m06</span>
+            <span class="term__title" data-i18n="term_m06">طلب · المحور 6</span>
             <div class="term__bar-end">
               <span class="demo__state" data-demo-state data-i18n="demo_ready">جاهز</span>
               <button class="demo__replay" type="button" data-demo-skip hidden><span data-i18n="demo_show_all">اعرض كاملاً</span></button>
@@ -754,7 +754,7 @@
         </div>
         <figure class="term wide" aria-labelledby="chain-cap" data-reveal>
           <div class="term__bar">
-            <span class="term__title" id="chain-cap">chain · paris</span>
+            <span class="term__title" id="chain-cap" data-i18n="term_chain">سلسلة طلبات · باريس</span>
             <div class="term__bar-end">
               <button class="copy-btn" type="button" data-copy="اقترح أماكن أزورها في باريس بناءً على اهتماماتي: [اكتب اهتماماتك].
 
@@ -796,9 +796,9 @@
           <p data-i18n="m7_p1">يفهم الذكاء الاصطناعي أنواعاً مختلفة من المحتوى وينشئها: النص والصورة والصوت والفيديو. فبدل أن تصف طلبك بالكلمات فقط، أرفق صورة أو تسجيلاً صوتياً أو فيديو ليفهم السياق بدقة أكبر.</p>
         </div>
         <ul class="flow wide" aria-label="أمثلة تطبيقية: ما تعطيه وما تحصل عليه" data-i18n-attr="aria-label:m7_cap" data-reveal>
-          <li><span class="flow__end"><span class="mono">text</span><span data-i18n="m7_a1">جملة واحدة تصف الفكرة</span></span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-chevron"/></svg><span class="flow__end"><span class="mono">video</span><span data-i18n="m7_b1">فيديو قصير</span></span></li>
-          <li><span class="flow__end"><span class="mono">image</span><span data-i18n="m7_a2">صور المنتج</span></span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-chevron"/></svg><span class="flow__end"><span class="mono">text</span><span data-i18n="m7_b2">رسالة تسويقية مكتوبة عنه</span></span></li>
-          <li><span class="flow__end"><span class="mono">audio</span><span data-i18n="m7_a3">تسجيل صوتي لأفكارك</span></span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-chevron"/></svg><span class="flow__end"><span class="mono">slides</span><span data-i18n="m7_b3">عرض تقديمي كامل</span></span></li>
+          <li><span class="flow__end"><span class="mono" data-i18n="md_text">نص</span><span data-i18n="m7_a1">جملة واحدة تصف الفكرة</span></span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-chevron"/></svg><span class="flow__end"><span class="mono" data-i18n="md_video">فيديو</span><span data-i18n="m7_b1">فيديو قصير</span></span></li>
+          <li><span class="flow__end"><span class="mono" data-i18n="md_image">صورة</span><span data-i18n="m7_a2">صور المنتج</span></span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-chevron"/></svg><span class="flow__end"><span class="mono" data-i18n="md_text">نص</span><span data-i18n="m7_b2">رسالة تسويقية مكتوبة عنه</span></span></li>
+          <li><span class="flow__end"><span class="mono" data-i18n="md_audio">صوت</span><span data-i18n="m7_a3">تسجيل صوتي لأفكارك</span></span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-chevron"/></svg><span class="flow__end"><span class="mono" data-i18n="md_slides">عرض تقديمي</span><span data-i18n="m7_b3">عرض تقديمي كامل</span></span></li>
         </ul>
         <div class="takeaway"><p class="takeaway__h" data-i18n="tk_label">الخلاصة</p><p class="takeaway__t" data-i18n="m7_tk">حين لا تكفي الكلمات، أرفق صورة أو صوتاً.</p></div>
         <div class="mod__end" data-mod-end="7">
@@ -870,7 +870,7 @@
         </ul>
         <div class="read"><h3 data-i18n="m9_loop_h">حلقة العمل في ثلاث خطوات</h3></div>
         <figure class="term wide" aria-labelledby="loop-cap" data-reveal>
-          <div class="term__bar"><span class="term__title" id="loop-cap">agent · loop</span></div>
+          <div class="term__bar"><span class="term__title" id="loop-cap" data-i18n="term_loop">حلقة عمل الوكيل</span></div>
           <ol class="loop">
             <li><span class="loop__n">01</span><span class="loop__k" data-i18n="m9_s1t">التحليل</span><span class="loop__v" data-i18n="m9_s1">يحدّد المهمة الأولى اللازمة.</span></li>
             <li><span class="loop__n">02</span><span class="loop__k" data-i18n="m9_s2t">التنفيذ</span><span class="loop__v" data-i18n="m9_s2">ينفّذها بعد أن تمنحه الأذونات اللازمة.</span></li>
@@ -1027,6 +1027,8 @@
 /* Edit here: CONFIG (session state) and CONTENT (AR/EN text).
    Arabic body text of the modules lives in the HTML above; CONTENT.en mirrors it by key. */
 const CONFIG = {
+  /* Lead catcher card: shows after this share of the page is scrolled AND this many seconds */
+  leadCatcher: { scroll: 0.15, delay: 20 },
   eventDate: '2026-08-05T17:00:00+04:00', // last session (past), so offers show the waitlist state
   durationMin: 60,
   seatsFull: false,
@@ -1036,6 +1038,21 @@ const CONFIG = {
 
 const CONTENT = {
   ar: {
+    term_progress: "تقدّمك · على هذا الجهاز",
+    term_m04: "طلب · المحور 4",
+    term_m05: "طلب · المحور 5",
+    term_m06: "طلب · المحور 6",
+    term_chain: "سلسلة طلبات · باريس",
+    term_loop: "حلقة عمل الوكيل",
+    term_file: "الطلب",
+    tg_model: "النموذج",
+    tg_app: "التطبيق",
+    tg_you: "أنت",
+    md_text: "نص",
+    md_video: "فيديو",
+    md_image: "صورة",
+    md_audio: "صوت",
+    md_slides: "عرض تقديمي",
     dir: "rtl",
     pageTitle: "مدخل إلى الذكاء الاصطناعي: دليل مجاني بالعربية في 9 محاور | أحمد مهنا",
     metaDesc: "دليل مجاني بالعربية لتعلّم الذكاء الاصطناعي من الصفر: الأساسيات، وكتابة الطلبات (Prompting) مع أداة تبني طلبك، والاستخدام المسؤول، ووكلاء الذكاء الاصطناعي. من المدرّب أحمد مهنا في دبي، بدون تسجيل.",
@@ -1082,6 +1099,21 @@ const CONTENT = {
   },
 
   en: {
+    term_progress: "progress · local",
+    term_m04: "prompt · m04",
+    term_m05: "prompt · m05",
+    term_m06: "prompt · m06",
+    term_chain: "chain · paris",
+    term_loop: "agent · loop",
+    term_file: "prompt.txt",
+    tg_model: "model",
+    tg_app: "app",
+    tg_you: "you",
+    md_text: "text",
+    md_video: "video",
+    md_image: "image",
+    md_audio: "audio",
+    md_slides: "slides",
     dir: "ltr",
     pageTitle: "Introduction to AI: a free 9-module guide in Arabic and English | Ahmad Muhanna",
     metaDesc: "Learn AI from scratch in nine short modules: the basics, writing prompts (with a working prompt builder), responsible use and AI agents. Free, no sign-up, by Dubai AI trainer Ahmad Muhanna.",
@@ -1881,7 +1913,7 @@ const CONTENT = {
   if (window.AMMotion) holdDemos(); else d.addEventListener('DOMContentLoaded', holdDemos);
 });
 </script>
-<script src="assets/js/site.js?v=20261008b" defer></script>
+<script src="assets/js/site.js?v=20261008c" defer></script>
 <script src="assets/js/motion.js" defer></script>
 <script src="ai-tracker.js" defer></script>
 </body>

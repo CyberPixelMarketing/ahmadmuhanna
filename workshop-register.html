@@ -71,8 +71,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
-<link rel="stylesheet" href="assets/css/site.css?v=20261008b">
-<link rel="stylesheet" href="assets/css/pages/workshops.css?v=20261008b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261008c">
+<link rel="stylesheet" href="assets/css/pages/workshops.css?v=20261008c">
 </head>
 <body class="ws-page" data-ws-page="paid">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -254,9 +254,9 @@
         <figure class="term readout" aria-labelledby="ro-cap" data-open="false">
           <div class="term__bar">
             <span class="status-light" aria-hidden="true"></span>
-            <span class="term__title">session · next</span>
+            <span class="term__title" data-i18n="term_session">الجلسة القادمة</span>
             <span class="readout__state" data-ws="ro_state">قائمة الانتظار مفتوحة</span>
-            <div class="term__bar-end"><time class="mono readout__clock no-js-hide" data-ws-clock>GST</time></div>
+            <div class="term__bar-end"><time class="mono readout__clock no-js-hide" data-ws-clock>بتوقيت الإمارات</time></div>
           </div>
           <dl class="readout__rows">
             <div><dt data-i18n="ro_fee">الرسوم</dt><dd><span class="readout__price" data-i18n="price">50 درهماً</span> <span class="faint" data-ws="ro_fee_v">تُدفع فقط بعد تحديد الموعد</span></dd></div>
@@ -495,6 +495,7 @@ const CONFIG = {
 
 const CONTENT = {
   ar: {
+    term_session: "الجلسة القادمة",
     fit_4: "المبتدئين بلا خلفية تقنية",
     tr_line: "أحمد مهنا، مدرّب ذكاء اصطناعي في دبي، وشريك مؤسس في <bdi>Cyber Pixel</bdi> منذ 2013.",
     fact_nci: "مدرّب في <bdi>NCI</bdi>",
@@ -616,6 +617,7 @@ const CONTENT = {
     ft_city: "دبي، الإمارات العربية المتحدة", ft_top: "العودة للأعلى"
   },
   en: {
+    term_session: "session · next",
     fit_4: "Beginners, no tech background",
     tr_line: "Ahmad Muhanna, AI trainer in Dubai and co-founder of Cyber Pixel since 2013.",
     fact_nci: "Trainer at NCI",
@@ -736,9 +738,9 @@ const CONTENT = {
 };
 /* ===== End of edit zone ===== */
 </script>
-<script src="assets/js/site.js?v=20261008b" defer></script>
+<script src="assets/js/site.js?v=20261008c" defer></script>
 <script src="assets/js/motion.js" defer></script>
-<script src="assets/js/pages/workshops.js" defer></script>
+<script src="assets/js/pages/workshops.js?v=20261008c" defer></script>
 <script src="ai-tracker.js" defer></script>
 </body>
 </html>

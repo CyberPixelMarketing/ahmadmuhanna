@@ -70,8 +70,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
-<link rel="stylesheet" href="assets/css/site.css?v=20261008b">
-<link rel="stylesheet" href="assets/css/pages/workshops.css?v=20261008b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261008c">
+<link rel="stylesheet" href="assets/css/pages/workshops.css?v=20261008c">
 </head>
 <body class="ws-page" data-ws-page="free">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -224,9 +224,9 @@
         <figure class="term readout" aria-labelledby="ro-cap" data-open="false">
           <div class="term__bar">
             <span class="status-light" aria-hidden="true"></span>
-            <span class="term__title">session · next</span>
+            <span class="term__title" data-i18n="term_session">الجلسة القادمة</span>
             <span class="readout__state" data-ws="ro_state">قائمة الانتظار مفتوحة</span>
-            <div class="term__bar-end"><time class="mono readout__clock no-js-hide" data-ws-clock>GST</time></div>
+            <div class="term__bar-end"><time class="mono readout__clock no-js-hide" data-ws-clock>بتوقيت الإمارات</time></div>
           </div>
           <dl class="readout__rows">
             <div><dt data-i18n="ro_next">الموعد القادم</dt><dd data-ws-next>يُعلن قريباً</dd></div>
@@ -320,12 +320,12 @@
     <div class="marquee ws-ticker" data-marquee data-marquee-speed="36">
       <div class="marquee__viewport">
         <ul class="marquee__track" role="list">
-          <li class="mono" data-ws="tk_state">WAITLIST · OPEN</li>
-          <li class="mono" data-ws="tk_next">NEXT SESSION · TBA</li>
-          <li class="mono" data-ws="tk_last">LAST · WED 5 AUG 2026</li>
-          <li class="mono">60 MIN · LIVE · ONLINE</li>
-          <li class="mono">GST · UTC+04:00</li>
-          <li class="mono" data-ws="tk_fee">FEE · WITH THE DATE</li>
+          <li class="mono" data-ws="tk_state">قائمة الانتظار مفتوحة</li>
+          <li class="mono" data-ws="tk_next">الموعد القادم يُعلن قريباً</li>
+          <li class="mono" data-ws="tk_last">الجلسة السابقة · الأربعاء 5 أغسطس 2026</li>
+          <li class="mono" data-i18n="tk_len">60 دقيقة · مباشر · أونلاين</li>
+          <li class="mono" data-i18n="tk_tz">بتوقيت الإمارات</li>
+          <li class="mono" data-ws="tk_fee">الرسوم تُعلن مع الموعد</li>
         </ul>
       </div>
     </div>
@@ -385,7 +385,7 @@
           <figure class="term demo" data-prompt-demo="ws_demo" aria-labelledby="demo-cap">
             <div class="term__bar">
               <span class="status-light" aria-hidden="true"></span>
-              <span class="term__title">prompt · m05</span>
+              <span class="term__title" data-i18n="term_prompt">طلب · الوحدة 5</span>
               <div class="term__bar-end">
                 <span class="demo__state" data-demo-state data-i18n="demo_ready">جاهز</span>
                 <button class="demo__replay" type="button" data-demo-skip hidden><span data-i18n="demo_show_all">اعرض كاملاً</span></button>
@@ -778,13 +778,20 @@ const TICKER = {
   tk_last: "LAST · {past_mono}",
   tk_fee_waitlist: "FEE · WITH THE DATE", tk_fee_open: "FEE · FREE", tk_fee_full: "FEE · FREE"
 };
-Object.assign(CONTENT.ar, TICKER);
-Object.assign(CONTENT.en, TICKER);
+const TICKER_AR = {
+  tk_state_waitlist: "قائمة الانتظار مفتوحة", tk_state_open: "التسجيل مفتوح", tk_state_full: "اكتملت المقاعد",
+  tk_next_waitlist: "الموعد القادم يُعلن قريباً", tk_next_open: "الموعد القادم · {date}", tk_next_full: "الموعد القادم · {date}",
+  tk_last: "الجلسة السابقة · {past_date}",
+  tk_fee_waitlist: "الرسوم تُعلن مع الموعد", tk_fee_open: "مجاناً", tk_fee_full: "مجاناً",
+  tk_len: "60 دقيقة · مباشر · أونلاين", tk_tz: "بتوقيت الإمارات", term_session: "الجلسة القادمة", term_prompt: "طلب · الوحدة 5"
+};
+Object.assign(CONTENT.ar, TICKER_AR);
+Object.assign(CONTENT.en, TICKER, { tk_len: "60 MIN · LIVE · ONLINE", tk_tz: "GST · UTC+04:00", term_session: "session · next", term_prompt: "prompt · m05" });
 /* ===== End of edit zone ===== */
 </script>
-<script src="assets/js/site.js?v=20261008b" defer></script>
+<script src="assets/js/site.js?v=20261008c" defer></script>
 <script src="assets/js/motion.js" defer></script>
-<script src="assets/js/pages/workshops.js" defer></script>
+<script src="assets/js/pages/workshops.js?v=20261008c" defer></script>
 <script src="ai-tracker.js" defer></script>
 </body>
 </html>

@@ -1143,6 +1143,298 @@
     }
   }, true);
 
+  /* ---------- 16 WhatsApp float ---------- */
+  /* One floating WhatsApp button on every page that loads site.js, bottom
+     inline-end (right in English, left in Arabic). Opt out per page with
+     CONFIG.waFloat = false. It waves on arrival and every 14s (3 times max,
+     never under reduced motion). On phones it is a circle and its label shows
+     as a bubble while it waves. It also hides the duplicate WhatsApp icon in the
+     mobile CTA bar, and borrows that bar's template on click, so the prefilled
+     text follows the section the visitor is reading. */
+  var FLOAT_TEXT = {
+    ar: { label: 'تواصل أو احجز' },
+    en: { label: 'Chat or book' }
+  };
+  function initWaFloat() {
+    if (AM.config().waFloat === false || $('.wa-fab')) return;
+    var a = d.createElement('a');
+    a.className = 'wa-fab';
+    a.href = 'https://wa.me/' + AM.WA_NUMBER;
+    a.setAttribute('data-wa', 'general');
+    a.setAttribute('data-section', 'float');
+    a.innerHTML = '<span class="wa-fab__ring" aria-hidden="true"></span>' +
+      '<span class="wa-fab__icon">' + AM.icon('whatsapp') + '</span>' +
+      '<span class="wa-fab__label"></span>';
+    var label = $('.wa-fab__label', a);
+    function paint() {
+      var t = FLOAT_TEXT[AM.lang] || FLOAT_TEXT.ar;
+      label.textContent = t.label;
+      a.setAttribute('data-wa-label', t.label);
+      refreshWaLinks(a);
+    }
+    paint();
+    d.body.appendChild(a);
+    root.classList.add('has-wa-fab');
+    d.addEventListener('am:lang', paint);
+
+    /* Borrow the CTA bar's current template (it swaps per section) */
+    a.addEventListener('click', function () {
+      var src = $('.cta-bar__wa');
+      a.setAttribute('data-wa', (src && src.getAttribute('data-wa')) || 'general');
+      var vars = src && src.getAttribute('data-wa-vars');
+      if (vars) a.setAttribute('data-wa-vars', vars); else a.removeAttribute('data-wa-vars');
+    }, true);
+
+    requestAnimationFrame(function () { a.classList.add('is-in'); });
+    /* Phones: step aside while the keyboard is up, so it never covers a field */
+    d.addEventListener('focusin', function (e) {
+      if (e.target.matches && e.target.matches('input, textarea, select')) a.classList.add('is-away');
+    });
+    d.addEventListener('focusout', function () { setTimeout(function () {
+      var f = d.activeElement; if (!(f && f.matches && f.matches('input, textarea, select'))) a.classList.remove('is-away');
+    }, 50); });
+    if (AM.reducedMotion()) return;
+    var waves = 0;
+    function wave() {
+      if (waves >= 3 || d.hidden) return;
+      waves++;
+      a.classList.remove('is-waving');
+      void a.offsetWidth;
+      a.classList.add('is-waving');
+      setTimeout(function () { a.classList.remove('is-waving'); }, waves === 1 ? 4200 : 2400);
+      if (waves < 3) setTimeout(wave, 14000);
+    }
+    setTimeout(wave, 1600);
+  }
+
+  /* ---------- 17 Lead catcher ---------- */
+  /* A small, non-modal card (bottom sheet on phones) offering the next free
+     workshop. Pages opt in with CONFIG.leadCatcher = { scroll: 0.15, delay: 10 }:
+     it shows once the visitor has scrolled `scroll` of the page AND spent `delay`
+     seconds on it. It never shows twice in a session, for 14 days after a
+     dismissal, after any waitlist sign-up on this device, or after a WhatsApp
+     click this session. Step one is a one-line offer; the two fields (name,
+     WhatsApp number) open on request. While the session is open for booking, the
+     card links to free-workshop.html instead of collecting details.
+     It posts to FormSubmit with the same field names as the waitlist form, plus
+     Source = "popup · <page>". No email field, so there is no autoresponse:
+     Ahmad confirms on WhatsApp. */
+  var LEAD = {
+    ar: {
+      eyebrow: 'الورشة المجانية القادمة',
+      title: 'ساعة أونلاين: الذكاء الاصطناعي لعملك بأقل عدد من التطبيقات',
+      body_waitlist: 'الموعد يُعلن قريباً. اترك رقمك على واتساب لتصلك الدعوة قبل غيرك.',
+      body_open: 'الموعد: {date}، {time} بتوقيت الإمارات. المقاعد محدودة.',
+      cta: 'أرسل لي الموعد',
+      cta_open: 'احجز مقعدك المجاني',
+      alt: 'أو ابدأ بالدليل المجاني',
+      later: 'ليس الآن',
+      name: 'الاسم',
+      phone: 'رقم الواتساب',
+      country: 'رمز الدولة',
+      submit: 'أرسل لي الموعد',
+      consent: 'رسالة واحدة على واتساب عند الإعلان عن الموعد. لا رسائل تسويقية.',
+      close: 'إغلاق',
+      ok_title: 'تم، أنت في القائمة',
+      ok_body: 'سأرسل لك الموعد على واتساب فور الإعلان عنه. احفظ رقمي: ‎+971 52 234 6020‎',
+      ok_guide: 'إلى أن يحين الموعد: الدليل المجاني'
+    },
+    en: {
+      eyebrow: 'Next free workshop',
+      title: 'One hour online: AI for your business, with fewer apps',
+      body_waitlist: 'The date is announced soon. Leave your WhatsApp number and you’ll hear first.',
+      body_open: '{date}, {time} UAE time. Seats are limited.',
+      cta: 'Send me the date',
+      cta_open: 'Book your free seat',
+      alt: 'Or start the free guide',
+      later: 'Not now',
+      name: 'Name',
+      phone: 'WhatsApp number',
+      country: 'Country code',
+      submit: 'Send me the date',
+      consent: 'One WhatsApp message when the date is set. No marketing.',
+      close: 'Close',
+      ok_title: 'Done, you’re on the list',
+      ok_body: 'I’ll send the date on WhatsApp as soon as it’s set. Save my number: +971 52 234 6020',
+      ok_guide: 'Until then: the free guide'
+    }
+  };
+  function initLeadCatcher() {
+    var opts = AM.config().leadCatcher;
+    if (!opts || $('.lc')) return;
+    var DISMISS_DAYS = 14;
+    var minScroll = typeof opts.scroll === 'number' ? opts.scroll : 0.15;
+    var delayMs = (typeof opts.delay === 'number' ? opts.delay : 10) * 1000;
+    var onGuide = /learn/.test(location.pathname);
+    var page = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
+
+    function suppressed() {
+      if (AM.store.get('am_waitlisted') || AM.store.get('am_lead_done')) return true;
+      if (AM.store.get('am_lead_shown', true) || AM.store.get('am_wa_clicked', true)) return true;
+      var t = parseInt(AM.store.get('am_lead_dismiss'), 10);
+      return t && Date.now() - t < DISMISS_DAYS * 86400000;
+    }
+    if (suppressed()) return;
+    d.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('[data-wa]')) AM.store.set('am_wa_clicked', '1', true);
+    }, true);
+
+    var T = function (k) { return (LEAD[AM.lang] || LEAD.ar)[k]; };
+    var card = d.createElement('aside');
+    card.className = 'lc';
+    card.hidden = true;
+    card.setAttribute('role', 'dialog');
+    card.setAttribute('aria-labelledby', 'lead-h');
+    card.setAttribute('aria-describedby', 'lead-p');
+    var codes = '<option value="AE">+971</option><option value="SA">+966</option><option value="QA">+974</option>' +
+      '<option value="KW">+965</option><option value="BH">+973</option><option value="OM">+968</option><option value="XX">+…</option>';
+    card.innerHTML =
+      '<button class="lc__x" type="button" data-lead-close>' + AM.icon('x') + '</button>' +
+      '<div class="lc__main">' +
+        '<p class="lc__eyebrow"><span class="status-light is-on" aria-hidden="true"></span><span data-l="eyebrow"></span></p>' +
+        '<h2 class="lc__h" id="lead-h" tabindex="-1" data-l="title"></h2>' +
+        '<p class="lc__p" id="lead-p"></p>' +
+        '<div class="lc__step" data-lead-step="offer">' +
+          '<button class="btn btn--primary lc__go" type="button" data-lead-open><span data-l="cta"></span>' + AM.icon('arrow', 'icon--dir') + '</button>' +
+          '<a class="btn btn--primary lc__go" href="free-workshop.html#register" data-lead-book hidden data-track="cta_click" data-cta="lead_book" data-target="form"><span data-l="cta_open"></span>' + AM.icon('arrow', 'icon--dir') + '</a>' +
+          (onGuide ? '<button class="link link--quiet lc__alt" type="button" data-lead-close><span data-l="later"></span></button>'
+                   : '<a class="link link--quiet lc__alt" href="learn-ai.html" data-track="cta_click" data-cta="lead_guide" data-target="guide"><span data-l="alt"></span></a>') +
+        '</div>' +
+        '<form class="form lc__form" data-lead-step="form" hidden action="' + AM.FORM_ENDPOINT.replace('/ajax', '') + '" method="POST">' +
+          '<div class="field"><label class="field__label" for="lead_name" data-l="name"></label>' +
+            '<input class="input" id="lead_name" name="الاسم / Name" type="text" autocomplete="name" required data-error-required="err_name"></div>' +
+          '<div class="field"><label class="field__label" for="lead_phone" data-l="phone"></label>' +
+            '<div class="phone"><select class="select" id="lead_country" name="رمز الدولة / Country code">' + codes + '</select>' +
+            '<input class="input" id="lead_phone" name="رقم الهاتف / Phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="050 123 4567" required data-phone data-phone-country="#lead_country"></div></div>' +
+          '<div class="honey" aria-hidden="true"><label for="lead_honey">Leave empty</label><input id="lead_honey" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>' +
+          '<div class="form__actions"><button class="btn btn--primary btn--block" type="submit"><span data-l="submit"></span></button>' +
+          '<p class="form__consent" data-l="consent"></p></div>' +
+        '</form>' +
+      '</div>';
+    d.body.appendChild(card);
+
+    var open = false, shown = false, expanded = false;
+    function paint() {
+      $$('[data-l]', card).forEach(function (el) { el.textContent = T(el.getAttribute('data-l')); });
+      var st = AM.session.workshopState();
+      var isOpen = st === 'open-free' || st === 'open-paid';
+      $('#lead-p', card).textContent = AM.fill(T(isOpen ? 'body_open' : 'body_waitlist'), {
+        date: AM.session.formatDate(), time: AM.session.formatTime()
+      });
+      $('[data-lead-open]', card).hidden = isOpen;
+      $('[data-lead-book]', card).hidden = !isOpen;
+      if (st === 'open-paid') $('[data-lead-book]', card).setAttribute('data-href', 'workshop-register.html');
+      $('[data-lead-close]', card).setAttribute('aria-label', T('close'));
+      $('#lead_country', card).setAttribute('aria-label', T('country'));
+      /* Injected after applyLang ran: carry the language on internal links */
+      $$('a[href]', card).forEach(function (a) {
+        var base = a.getAttribute('data-href') || a.getAttribute('href');
+        a.setAttribute('data-href', base);
+        var h = base.split('#');
+        a.setAttribute('href', h[0] + (AM.lang === 'en' ? '?lang=en' : '') + (h[1] ? '#' + h[1] : ''));
+      });
+    }
+    paint();
+    d.addEventListener('am:lang', paint);
+
+    function setOpen(next) {
+      open = next;
+      root.classList.toggle('lc-on', next);
+      if (next) {
+        card.hidden = false;
+        requestAnimationFrame(function () { card.classList.add('is-in'); });
+        root.style.setProperty('--lc-h', card.offsetHeight + 'px');
+      } else {
+        card.classList.remove('is-in');
+        setTimeout(function () { if (!open) card.hidden = true; }, AM.reducedMotion() ? 0 : 280);
+      }
+      if (AM.ctaBar) AM.ctaBar.update();
+    }
+    function dismiss(how) {
+      if (!open) return;
+      var inside = card.contains(d.activeElement);
+      if (!$('.form-success', card)) AM.store.set('am_lead_dismiss', String(Date.now()));
+      AM.track('lead_dismiss', { how: how, step: expanded ? 'form' : 'offer', page: page });
+      setOpen(false);
+      if (inside) { var main = $('#main') || $('main'); if (main) { main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); } }
+    }
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('[data-lead-close]')) dismiss('button');
+      else if (e.target.closest('[data-lead-open]')) {
+        expanded = true;
+        $('[data-lead-step="offer"]', card).hidden = true;
+        $('[data-lead-step="form"]', card).hidden = false;
+        card.classList.add('is-form');
+        root.style.setProperty('--lc-h', card.offsetHeight + 'px');
+        AM.track('lead_open', { page: page });
+        setTimeout(function () { $('#lead_name', card).focus(); }, 30);
+      } else if (e.target.closest('[data-lead-book], .lc__alt[href]')) {
+        AM.store.set('am_lead_dismiss', String(Date.now()));
+        setOpen(false);
+      }
+    });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && open && !AM.overlayOpen()) dismiss('esc');
+    });
+
+    var form = $('form', card);
+    AM.initForm(form, {
+      name: 'lead_popup',
+      payload: function (f, data) {
+        return {
+          _subject: 'مشترك جديد — قائمة انتظار (نافذة الموقع) — ' + AM.lang.toUpperCase(),
+          _template: 'table',
+          _captcha: 'false',
+          'الاسم / Name': data.values['الاسم / Name'] || '',
+          'رقم الهاتف / Phone': (data.phone && data.phone.e164) || data.values['رقم الهاتف / Phone'] || '',
+          'الحالة / Status': 'waitlist',
+          'الورشة / Workshop': 'free',
+          'المصدر / Source': 'popup · ' + page,
+          'اللغة / Language': AM.lang
+        };
+      },
+      onSuccess: function () {
+        AM.store.set('am_lead_done', String(Date.now()));
+        AM.store.set('am_waitlisted', JSON.stringify({ ts: Date.now(), state: 'waitlist', ws: 'popup' }));
+        AM.track('lead_submit', { page: page });
+        var panel = AM.formSuccess(form, {
+          title: T('ok_title'), body: T('ok_body'),
+          html: onGuide ? '' : '<a class="link" href="learn-ai.html' + (AM.lang === 'en' ? '?lang=en' : '') + '" data-track="cta_click" data-cta="lead_success_guide"><span></span>' + AM.icon('arrow', 'icon--dir') + '</a>'
+        });
+        var g = $('a span', panel); if (g) g.textContent = T('ok_guide');
+        $('#lead-p', card).hidden = true;
+        $('#lead-h', card).hidden = true;
+        $('.lc__eyebrow', card).hidden = true;
+        root.style.setProperty('--lc-h', card.offsetHeight + 'px');
+      }
+    });
+
+    /* Trigger: scroll depth AND time on page, whichever is reached last */
+    var timeOk = false, scrollOk = false;
+    function ready() {
+      if (shown || !timeOk || !scrollOk) return;
+      /* Never interrupt typing, an open menu or dialog, or the page's own forms */
+      var a = d.activeElement;
+      if (AM.overlayOpen() || (a && a.matches && a.matches('input, textarea, select'))) { setTimeout(ready, 4000); return; }
+      if (suppressed()) return;
+      shown = true;
+      AM.store.set('am_lead_shown', '1', true);
+      AM.track('lead_show', { page: page });
+      setOpen(true);
+    }
+    setTimeout(function () { timeOk = true; ready(); }, delayMs);
+    function onScroll() {
+      var max = d.documentElement.scrollHeight - window.innerHeight;
+      if (max > 0 && window.scrollY / max >= minScroll) {
+        scrollOk = true;
+        window.removeEventListener('scroll', onScroll);
+        ready();
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    AM.lead = { show: function () { shown = false; timeOk = scrollOk = true; AM.store.remove('am_lead_shown', true); ready(); }, hide: function () { setOpen(false); } };
+  }
+
   /* ---------- 15 Boot ---------- */
   function boot() {
     AM.applyLang();
@@ -1152,6 +1444,8 @@
     initHeader();
     initCtaBar();
     initTestimonials();
+    initWaFloat();
+    initLeadCatcher();
     AM.ready = true;
     var q = window.AMQ || [];
     window.AMQ = { push: function (fn) { try { fn(AM); } catch (e) { console.error(e); } } };

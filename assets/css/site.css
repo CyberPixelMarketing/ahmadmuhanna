@@ -684,6 +684,9 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   font-size: .75rem; line-height: 1.3; color: var(--c-ink-2); white-space: nowrap;
 }
 .tag:lang(ar) { font-family: var(--font-text); font-size: .8125rem; }
+/* Translated labels inside mono/terminal chrome: Arabic text face, RTL */
+html[lang="ar"] .term__title[data-i18n], html[lang="ar"] .mono[data-i18n], html[lang="ar"] .mono[data-ws],
+html[lang="ar"] .trio__tag[data-i18n], html[lang="ar"] [data-ws-clock] { font-family: var(--font-text); font-stretch: normal; direction: rtl; letter-spacing: 0; }
 .tag-list { display: flex; flex-wrap: wrap; gap: var(--s-2); list-style: none; padding: 0; }
 .tag--credential { color: var(--c-ink); direction: ltr; unicode-bidi: isolate; }
 .tag--credential .tag__year { color: var(--c-ink-3); }
@@ -1043,6 +1046,110 @@ dialog.sheet[open] { animation: am-sheet-in var(--dur-3) var(--ease-out); }
 @keyframes am-sheet-in { from { opacity: 0; transform: translateY(12px); } }
 @keyframes am-sheet-up { from { transform: translateY(100%); } }
 
+/* ---------- 21b WhatsApp float ---------- */
+/* Bottom inline-end: right in English, left in Arabic. Signal fill, never green
+   (one signal colour). Pill with label from 768px, a 56px circle below that, whose
+   label appears as a bubble while it waves. */
+.wa-fab {
+  --fab: 56px;
+  position: fixed; z-index: calc(var(--z-ctabar) + 10);
+  inset-inline-end: max(var(--s-4), env(safe-area-inset-right));
+  inset-block-end: calc(var(--s-4) + env(safe-area-inset-bottom));
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: var(--fab); min-width: var(--fab); padding: 0;
+  border-radius: var(--r-lg); background: var(--c-signal); color: var(--c-on-signal);
+  font-family: var(--font-text); font-size: var(--fs-small); font-weight: 600; line-height: 1;
+  text-decoration: none; box-shadow: var(--shadow-overlay);
+  opacity: 0; translate: 0 12px;
+  transition: opacity var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out),
+              background-color var(--dur-2) var(--ease-out), scale var(--dur-1) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.wa-fab.is-in { opacity: 1; translate: 0 0; }
+.wa-fab:hover { background: var(--c-signal-hover); }
+.wa-fab:active { background: var(--c-signal-press); scale: .95; }
+.wa-fab:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 3px; }
+.wa-fab__icon { display: grid; place-items: center; width: var(--fab); height: var(--fab); flex: none; }
+.wa-fab__icon .icon { width: 26px; height: 26px; }
+.wa-fab__ring { position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--c-signal); opacity: 0; pointer-events: none; }
+.wa-fab__label {
+  position: absolute; inset-inline-end: calc(100% + var(--s-3)); inset-block-start: 50%;
+  padding: .55rem .85rem; border-radius: var(--r-md); white-space: nowrap;
+  background: var(--c-ink); color: var(--c-bg); box-shadow: var(--shadow-overlay);
+  opacity: 0; translate: 6px -50%; pointer-events: none;
+  transition: opacity var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out);
+}
+[dir="rtl"] .wa-fab__label { translate: -6px -50%; }
+.wa-fab.is-waving .wa-fab__label { opacity: 1; translate: 0 -50%; }
+.wa-fab.is-waving .wa-fab__icon .icon { animation: am-wave 1.3s var(--ease-out); transform-origin: 70% 85%; }
+.wa-fab.is-waving .wa-fab__ring { animation: am-ring 1.3s var(--ease-out) 2; }
+@keyframes am-wave {
+  0%, 62%, 100% { rotate: 0deg; }
+  10% { rotate: 16deg; } 22% { rotate: -10deg; } 34% { rotate: 14deg; } 46% { rotate: -6deg; } 56% { rotate: 8deg; }
+}
+@keyframes am-ring { from { opacity: .6; scale: 1; } to { opacity: 0; scale: 1.45; } }
+
+/* Phones: lift above the CTA bar and take over its WhatsApp icon */
+@media (max-width: 767px) {
+  html.has-wa-fab .cta-bar__wa { display: none; }
+  html.has-wa-fab .cta-bar { padding-inline-end: calc(var(--pad) + 56px + var(--s-3)); }
+  html.has-wa-fab .cta-bar .cta-bar__primary { flex: 1; }
+  html.cta-bar-on .wa-fab { inset-block-end: calc((var(--ctabar-h) - 56px) / 2 + env(safe-area-inset-bottom)); }
+  html.lc-on .wa-fab, .wa-fab.is-away { opacity: 0; translate: 0 12px; pointer-events: none; }
+}
+@media (min-width: 768px) {
+  .wa-fab { padding-inline-end: 1.25rem; inset-inline-end: var(--s-6); inset-block-end: var(--s-6); }
+  .wa-fab__icon { width: 48px; }
+  .wa-fab__label { position: static; padding: 0; background: none; color: inherit; box-shadow: none; opacity: 1; translate: none; }
+  [dir="rtl"] .wa-fab__label { translate: none; }
+  .wa-fab:hover { translate: 0 -2px; }
+}
+
+/* ---------- 21c Lead catcher ---------- */
+/* Non-modal card above the float (desktop) / bottom sheet (phones). No backdrop,
+   no focus trap: the page stays usable. */
+.lc {
+  position: fixed; z-index: calc(var(--z-ctabar) + 20);
+  inset-inline: var(--s-3); inset-block-end: calc(var(--s-3) + env(safe-area-inset-bottom));
+  max-height: calc(100dvh - var(--header-h) - var(--s-6)); overflow-y: auto; overscroll-behavior: contain;
+  background: var(--c-raised); color: var(--c-ink);
+  border: var(--bw) solid var(--c-line-strong); border-block-start: 3px solid var(--c-signal);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-overlay);
+  opacity: 0; translate: 0 24px;
+  transition: opacity var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out);
+}
+.lc.is-in { opacity: 1; translate: 0 0; }
+.lc[hidden] { display: none; }
+.lc__main { display: grid; gap: var(--s-3); padding: var(--s-5); }
+.lc__eyebrow, .lc__h { padding-inline-end: 36px; }
+.lc__x {
+  position: absolute; inset-block-start: var(--s-2); inset-inline-end: var(--s-2);
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r-md);
+  color: var(--c-ink-2); background: none; border: 0; cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out), rotate var(--dur-2) var(--ease-out);
+}
+.lc__x:hover { background: var(--c-hover); color: var(--c-ink); rotate: 90deg; }
+.lc__x .icon { width: 20px; height: 20px; }
+.lc__eyebrow { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-label); font-weight: 600; color: var(--c-signal-ink); }
+.lc__h { font-size: var(--fs-h4); line-height: 1.4; font-weight: 700; max-width: 26ch; }
+.lc__h:focus { outline: none; }
+.lc__p { color: var(--c-ink-2); font-size: var(--fs-small); line-height: 1.6; }
+.lc__step { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-4); margin-block-start: var(--s-1); }
+.lc__go { flex: 1 1 auto; }
+.lc__alt { min-height: 44px; display: inline-flex; align-items: center; background: none; border: 0; cursor: pointer; font: inherit; font-size: var(--fs-small); }
+.lc__form { display: grid; gap: var(--s-4); }
+.lc .form-success { padding: 0; background: none; border: 0; }
+.lc .form-success h3 { font-size: var(--fs-h4); }
+@media (min-width: 768px) {
+  .lc { inset-inline: auto var(--s-6); inset-block-end: calc(var(--s-6) + 48px + var(--s-4)); width: min(400px, calc(100vw - 2 * var(--s-6))); }
+}
+@media (max-width: 767px) {
+  html.lc-on .cta-bar { translate: 0 100%; visibility: hidden; }
+  html.lc-on { scroll-padding-block-end: calc(var(--lc-h, 0px) + var(--s-4)); }
+  .lc__main { padding: var(--s-4); gap: var(--s-2); }
+  .lc__go { width: 100%; }
+}
+
 /* ---------- 22 Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1053,6 +1160,8 @@ dialog.sheet[open] { animation: am-sheet-in var(--dur-3) var(--ease-out); }
   .demo__caret { display: none !important; }
   .marquee .marquee__track { animation: none !important; flex-wrap: wrap; width: auto; }
   .marquee__toggle { display: none; }
+  .wa-fab, .lc { translate: none !important; }
+  .wa-fab.is-waving .wa-fab__label { opacity: 0; }
   .btn__spinner { animation: am-spin 1.4s linear infinite !important; animation-duration: 1.4s !important; animation-iteration-count: infinite !important; }
 }
 /* JS mirror of the media query, for the styleguide toggle */
@@ -1062,5 +1171,5 @@ html.reduce-motion .btn__spinner { animation-duration: 1.4s !important; animatio
 
 /* Print: hide interactive chrome only */
 @media print {
-  .site-header, .cta-bar, .toast-region, .field-canvas, .demo__presets, .menu, [data-theme-toggle] { display: none !important; }
+  .site-header, .cta-bar, .toast-region, .field-canvas, .demo__presets, .menu, [data-theme-toggle], .wa-fab, .lc { display: none !important; }
 }

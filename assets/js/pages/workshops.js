@@ -169,7 +169,7 @@
     function tickClock() {
       var now = new Date();
       $$('[data-ws-clock]').forEach(function (el) {
-        el.textContent = 'GST ' + clockFmt.format(now);
+        el.textContent = AM.lang === 'en' ? 'GST ' + clockFmt.format(now) : clockFmt.format(now) + ' بتوقيت الإمارات';
         el.setAttribute('datetime', now.toISOString());
       });
     }

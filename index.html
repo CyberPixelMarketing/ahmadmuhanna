@@ -99,8 +99,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fustat:wght@600;700&family=Readex+Pro:wght@400;500;600&family=Funnel+Display:wght@500;600&family=Funnel+Sans:wght@400;500;600&family=Martian+Mono:wdth,wght@87.5,400;87.5,500&display=swap">
 <link rel="preload" as="image" href="assets/img/Me.webp" imagesrcset="assets/img/Me-720.webp 720w, assets/img/Me.webp 1101w" imagesizes="(min-width: 1024px) 37vw, 90vw" media="(min-width: 1024px)" fetchpriority="high">
 <script>(function(e){var t;try{t=localStorage.getItem("am-theme")}catch(n){}if(t!="light"&&t!="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";e.setAttribute("data-theme",t);e.classList.add("js")})(document.documentElement)</script>
-<link rel="stylesheet" href="assets/css/site.css?v=20261008b">
-<link rel="stylesheet" href="assets/css/pages/index.css?v=20261008b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261008c">
+<link rel="stylesheet" href="assets/css/pages/index.css?v=20261008c">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -238,7 +238,7 @@
           <li data-i18n="tk1">الجلسة القادمة</li>
           <li data-session="waitlist full" data-i18n="tk2">قائمة الانتظار مفتوحة</li>
           <li data-session="open-free open-paid" hidden data-i18n="tk2_open">التسجيل مفتوح</li>
-          <li lang="en" dir="ltr">60 MIN · ONLINE · LIVE</li>
+          <li data-i18n="tk_len">60 دقيقة · أونلاين · مباشر</li>
           <li data-i18n="tk3">بالعربية</li>
         </ul>
       </div>
@@ -314,7 +314,7 @@
       </div>
       <ul class="bento" role="list">
         <li class="card card--feature" id="w5" data-spot>
-          <ul class="tag-list card__tags" role="list"><li class="tag" data-i18n="w5_dur">ساعتان</li><li class="tag" data-i18n="w_mode">حضوري أو أونلاين</li><li class="tag" lang="en">AR · EN</li></ul>
+          <ul class="tag-list card__tags" role="list"><li class="tag" data-i18n="w5_dur">ساعتان</li><li class="tag" data-i18n="w_mode">حضوري أو أونلاين</li><li class="tag" data-i18n="t_langs">عربي · إنجليزي</li></ul>
           <h3 class="card__t" data-i18n="w5_t">الذكاء الاصطناعي لأصحاب الأعمال والمدراء</h3>
           <p class="card__o" data-i18n="w5_o">خطة لتبنّي الذكاء الاصطناعي في منشأتك: من أين تبدأ، وبأي ترتيب، وكيف تقيس العائد.</p>
           <details class="disclosure card__more" open>
@@ -425,7 +425,7 @@
     <div class="wrap">
       <div class="teams-sec__head">
         <h2 id="teams-h" data-i18n="teams_h">تدريب لفريقك أو شركتك</h2>
-        <ul class="tag-list" role="list"><li class="tag" data-i18n="t_onsite">حضوري في الإمارات والخليج</li><li class="tag" data-i18n="t_online">أونلاين مباشر</li><li class="tag" lang="en">AR · EN</li></ul>
+        <ul class="tag-list" role="list"><li class="tag" data-i18n="t_onsite">حضوري في الإمارات والخليج</li><li class="tag" data-i18n="t_online">أونلاين مباشر</li><li class="tag" data-i18n="t_langs">عربي · إنجليزي</li></ul>
       </div>
       <ol class="timeline" data-timeline>
         <li class="timeline__step" data-spot><span class="timeline__n num">01</span><h3 class="timeline__t" data-i18n="step1_t">ترسل التفاصيل</h3><p class="timeline__d" data-i18n="step1">عدد الفريق، والمكان، واللغة، والموضوع، على واتساب.</p></li>
@@ -519,7 +519,7 @@
       <nav class="term tree" aria-labelledby="tree-cap">
         <div class="term__bar">
           <span class="status-light is-on" aria-hidden="true"></span>
-          <span class="term__title" id="tree-cap">learn-ai/ · 9 modules</span>
+          <span class="term__title" id="tree-cap" data-i18n="tree_cap">الدليل · 9 محاور</span>
           <span class="tree__count term__bar-end mono" data-tree-count>0/9</span>
         </div>
         <div class="tree__progress" aria-hidden="true"><span class="tree__bar" data-tree-bar></span></div>
@@ -683,7 +683,7 @@
         </div>
       </fieldset>
       <figure class="term sheet__preview">
-        <div class="term__bar"><span class="status-light is-on" aria-hidden="true"></span><span class="term__title">whatsapp · preview</span></div>
+        <div class="term__bar"><span class="status-light is-on" aria-hidden="true"></span><span class="term__title" data-i18n="sheet_prev">معاينة رسالة واتساب</span></div>
         <div class="term__body"><pre class="term__pre" id="sheet-preview" aria-live="off"></pre></div>
       </figure>
       <p class="form__status" role="status" aria-live="polite"></p>
@@ -714,6 +714,8 @@ window.CONFIG = {
   durationMin: 60,
   seatsFull: false,
   sessionType: 'free', /* 'free' or 'paid' */
+  /* Lead catcher card: shows after this share of the page is scrolled AND this many seconds */
+  leadCatcher: { scroll: 0.15, delay: 10 },
   /* Fujairah kids photos. Keep 'blurred' until parental / organiser consent for the
      unblurred originals is confirmed in writing; then set 'original'. */
   kidsPhotos: 'original'
@@ -769,6 +771,10 @@ window.CONTENT = {
     tk2: 'قائمة الانتظار مفتوحة',
     tk2_open: 'التسجيل مفتوح',
     tk3: 'بالعربية',
+    tk_len: '60 دقيقة · أونلاين · مباشر',
+    t_langs: 'عربي · إنجليزي',
+    tree_cap: 'الدليل · 9 محاور',
+    sheet_prev: 'معاينة رسالة واتساب',
     sc_status: 'الموعد القادم يُعلن قريباً',
     sc_tz: 'بتوقيت الإمارات',
     sc_full: 'اكتملت المقاعد، والانتظار مفتوح',
@@ -1022,6 +1028,10 @@ window.CONTENT = {
     tk2: 'WAITLIST OPEN',
     tk2_open: 'REGISTRATION OPEN',
     tk3: 'IN ARABIC',
+    tk_len: '60 MIN · ONLINE · LIVE',
+    t_langs: 'AR · EN',
+    tree_cap: 'learn-ai/ · 9 modules',
+    sheet_prev: 'whatsapp · preview',
     sc_status: 'Next date announced soon',
     sc_tz: 'UAE time',
     sc_full: 'Seats are full; the waitlist is open',
@@ -1230,7 +1240,7 @@ window.CONTENT = {
   }
 };
 </script>
-<script src="assets/js/site.js?v=20261008b" defer></script>
+<script src="assets/js/site.js?v=20261008c" defer></script>
 <script src="assets/js/motion.js" defer></script>
 <script src="assets/js/pages/index.js" defer></script>
 <script src="ai-tracker.js" defer></script>
