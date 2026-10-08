@@ -1220,7 +1220,8 @@
      open for booking, it links to the booking page instead of collecting details.
      It posts to FormSubmit with the same field names as the waitlist form, plus
      Source = "popup · <page>". No email field, so there is no autoresponse:
-     Ahmad confirms on WhatsApp. */
+     Ahmad confirms on WhatsApp. Optional CONFIG.leadCatcher.copy overrides the
+     text per language (see T below). */
   var LEAD = {
     ar: {
       eyebrow: 'الورشة المجانية القادمة',
@@ -1279,7 +1280,11 @@
       if (e.target.closest && e.target.closest('[data-wa]')) AM.store.set('am_wa_clicked', '1', true);
     }, true);
 
-    var T = function (k) { return (LEAD[AM.lang] || LEAD.ar)[k]; };
+    /* Pages may override any LEAD string per language: CONFIG.leadCatcher.copy = { ar: {…}, en: {…} } */
+    var T = function (k) {
+      var o = opts.copy && opts.copy[AM.lang];
+      return (o && o[k] != null) ? o[k] : (LEAD[AM.lang] || LEAD.ar)[k];
+    };
     var dlg = d.createElement('dialog');
     dlg.className = 'lc';
     dlg.setAttribute('aria-labelledby', 'lead-h');

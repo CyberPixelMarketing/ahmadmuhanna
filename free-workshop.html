@@ -36,7 +36,7 @@
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://ahmadmuhanna.com/#ahmad",
+      "@id": "https://ahmadmuhanna.com/#person",
       "name": "Ahmad Muhanna",
       "alternateName": ["أحمد مهنا", "احمد مهنا"],
       "jobTitle": ["AI Trainer", "مدرب ذكاء اصطناعي", "Co-founder of Cyber Pixel", "Project Manager at Dune AI"],
@@ -57,7 +57,7 @@
       "@type": "Service",
       "name": "Online workshop: AI for your business, with fewer apps · ورشة أونلاين: الذكاء الاصطناعي لعملك بأقل عدد من التطبيقات",
       "serviceType": ["AI workshop", "Online AI training", "ورشة ذكاء اصطناعي", "تدريب ذكاء اصطناعي أونلاين"],
-      "provider": {"@id": "https://ahmadmuhanna.com/#ahmad"},
+      "provider": {"@id": "https://ahmadmuhanna.com/#person"},
       "areaServed": ["United Arab Emirates", "GCC", "Online"],
       "availableLanguage": ["ar", "en"],
       "url": "https://ahmadmuhanna.com/free-workshop.html"
@@ -235,7 +235,7 @@
             <div><dt data-i18n="ro_mode">الشكل</dt><dd data-i18n="ro_mode_v">أونلاين، مباشر</dd></div>
             <div><dt data-i18n="ro_link">رابط الحضور</dt><dd data-i18n="ro_link_v">يصلك على بريدك بعد التسجيل</dd></div>
             <div><dt data-i18n="ro_fee">الرسوم</dt><dd data-ws="ro_fee_v">تُعلن مع الموعد</dd></div>
-            <div><dt data-i18n="ro_init">الجلسة الأولى</dt><dd class="faint" data-i18n="ro_init_v">أُقيمت دعماً لمبادرة دبي «مليون خبير لأوامر الذكاء الاصطناعي»</dd></div>
+            <div><dt data-i18n="ro_init">الجلسة الأولى</dt><dd class="faint" data-i18n-html="ro_init_v">أُقيمت دعماً لمبادرة دبي <a href="one-million-prompters.html">«مليون خبير لأوامر الذكاء الاصطناعي»</a></dd></div>
           </dl>
           <figcaption class="sr-only" id="ro-cap" data-i18n="ro_cap">حالة الجلسة القادمة</figcaption>
         </figure>
@@ -433,6 +433,7 @@
           <li><a href="workshop-register.html" data-i18n="ft_paid">جلسة الورشة المدفوعة</a></li>
           <li><a href="learn-ai.html" data-i18n="nav_guide">الدليل المجاني</a></li>
           <li><a href="learn-ai.html#builder" data-i18n="ft_builder">أداة بناء الطلبات</a></li>
+          <li><a href="one-million-prompters.html"><bdi>One Million Prompters</bdi></a></li>
           <li><a href="index.html#kids" data-i18n="ft_kids">ورش الأطفال</a></li>
         </ul>
       </nav>
@@ -541,7 +542,7 @@ const CONTENT = {
     tr_more_s: "المزيد عن أحمد",
     tr_more_p: "أسّست منصة <bdi>WATSIN.NET</bdi> لوكلاء الذكاء الاصطناعي، وأعمل مدير مشاريع في <bdi>Dune AI</bdi>. أدرّب على ما تستخدمه فرقنا فعلاً في مشاريع العملاء، بالعربية أولاً ومع الإنجليزية.",
     ro_init: "الجلسة الأولى",
-    ro_init_v: "أُقيمت دعماً لمبادرة دبي «مليون خبير لأوامر الذكاء الاصطناعي»",
+    ro_init_v: "أُقيمت دعماً لمبادرة دبي <a href=\"one-million-prompters.html\">«مليون خبير لأوامر الذكاء الاصطناعي»</a>",
     band_h_waitlist: "الموعد القادم يُعلن قريباً",
     band_h_open: "التسجيل مفتوح لورشة {date}",
     band_h_full: "اكتملت مقاعد ورشة {date}",
@@ -661,7 +662,7 @@ const CONTENT = {
     tr_more_s: "More about Ahmad",
     tr_more_p: "I founded WATSIN.NET, an AI-agents platform, and I’m Project Manager at Dune AI. I teach what my teams actually use on client projects, in Arabic first and in English.",
     ro_init: "First session",
-    ro_init_v: "Held in support of Dubai’s One Million Prompters initiative",
+    ro_init_v: "Held in support of Dubai’s <a href=\"one-million-prompters.html\">One Million Prompters</a> initiative",
     band_h_waitlist: "Next date: announced soon",
     band_h_open: "Registration is open for {date}",
     band_h_full: "The {date} session is full",

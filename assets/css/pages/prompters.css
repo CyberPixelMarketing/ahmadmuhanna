@@ -1,0 +1,66 @@
+/* =====================================================================
+   one-million-prompters.html only. Loads after site.css and
+   pages/workshops.css (hero, form panel, readout, steps, trainer, band).
+   Tokens only, logical properties, RTL first.
+   ===================================================================== */
+
+/* ---------- Hero ---------- */
+.omp-hero .ws-hero__title { max-width: 22ch; }
+html[lang="en"] .omp-hero .ws-hero__title { max-width: 16ch; }
+.omp-answer { display: grid; gap: var(--s-3); max-width: 60ch; }
+.omp-answer .lead { max-width: none; }
+.omp-note {
+  display: flex; gap: var(--s-2); align-items: flex-start;
+  font-size: var(--fs-small); line-height: var(--lh-small); color: var(--c-ink-3); max-width: 60ch;
+}
+.omp-note .icon { flex: none; margin-block-start: .2em; color: var(--c-ink-3); }
+.omp-note a { color: var(--c-ink-2); }
+.omp-updated { font-size: var(--fs-small); color: var(--c-ink-3); }
+
+/* Fact sheet beside the answer: a readout of sourced facts */
+.omp-facts .readout__rows > div { grid-template-columns: minmax(7rem, 2fr) minmax(0, 5fr); }
+.omp-facts dd a { color: var(--c-ink); text-decoration-color: var(--c-signal-ink); }
+
+/* ---------- Steps: external link inside a step ---------- */
+.omp-steps .link { justify-self: start; }
+.omp-steps .btn { max-width: 100%; white-space: normal; }
+
+/* ---------- Official modules: editorial rows ---------- */
+.omp-mods .row { padding-block: var(--s-5); }
+.omp-mods .row__title bdi { display: block; }
+.omp-mods .row__ar { display: block; font-size: var(--fs-small); line-height: var(--lh-small); color: var(--c-ink-3); font-weight: 400; margin-block-start: var(--s-1); }
+.omp-mods .row__actions .link { min-height: 44px; }
+.omp-mods__total { margin-block-start: var(--s-4); font-size: var(--fs-small); color: var(--c-ink-3); }
+
+/* ---------- Course vs live practice: a real table ---------- */
+.omp-compare { width: 100%; max-width: 64rem; font-size: var(--fs-small); line-height: var(--lh-small); }
+.omp-compare caption { text-align: start; color: var(--c-ink-3); padding-block-end: var(--s-3); }
+.omp-compare th, .omp-compare td { text-align: start; vertical-align: top; padding: var(--s-4) var(--s-3); border-block-start: var(--bw) solid var(--c-line); }
+.omp-compare thead th { font-size: var(--fs-label); font-weight: 600; color: var(--c-ink-2); border-block-start: 0; padding-block-start: 0; }
+.omp-compare tbody th { font-weight: 600; color: var(--c-ink); width: 22%; }
+.omp-compare td { color: var(--c-ink-2); }
+.omp-compare td:last-child { color: var(--c-ink); }
+@media (max-width: 767px) {
+  .omp-compare, .omp-compare caption, .omp-compare tbody, .omp-compare tr, .omp-compare td, .omp-compare th { display: block; width: 100%; }
+  .omp-compare thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .omp-compare tr { border-block-start: var(--bw) solid var(--c-line); padding-block: var(--s-4); }
+  .omp-compare tbody th, .omp-compare td { border: 0; padding: var(--s-1) 0; }
+  .omp-compare tbody th { padding-block-end: var(--s-2); }
+  .omp-compare td::before { content: attr(data-label); display: block; font-size: .8125rem; color: var(--c-ink-3); }
+}
+
+/* ---------- Teams ---------- */
+.omp-teams { display: grid; gap: var(--s-5) var(--gutter); align-items: end; }
+.omp-teams__copy { display: grid; gap: var(--s-3); max-width: 46rem; }
+.omp-teams__copy h2 { font-size: var(--fs-h2); }
+.omp-teams__copy p { color: var(--c-ink-2); max-width: var(--measure); }
+@media (min-width: 1024px) { .omp-teams { grid-template-columns: minmax(0, 1fr) auto; } }
+@media (max-width: 767px) { .omp-teams .btn { width: 100%; } }
+
+/* ---------- Sources ---------- */
+.omp-sources { display: grid; gap: var(--s-4); }
+.omp-sources h2 { font-size: var(--fs-h3); font-family: var(--font-text); }
+.omp-sources ol { display: grid; gap: var(--s-2); padding-inline-start: 1.25rem; color: var(--c-ink-3); font-size: var(--fs-small); line-height: var(--lh-small); max-width: var(--measure); }
+.omp-sources a { color: var(--c-ink-2); }
+.omp-sources a:hover { color: var(--c-ink); text-decoration-color: var(--c-signal-ink); }
+.omp-sources p { font-size: var(--fs-small); color: var(--c-ink-3); max-width: var(--measure); }
