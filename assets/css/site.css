@@ -1066,6 +1066,7 @@ dialog.sheet[open] { animation: am-sheet-in var(--dur-3) var(--ease-out); }
   -webkit-tap-highlight-color: transparent;
 }
 .wa-fab.is-in { opacity: 1; translate: 0 0; }
+html.is-locked .wa-fab { opacity: 0; pointer-events: none; }
 .wa-fab:hover { background: var(--c-signal-hover); }
 .wa-fab:active { background: var(--c-signal-press); scale: .95; }
 .wa-fab:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 3px; }
@@ -1095,7 +1096,7 @@ dialog.sheet[open] { animation: am-sheet-in var(--dur-3) var(--ease-out); }
   html.has-wa-fab .cta-bar { padding-inline-end: calc(var(--pad) + 56px + var(--s-3)); }
   html.has-wa-fab .cta-bar .cta-bar__primary { flex: 1; }
   html.cta-bar-on .wa-fab { inset-block-end: calc((var(--ctabar-h) - 56px) / 2 + env(safe-area-inset-bottom)); }
-  html.lc-on .wa-fab, .wa-fab.is-away { opacity: 0; translate: 0 12px; pointer-events: none; }
+  .wa-fab.is-away { opacity: 0; translate: 0 12px; pointer-events: none; }
 }
 @media (min-width: 768px) {
   .wa-fab { padding-inline-end: 1.25rem; inset-inline-end: var(--s-6); inset-block-end: var(--s-6); }
@@ -1106,49 +1107,41 @@ dialog.sheet[open] { animation: am-sheet-in var(--dur-3) var(--ease-out); }
 }
 
 /* ---------- 21c Lead catcher ---------- */
-/* Non-modal card above the float (desktop) / bottom sheet (phones). No backdrop,
-   no focus trap: the page stays usable. */
-.lc {
-  position: fixed; z-index: calc(var(--z-ctabar) + 20);
-  inset-inline: var(--s-3); inset-block-end: calc(var(--s-3) + env(safe-area-inset-bottom));
-  max-height: calc(100dvh - var(--header-h) - var(--s-6)); overflow-y: auto; overscroll-behavior: contain;
-  background: var(--c-raised); color: var(--c-ink);
-  border: var(--bw) solid var(--c-line-strong); border-block-start: 3px solid var(--c-signal);
-  border-radius: var(--r-lg); box-shadow: var(--shadow-overlay);
-  opacity: 0; translate: 0 24px;
-  transition: opacity var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out);
+/* Centred modal <dialog> over a dimmed page. Native focus trap, Esc and
+   backdrop click close it. */
+dialog.lc {
+  width: min(28rem, calc(100vw - 2 * var(--s-4))); max-width: none;
+  max-height: calc(100dvh - 2 * var(--s-4)); overflow-y: auto; overscroll-behavior: contain;
+  margin: auto; padding: 0; border: 0; border-block-start: 3px solid var(--c-signal);
+  border-radius: var(--r-lg); background: var(--c-raised); color: var(--c-ink);
+  box-shadow: var(--shadow-overlay);
 }
-.lc.is-in { opacity: 1; translate: 0 0; }
-.lc[hidden] { display: none; }
-.lc__main { display: grid; gap: var(--s-3); padding: var(--s-5); }
-.lc__eyebrow, .lc__h { padding-inline-end: 36px; }
+dialog.lc::backdrop { background: var(--c-backdrop); }
+dialog.lc[open] { animation: am-lc-in var(--dur-3) var(--ease-out); }
+dialog.lc[open]::backdrop { animation: am-fade-in var(--dur-3) var(--ease-out); }
+dialog.lc.is-closing { animation: am-lc-out 180ms var(--ease-in) forwards; }
+dialog.lc.is-closing::backdrop { animation: am-lc-fade-out 180ms var(--ease-in) forwards; }
+@keyframes am-lc-in { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+@keyframes am-lc-out { to { opacity: 0; transform: translateY(8px) scale(.98); } }
+@keyframes am-lc-fade-out { to { opacity: 0; } }
+.lc__main { position: relative; display: grid; gap: var(--s-3); padding: var(--s-6); }
 .lc__x {
-  position: absolute; inset-block-start: var(--s-2); inset-inline-end: var(--s-2);
+  position: absolute; inset-block-start: var(--s-3); inset-inline-end: var(--s-3);
   display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r-md);
   color: var(--c-ink-2); background: none; border: 0; cursor: pointer;
   transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out), rotate var(--dur-2) var(--ease-out);
 }
 .lc__x:hover { background: var(--c-hover); color: var(--c-ink); rotate: 90deg; }
 .lc__x .icon { width: 20px; height: 20px; }
-.lc__eyebrow { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-label); font-weight: 600; color: var(--c-signal-ink); }
-.lc__h { font-size: var(--fs-h4); line-height: 1.4; font-weight: 700; max-width: 26ch; }
+.lc__eyebrow { display: flex; align-items: center; gap: var(--s-2); padding-inline-end: 44px; font-size: var(--fs-label); font-weight: 600; color: var(--c-signal-ink); }
+.lc__h { font-size: var(--fs-h3); line-height: 1.35; font-weight: 700; }
 .lc__h:focus { outline: none; }
-.lc__p { color: var(--c-ink-2); font-size: var(--fs-small); line-height: 1.6; }
-.lc__step { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-4); margin-block-start: var(--s-1); }
-.lc__go { flex: 1 1 auto; }
-.lc__alt { min-height: 44px; display: inline-flex; align-items: center; background: none; border: 0; cursor: pointer; font: inherit; font-size: var(--fs-small); }
+.lc__p { color: var(--c-ink-2); font-size: var(--fs-small); line-height: 1.6; margin-block-end: var(--s-2); }
 .lc__form { display: grid; gap: var(--s-4); }
+.lc__alt { justify-self: center; min-height: 44px; display: inline-flex; align-items: center; font-size: var(--fs-small); }
 .lc .form-success { padding: 0; background: none; border: 0; }
 .lc .form-success h3 { font-size: var(--fs-h4); }
-@media (min-width: 768px) {
-  .lc { inset-inline: auto var(--s-6); inset-block-end: calc(var(--s-6) + 48px + var(--s-4)); width: min(400px, calc(100vw - 2 * var(--s-6))); }
-}
-@media (max-width: 767px) {
-  html.lc-on .cta-bar { translate: 0 100%; visibility: hidden; }
-  html.lc-on { scroll-padding-block-end: calc(var(--lc-h, 0px) + var(--s-4)); }
-  .lc__main { padding: var(--s-4); gap: var(--s-2); }
-  .lc__go { width: 100%; }
-}
+@media (max-width: 767px) { .lc__main { padding: var(--s-5); } }
 
 /* ---------- 22 Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -1160,7 +1153,7 @@ dialog.sheet[open] { animation: am-sheet-in var(--dur-3) var(--ease-out); }
   .demo__caret { display: none !important; }
   .marquee .marquee__track { animation: none !important; flex-wrap: wrap; width: auto; }
   .marquee__toggle { display: none; }
-  .wa-fab, .lc { translate: none !important; }
+  .wa-fab { translate: none !important; }
   .wa-fab.is-waving .wa-fab__label { opacity: 0; }
   .btn__spinner { animation: am-spin 1.4s linear infinite !important; animation-duration: 1.4s !important; animation-iteration-count: infinite !important; }
 }

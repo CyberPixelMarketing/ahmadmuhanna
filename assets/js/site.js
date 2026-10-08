@@ -597,14 +597,16 @@
     var base = /^share_/.test(key) ? 'https://wa.me/' : 'https://wa.me/' + AM.WA_NUMBER;
     return base + '?text=' + encodeURIComponent(AM.waText(key, vars));
   };
-  /* waOpen: tracks, then location.href on touch (in-app browsers mishandle
-     _blank for wa.me), window.open on desktop. */
+  /* waOpen: tracks, then opens WhatsApp in a new tab (same tab only if the
+     browser blocks the popup). */
   AM.waOpen = function (key, vars, props) {
     var url = AM.waLink(key, vars);
     AM.track('wa_open', Object.assign({ context: key }, props || {}));
-    if (AM.isTouch()) { location.href = url; return; }
-    var w = window.open(url, '_blank', 'noopener');
-    if (!w) location.href = url;
+    /* New tab only. No 'noopener' feature: with it window.open always returns
+       null, which made the fallback below fire too and open WhatsApp twice. */
+    var w = window.open(url, '_blank');
+    if (w) { try { w.opener = null; } catch (e) { } return; }
+    location.href = url; /* popup blocked: same tab, so the click still works */
   };
 
   function waVars(el) {
@@ -1208,14 +1210,14 @@
   }
 
   /* ---------- 17 Lead catcher ---------- */
-  /* A small, non-modal card (bottom sheet on phones) offering the next free
-     workshop. Pages opt in with CONFIG.leadCatcher = { scroll: 0.15, delay: 10 }:
-     it shows once the visitor has scrolled `scroll` of the page AND spent `delay`
-     seconds on it. It never shows twice in a session, for 14 days after a
-     dismissal, after any waitlist sign-up on this device, or after a WhatsApp
-     click this session. Step one is a one-line offer; the two fields (name,
-     WhatsApp number) open on request. While the session is open for booking, the
-     card links to free-workshop.html instead of collecting details.
+  /* A centred modal (<dialog>, dimmed backdrop) offering the next free workshop,
+     with the two fields (name, WhatsApp number) shown straight away. Pages opt
+     in with CONFIG.leadCatcher = { scroll: 0.15, delay: 10 }: it opens once the
+     visitor has scrolled `scroll` of the page AND spent `delay` seconds on it.
+     It never opens twice in a session, for 14 days after a dismissal, after any
+     waitlist sign-up on this device, or after a WhatsApp click this session.
+     Close: the x button, Esc or a click on the backdrop. While the session is
+     open for booking, it links to the booking page instead of collecting details.
      It posts to FormSubmit with the same field names as the waitlist form, plus
      Source = "popup · <page>". No email field, so there is no autoresponse:
      Ahmad confirms on WhatsApp. */
@@ -1223,12 +1225,10 @@
     ar: {
       eyebrow: 'الورشة المجانية القادمة',
       title: 'ساعة أونلاين: الذكاء الاصطناعي لعملك بأقل عدد من التطبيقات',
-      body_waitlist: 'الموعد يُعلن قريباً. اترك رقمك على واتساب لتصلك الدعوة قبل غيرك.',
+      body_waitlist: 'الموعد يُعلن قريباً. اترك اسمك ورقمك على واتساب لتصلك الدعوة قبل غيرك.',
       body_open: 'الموعد: {date}، {time} بتوقيت الإمارات. المقاعد محدودة.',
-      cta: 'أرسل لي الموعد',
       cta_open: 'احجز مقعدك المجاني',
       alt: 'أو ابدأ بالدليل المجاني',
-      later: 'ليس الآن',
       name: 'الاسم',
       phone: 'رقم الواتساب',
       country: 'رمز الدولة',
@@ -1242,12 +1242,10 @@
     en: {
       eyebrow: 'Next free workshop',
       title: 'One hour online: AI for your business, with fewer apps',
-      body_waitlist: 'The date is announced soon. Leave your WhatsApp number and you’ll hear first.',
+      body_waitlist: 'The date is announced soon. Leave your name and WhatsApp number and you’ll hear first.',
       body_open: '{date}, {time} UAE time. Seats are limited.',
-      cta: 'Send me the date',
       cta_open: 'Book your free seat',
       alt: 'Or start the free guide',
-      later: 'Not now',
       name: 'Name',
       phone: 'WhatsApp number',
       country: 'Country code',
@@ -1262,6 +1260,8 @@
   function initLeadCatcher() {
     var opts = AM.config().leadCatcher;
     if (!opts || $('.lc')) return;
+    var probe = d.createElement('dialog');
+    if (typeof probe.showModal !== 'function') return;
     var DISMISS_DAYS = 14;
     var minScroll = typeof opts.scroll === 'number' ? opts.scroll : 0.15;
     var delayMs = (typeof opts.delay === 'number' ? opts.delay : 10) * 1000;
@@ -1280,27 +1280,20 @@
     }, true);
 
     var T = function (k) { return (LEAD[AM.lang] || LEAD.ar)[k]; };
-    var card = d.createElement('aside');
-    card.className = 'lc';
-    card.hidden = true;
-    card.setAttribute('role', 'dialog');
-    card.setAttribute('aria-labelledby', 'lead-h');
-    card.setAttribute('aria-describedby', 'lead-p');
+    var dlg = d.createElement('dialog');
+    dlg.className = 'lc';
+    dlg.setAttribute('aria-labelledby', 'lead-h');
+    dlg.setAttribute('aria-describedby', 'lead-p');
     var codes = '<option value="AE">+971</option><option value="SA">+966</option><option value="QA">+974</option>' +
       '<option value="KW">+965</option><option value="BH">+973</option><option value="OM">+968</option><option value="XX">+…</option>';
-    card.innerHTML =
-      '<button class="lc__x" type="button" data-lead-close>' + AM.icon('x') + '</button>' +
+    dlg.innerHTML =
       '<div class="lc__main">' +
+        '<button class="lc__x" type="button" data-lead-close>' + AM.icon('x') + '</button>' +
         '<p class="lc__eyebrow"><span class="status-light is-on" aria-hidden="true"></span><span data-l="eyebrow"></span></p>' +
-        '<h2 class="lc__h" id="lead-h" tabindex="-1" data-l="title"></h2>' +
+        '<h2 class="lc__h" id="lead-h" tabindex="-1" autofocus data-l="title"></h2>' +
         '<p class="lc__p" id="lead-p"></p>' +
-        '<div class="lc__step" data-lead-step="offer">' +
-          '<button class="btn btn--primary lc__go" type="button" data-lead-open><span data-l="cta"></span>' + AM.icon('arrow', 'icon--dir') + '</button>' +
-          '<a class="btn btn--primary lc__go" href="free-workshop.html#register" data-lead-book hidden data-track="cta_click" data-cta="lead_book" data-target="form"><span data-l="cta_open"></span>' + AM.icon('arrow', 'icon--dir') + '</a>' +
-          (onGuide ? '<button class="link link--quiet lc__alt" type="button" data-lead-close><span data-l="later"></span></button>'
-                   : '<a class="link link--quiet lc__alt" href="learn-ai.html" data-track="cta_click" data-cta="lead_guide" data-target="guide"><span data-l="alt"></span></a>') +
-        '</div>' +
-        '<form class="form lc__form" data-lead-step="form" hidden action="' + AM.FORM_ENDPOINT.replace('/ajax', '') + '" method="POST">' +
+        '<a class="btn btn--primary btn--block" href="free-workshop.html#register" data-lead-book hidden data-track="cta_click" data-cta="lead_book" data-target="form"><span data-l="cta_open"></span>' + AM.icon('arrow', 'icon--dir') + '</a>' +
+        '<form class="form lc__form" action="' + AM.FORM_ENDPOINT.replace('/ajax', '') + '" method="POST">' +
           '<div class="field"><label class="field__label" for="lead_name" data-l="name"></label>' +
             '<input class="input" id="lead_name" name="الاسم / Name" type="text" autocomplete="name" required data-error-required="err_name"></div>' +
           '<div class="field"><label class="field__label" for="lead_phone" data-l="phone"></label>' +
@@ -1310,24 +1303,26 @@
           '<div class="form__actions"><button class="btn btn--primary btn--block" type="submit"><span data-l="submit"></span></button>' +
           '<p class="form__consent" data-l="consent"></p></div>' +
         '</form>' +
+        (onGuide ? '' : '<a class="link link--quiet lc__alt" href="learn-ai.html" data-lead-away data-track="cta_click" data-cta="lead_guide" data-target="guide"><span data-l="alt"></span></a>') +
       '</div>';
-    d.body.appendChild(card);
+    d.body.appendChild(dlg);
 
-    var open = false, shown = false, expanded = false;
+    var shown = false, done = false;
+    var form = $('form', dlg);
     function paint() {
-      $$('[data-l]', card).forEach(function (el) { el.textContent = T(el.getAttribute('data-l')); });
+      $$('[data-l]', dlg).forEach(function (el) { el.textContent = T(el.getAttribute('data-l')); });
       var st = AM.session.workshopState();
       var isOpen = st === 'open-free' || st === 'open-paid';
-      $('#lead-p', card).textContent = AM.fill(T(isOpen ? 'body_open' : 'body_waitlist'), {
+      $('#lead-p', dlg).textContent = AM.fill(T(isOpen ? 'body_open' : 'body_waitlist'), {
         date: AM.session.formatDate(), time: AM.session.formatTime()
       });
-      $('[data-lead-open]', card).hidden = isOpen;
-      $('[data-lead-book]', card).hidden = !isOpen;
-      if (st === 'open-paid') $('[data-lead-book]', card).setAttribute('data-href', 'workshop-register.html');
-      $('[data-lead-close]', card).setAttribute('aria-label', T('close'));
-      $('#lead_country', card).setAttribute('aria-label', T('country'));
+      if (form.isConnected) form.hidden = isOpen;
+      $('[data-lead-book]', dlg).hidden = !isOpen;
+      if (st === 'open-paid') $('[data-lead-book]', dlg).setAttribute('data-href', 'workshop-register.html');
+      $('[data-lead-close]', dlg).setAttribute('aria-label', T('close'));
+      $('#lead_country', dlg) && $('#lead_country', dlg).setAttribute('aria-label', T('country'));
       /* Injected after applyLang ran: carry the language on internal links */
-      $$('a[href]', card).forEach(function (a) {
+      $$('a[href]', dlg).forEach(function (a) {
         var base = a.getAttribute('data-href') || a.getAttribute('href');
         a.setAttribute('data-href', base);
         var h = base.split('#');
@@ -1337,47 +1332,22 @@
     paint();
     d.addEventListener('am:lang', paint);
 
-    function setOpen(next) {
-      open = next;
-      root.classList.toggle('lc-on', next);
-      if (next) {
-        card.hidden = false;
-        requestAnimationFrame(function () { card.classList.add('is-in'); });
-        root.style.setProperty('--lc-h', card.offsetHeight + 'px');
-      } else {
-        card.classList.remove('is-in');
-        setTimeout(function () { if (!open) card.hidden = true; }, AM.reducedMotion() ? 0 : 280);
-      }
-      if (AM.ctaBar) AM.ctaBar.update();
+    function close(how) {
+      if (!dlg.open) return;
+      if (!done) AM.store.set('am_lead_dismiss', String(Date.now()));
+      if (how) AM.track('lead_dismiss', { how: how, page: page });
+      if (AM.reducedMotion()) { dlg.close(); return; }
+      dlg.classList.add('is-closing');
+      setTimeout(function () { dlg.classList.remove('is-closing'); dlg.close(); }, 180);
     }
-    function dismiss(how) {
-      if (!open) return;
-      var inside = card.contains(d.activeElement);
-      if (!$('.form-success', card)) AM.store.set('am_lead_dismiss', String(Date.now()));
-      AM.track('lead_dismiss', { how: how, step: expanded ? 'form' : 'offer', page: page });
-      setOpen(false);
-      if (inside) { var main = $('#main') || $('main'); if (main) { main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); } }
-    }
-    card.addEventListener('click', function (e) {
-      if (e.target.closest('[data-lead-close]')) dismiss('button');
-      else if (e.target.closest('[data-lead-open]')) {
-        expanded = true;
-        $('[data-lead-step="offer"]', card).hidden = true;
-        $('[data-lead-step="form"]', card).hidden = false;
-        card.classList.add('is-form');
-        root.style.setProperty('--lc-h', card.offsetHeight + 'px');
-        AM.track('lead_open', { page: page });
-        setTimeout(function () { $('#lead_name', card).focus(); }, 30);
-      } else if (e.target.closest('[data-lead-book], .lc__alt[href]')) {
-        AM.store.set('am_lead_dismiss', String(Date.now()));
-        setOpen(false);
-      }
-    });
-    d.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && open && !AM.overlayOpen()) dismiss('esc');
+    dlg.addEventListener('close', function () { AM.overlay(false); });
+    dlg.addEventListener('cancel', function (e) { e.preventDefault(); close('esc'); });
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg) close('backdrop');
+      else if (e.target.closest('[data-lead-close]')) close('button');
+      else if (e.target.closest('[data-lead-book], [data-lead-away]')) close('');
     });
 
-    var form = $('form', card);
     AM.initForm(form, {
       name: 'lead_popup',
       payload: function (f, data) {
@@ -1394,18 +1364,18 @@
         };
       },
       onSuccess: function () {
+        done = true;
         AM.store.set('am_lead_done', String(Date.now()));
         AM.store.set('am_waitlisted', JSON.stringify({ ts: Date.now(), state: 'waitlist', ws: 'popup' }));
         AM.track('lead_submit', { page: page });
+        var alt = $('.lc__alt', dlg); if (alt) alt.remove();
         var panel = AM.formSuccess(form, {
           title: T('ok_title'), body: T('ok_body'),
-          html: onGuide ? '' : '<a class="link" href="learn-ai.html' + (AM.lang === 'en' ? '?lang=en' : '') + '" data-track="cta_click" data-cta="lead_success_guide"><span></span>' + AM.icon('arrow', 'icon--dir') + '</a>'
+          html: onGuide ? '' : '<a class="link" href="learn-ai.html' + (AM.lang === 'en' ? '?lang=en' : '') + '" data-lead-away data-track="cta_click" data-cta="lead_success_guide"><span></span>' + AM.icon('arrow', 'icon--dir') + '</a>'
         });
         var g = $('a span', panel); if (g) g.textContent = T('ok_guide');
-        $('#lead-p', card).hidden = true;
-        $('#lead-h', card).hidden = true;
-        $('.lc__eyebrow', card).hidden = true;
-        root.style.setProperty('--lc-h', card.offsetHeight + 'px');
+        ['#lead-p', '#lead-h', '.lc__eyebrow'].forEach(function (s) { $(s, dlg).hidden = true; });
+        dlg.setAttribute('aria-labelledby', '');
       }
     });
 
@@ -1413,14 +1383,15 @@
     var timeOk = false, scrollOk = false;
     function ready() {
       if (shown || !timeOk || !scrollOk) return;
-      /* Never interrupt typing, an open menu or dialog, or the page's own forms */
+      /* Never interrupt typing or another open menu/dialog */
       var a = d.activeElement;
       if (AM.overlayOpen() || (a && a.matches && a.matches('input, textarea, select'))) { setTimeout(ready, 4000); return; }
       if (suppressed()) return;
       shown = true;
       AM.store.set('am_lead_shown', '1', true);
       AM.track('lead_show', { page: page });
-      setOpen(true);
+      dlg.showModal();
+      AM.overlay(true);
     }
     setTimeout(function () { timeOk = true; ready(); }, delayMs);
     function onScroll() {
@@ -1432,7 +1403,7 @@
       }
     }
     window.addEventListener('scroll', onScroll, { passive: true });
-    AM.lead = { show: function () { shown = false; timeOk = scrollOk = true; AM.store.remove('am_lead_shown', true); ready(); }, hide: function () { setOpen(false); } };
+    AM.lead = { show: function () { shown = false; timeOk = scrollOk = true; AM.store.remove('am_lead_shown', true); ready(); }, hide: function () { close(''); } };
   }
 
   /* ---------- 15 Boot ---------- */
