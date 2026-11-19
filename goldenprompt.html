@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your AI Golden Prompting Guide</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1d2330;
+    --muted: #5d6676;
+    --line: #e2e6ec;
+    --accent: #2b5fd9;
+    --accent-soft: #e8efff;
+    --ok: #137a45;
+    --ok-soft: #e6f6ee;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 24px 22px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 6px; font-size: 24px; }
+  header p { margin: 0; color: var(--muted); }
+  main { max-width: 920px; margin: 0 auto; padding: 24px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .card h2 { margin: 0; font-size: 18px; }
+  .tag {
+    display: inline-block;
+    font-size: 13px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+  .copy-btn {
+    appearance: none;
+    border: 1px solid var(--accent);
+    background: var(--card);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .copy-btn:hover { background: var(--accent-soft); }
+  .copy-btn.done { background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
+  .prompt {
+    background: #fafbfd;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .prompt.en { direction: ltr; text-align: left; font-family: "Segoe UI", Arial, sans-serif; }
+  .field-list { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .field-list li {
+    border-inline-start: 3px solid var(--accent);
+    padding: 6px 12px;
+    background: #fafbfd;
+    border-radius: 0 6px 6px 0;
+  }
+  .field-list strong { color: var(--accent); }
+  .note { color: var(--muted); font-size: 14px; margin-top: 10px; }
+  @media (max-width: 600px) { main { padding: 16px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Your AI Golden Prompting Guide</h1>
+  <p>The simple, clever guide to using AI in your sales role, every day.</p>
+</header>
+
+<main>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>نسخ ولصق المهمة (هنا)</h2>
+      <button class="copy-btn" data-target="ar-prompt">نسخ</button>
+    </div>
+    <pre class="prompt" id="ar-prompt">أجر معي مقابلة كما يلي:
+الهدف: ما النتيجة التي أريدها؟
+السياق: ما الخلفية المهمة؟
+الدور: من يجب أن يكون الذكاء الاصطناعي؟
+التعليمات: ماذا يجب أن تفعل بالضبط؟
+القيود: ما هي الحدود؟
+معايير النجاح: كيف يبدو الخير؟
+مواصفات الإخراج: كيف يجب أن يبدو؟ النغمة · الهيكل · الصيغة · مستوى التفاصيل
+اختياري: أرفق عينة مشابهى من مصدر البيانات.</pre>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>COPY–PASTE TRANSCRIPTED TASK PROMPT</h2>
+      <button class="copy-btn" data-target="en-prompt">Copy</button>
+    </div>
+    <pre class="prompt en" id="en-prompt">Interview me as per the below:
+Objective: What outcome do I want?
+Context: What background matters?
+Role: Who should the AI be?
+Instructions: What exactly to do?
+Constraints: What are the limits?
+Success criteria: What does good look like?
+Output spec: How should it look? tone · structure · format · level of detail
+Optional: attached a sample of source of data.</pre>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>الحقول الأساسية</h2>
+      <span class="tag">7 عناصر</span>
+    </div>
+    <ul class="field-list">
+      <li><strong>الهدف (Objective):</strong> ما النتيجة التي أريدها؟</li>
+      <li><strong>السياق (Context):</strong> ما الخلفية المهمة؟</li>
+      <li><strong>الدور (Role):</strong> من يجب أن يكون الذكاء الاصطناعي؟</li>
+      <li><strong>التعليمات (Instructions):</strong> ماذا يجب أن تفعل بالضبط؟</li>
+      <li><strong>القيود (Constraints):</strong> ما هي الحدود؟</li>
+      <li><strong>معايير النجاح (Success criteria):</strong> كيف يبدو الجيد؟</li>
+      <li><strong>مواصفات الإخراج (Output spec):</strong> النغمة · الهيكل · الصيغة · مستوى التفاصيل</li>
+    </ul>
+    <p class="note">اختياري: أرفق عينة من مصدر البيانات.</p>
+  </section>
+
+</main>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = document.getElementById(btn.dataset.target).innerText;
+      const original = btn.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = btn.dataset.target.startsWith('ar') ? 'تم النسخ' : 'Copied';
+        btn.classList.add('done');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('done'); }, 1600);
+      });
+    });
+  });
+</script>
+</body>
+</html>
