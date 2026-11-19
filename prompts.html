@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقارنة الـ Prompts - ثلاثة تمارين</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1d2330;
+    --muted: #5d6676;
+    --line: #e2e6ec;
+    --accent: #2b5fd9;
+    --accent-soft: #e8efff;
+    --warn: #b45309;
+    --warn-soft: #fff4e5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px 0;
+  }
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 22px;
+  }
+  .eval-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .eval-btn:hover { filter: brightness(1.08); }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    overflow-x: auto;
+  }
+  .tab {
+    appearance: none;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background: transparent;
+    padding: 10px 16px;
+    font: inherit;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+  }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] {
+    background: var(--bg);
+    color: var(--accent);
+    border-color: var(--line);
+    font-weight: 700;
+    position: relative;
+    top: 1px;
+  }
+  main { padding: 24px; max-width: 920px; margin: 0 auto; }
+  .panel[hidden] { display: none; }
+  .panel h2 {
+    font-size: 20px;
+    margin: 0 0 16px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: var(--accent);
+  }
+  .card p { margin: 0 0 10px; }
+  .card ul { margin: 0; padding-inline-start: 22px; }
+  .card li { margin-bottom: 6px; }
+  .label {
+    display: inline-block;
+    font-size: 13px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .label.strong { background: #e6f6ee; color: #137a45; }
+  .label.plain { background: var(--warn-soft); color: var(--warn); }
+  .fw-item {
+    border-inline-start: 3px solid var(--accent);
+    padding: 6px 14px;
+    margin: 12px 0;
+    background: #fafbfd;
+    border-radius: 0 8px 8px 0;
+  }
+  .fw-item h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+  .en { direction: ltr; text-align: left; font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; color: var(--muted); }
+  @media (max-width: 600px) {
+    main { padding: 16px; }
+    .tab { padding: 8px 10px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top-row">
+    <h1>مقارنة الـ Prompts: ثلاثة تمارين</h1>
+    <a class="eval-btn" href="https://quality-dashboard-ebon.vercel.app/" target="_blank" rel="noopener noreferrer">تقييم البرومت</a>
+  </div>
+  <div class="tabs" role="tablist" aria-label="التمارين">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">سياسة الإجازات</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1">تحليل البيانات والقرار</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1">تقرير الصيانة</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ TAB 1: Leave policy ============ -->
+  <section class="panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+    <h2>تمرين 1: شرح سياسة الإجازات للموظفين الجدد</h2>
+
+    <div class="card">
+      <h3>المبسّط</h3>
+      <p>يجب على الموظف إرسال طلب الإجازة قبل 5 أيام عمل، باستثناء الحالات الطارئة. الموافقة النهائية تعود إلى المدير المباشر والموارد البشرية. لا يجوز ترحيل أكثر من 10 أيام من الرصيد السنوي، ولا يشمل ذلك الموظفين خلال فترة التجربة. يبدأ تطبيق السياسة اعتباراً من 1 يناير 2027.</p>
+    </div>
+
+    <div class="card">
+      <span class="label plain">Prompt عادي</span>
+      <p>بسّط السياسة للموظفين.</p>
+    </div>
+
+    <div class="card">
+      <span class="label strong">قوي وفق الفريمورك السباعي Prompt</span>
+      <p>تصرف ككاتب سياسات مؤسسية. هدفك إنتاج شرح واضح للموظفين الجدد دون تغيير المعنى القانوني. حافظ على كل الأرقام والتواريخ والالتزامات والاستثناءات. ميّز بين القاعدة والاستثناء، ولا تضف معلومات غير موجودة. أخرج النتيجة في ثلاثة أقسام: شرح مبسط، خطوات تنفيذية، وقائمة تحقق تقارن النص المبسط بالنص الأصلي. استخدم نبرة واضحة ومحايدة ومستوى تفصيل متوسط.</p>
+    </div>
+
+    <div class="card">
+      <h3>الفريمورك السباعي (مفصّل)</h3>
+      <div class="fw-item">
+        <h4>Role - الدور</h4>
+        <p>أنت كاتب سياسات مؤسسية.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Objective - الهدف</h4>
+        <p>إنتاج شرح واضح ومبسط للسياسة للموظفين الجدد دون تغيير المعنى القانوني.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Context - السياق</h4>
+        <p>السياسة المؤسسية للإجازات الواردة في المادة التدريبية أعلاه، ويقرأها الموظفون الجدد.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Instructions - التعليمات</h4>
+        <ul>
+          <li>حافظ على كل الأرقام والتواريخ والالتزامات والاستثناءات.</li>
+          <li>ميّز بين القاعدة والاستثناء.</li>
+          <li>أخرج النتيجة في ثلاثة أقسام: شرح مبسط، خطوات تنفيذية، وقائمة تحقق تقارن النص المبسط بالنص الأصلي.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Constraints - المحظورات</h4>
+        <ul>
+          <li>لا تضف معلومات غير موجودة في النص الأصلي.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Success criteria - معيار النجاح</h4>
+        <ul>
+          <li>الشرح المبسط يحافظ على كل الشروط والأرقام والتواريخ دون تغيير المعنى القانوني.</li>
+          <li>قائمة التحقق تقارن كل جملة مبسطة بالنص الأصلي وتكشف أي تغيير.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Output spec - مواصفات المخرجات</h4>
+        <ul>
+          <li>ثلاثة أقسام: شرح مبسط، خطوات تنفيذية، قائمة تحقق.</li>
+          <li>نبرة واضحة ومحايدة، ومستوى تفصيل متوسط.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 2: Data to decision ============ -->
+  <section class="panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+    <h2>تمرين 2: من البيانات إلى القرار</h2>
+
+    <div class="card">
+      <h3>بيانات القرار الموسعة</h3>
+      <p>يناير: مبيعات 100,000، عملاء 500، شكاوى 20، تكلفة إعلان 12,000، عملاء عائدون 210.</p>
+      <p>فبراير: مبيعات 110,000، عملاء 550، شكاوى 22، تكلفة إعلان 12,500، عملاء عائدون 220.</p>
+      <p>مارس: مبيعات 120,000، عملاء 400، شكاوى 24، تكلفة إعلان 20,000، عملاء عائدون 180.</p>
+      <p>أبريل: مبيعات 118,000، عملاء 390، شكاوى 26، تكلفة إعلان 21,000، عملاء عائدون 175.</p>
+      <p><strong>الاستنتاج المقترح من الفريق:</strong> المبيعات ترتفع، إذن رضا العملاء يتحسن، ولذلك يجب مضاعفة الإعلان.</p>
+      <p>لا توجد نتيجة استبيان رضا، ولا تعريف للعميل العائد، ولا فصل بين القنوات.</p>
+    </div>
+
+    <div class="card">
+      <span class="label plain">Prompt عادي</span>
+      <p>حلل البيانات وأعطني قراراً.</p>
+    </div>
+
+    <div class="card">
+      <span class="label strong">قوي وفق الفريمورك السباعي Prompt</span>
+      <p>تصرف كمحلل بيانات ومستشار قرار. هدفك تقديم قرار قابل للدفاع، لا مجرد ملخص. احسب معدل الشكاوى لكل عميل، وقارن الاتجاهات، وافصل بين الحقائق والاستنتاجات والافتراضات. لا تستنتج تحسن الرضا من المبيعات وحدها، ولا تخلط بين الارتباط والسببية. اذكر ما يمكن إثباته وما لا يمكن إثباته، ثم اقترح قراراً مشروطاً بخطوات تحقق ومؤشرات متابعة ومخاطر. أخرج النتيجة في أقسام: ملخص تنفيذي، الحسابات، الأخطاء في الاستنتاج الحالي، التوصية، المخاطر، ومؤشرات المتابعة.</p>
+    </div>
+
+    <div class="card">
+      <h3>الفريمورك السباعي (مفصّل)</h3>
+      <div class="fw-item">
+        <h4>Role - الدور</h4>
+        <p>أنت محلل بيانات ومستشار قرار.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Objective - الهدف</h4>
+        <p>تقديم قرار قابل للدفاع بشأن الاستنتاج المقترح، لا مجرد ملخص للأرقام.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Context - السياق</h4>
+        <p>بيانات المبيعات والعملاء والشكاوى وتكلفة الإعلان والعملاء العائدين للأشهر الأربعة الواردة أعلاه، والاستنتاج المقترح من الفريق.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Instructions - التعليمات</h4>
+        <ul>
+          <li>احسب معدل الشكاوى لكل عميل، وقارن الاتجاهات بين الأشهر.</li>
+          <li>افصل بين الحقائق والاستنتاجات والافتراضات.</li>
+          <li>اختبر الاستنتاج المقترح، ولا تستنتج تحسن الرضا من المبيعات وحدها، ولا تخلط بين الارتباط والسببية.</li>
+          <li>اقترح قراراً مشروطاً بخطوات تحقق ومؤشرات متابعة ومخاطر.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Constraints - المحظورات</h4>
+        <ul>
+          <li>اذكر ما يمكن إثباته وما لا يمكن إثباته، ولا تفترض وجود نتيجة استبيان رضا أو تعريف للعميل العائد غير الواردين في البيانات.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Success criteria - معيار النجاح</h4>
+        <ul>
+          <li>الحسابات صحيحة، والفريق يذكر حدود البيانات.</li>
+          <li>التوصية مرتبطة بمؤشرات يمكن قياسها، ولا توصي بمضاعفة الإعلان دون فرضية واختبار ومؤشرات نجاح.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Output spec - مواصفات المخرجات</h4>
+        <ul>
+          <li>أقسام بهذا الترتيب: ملخص تنفيذي، الحسابات، الأخطاء في الاستنتاج الحالي، التوصية، المخاطر، ومؤشرات المتابعة.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 3: Maintenance report ============ -->
+  <section class="panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+    <h2>تمرين 3: تدقيق تقرير الصيانة</h2>
+
+    <div class="card">
+      <h3>تقرير الصيانة</h3>
+      <p>بيانات شهر أكتوبر 2026: 24 بلاغ عطل، منها 18 بلاغاً مغلقاً و6 مفتوحة. يذكر الملخص أن الأعطال انخفضت 20 بالمئة، بينما يعرض الشهر السابق 19 بلاغاً فقط دون توضيح ما إذا كان العد يشمل البلاغات المفتوحة.</p>
+      <p>إجمالي ساعات التوقف 76 ساعة، ومتوسط زمن الإصلاح المعلن 3.2 ساعة. جدول البلاغات يحتوي سجلاً بتاريخ 31 سبتمبر، وسجلين برقم MNT-104، وسجلاً مغلقاً بلا وقت إغلاق.</p>
+      <p>تكلفة قطع الغيار 31,500 ريال، العمالة 12,600 ريال، والنقل 5,400 ريال، لكن الملخص يذكر تكلفة إجمالية مقدارها 48,000 ريال.</p>
+      <p>يذكر التقرير أن الالتزام بالصيانة الوقائية 92 بالمئة، لكن الجدول يعرض 44 مهمة مكتملة من أصل 50 مهمة مقررة. كما يوصي بإيقاف الصيانة الوقائية لتوفير وقت الفريق، رغم أن 9 من 12 عطلاً متكرراً حدثت في معدات تأخرت صيانتها الوقائية.</p>
+    </div>
+
+    <div class="card">
+      <span class="label plain">Prompt عادي</span>
+      <p>راجع التقرير وحدد الأخطاء.</p>
+    </div>
+
+    <div class="card">
+      <span class="label strong">قوي وفق الفريمورك السباعي Prompt</span>
+      <p>تصرف كمدقق جودة مؤسسية مستقل. هدفك إصدار قرار قابل للتدقيق حول صلاحية تقرير الصيانة لشهر أكتوبر 2026. افحص الحسابات والتواريخ والتكرار واتساق التوصيات مع البيانات ومصادر الأرقام. لا تفترض معلومات غير موجودة. لكل نقطة، أخرج رقم الخطأ، الدليل من التقرير، سبب الخطأ، التصحيح المقترح، درجة الخطورة، والبيانات اللازمة للتحقق. اختم بجدول ملخص منظم، واذكر صراحة ما لا يمكن إثباته.</p>
+    </div>
+
+    <div class="card">
+      <h3>الفريمورك السباعي (مفصّل)</h3>
+      <div class="fw-item">
+        <h4>Role - الدور</h4>
+        <p>أنت مدقق جودة مؤسسية مستقل.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Objective - الهدف</h4>
+        <p>إصدار قرار قابل للتدقيق حول صلاحية تقرير الصيانة لشهر أكتوبر 2026.</p>
+      </div>
+      <div class="fw-item">
+        <h4>Instructions - التعليمات</h4>
+        <ul>
+          <li>افحص الحسابات والتواريخ والتكرار واتساق التوصيات مع البيانات ومصادر الأرقام.</li>
+          <li>لكل نقطة مكتشفة، أخرج: رقم الخطأ، الدليل من التقرير، سبب الخطأ، التصحيح المقترح، درجة الخطورة، والبيانات اللازمة للتحقق.</li>
+          <li>اختم بجدول ملخص منظم.</li>
+          <li>اذكر صراحة ما لا يمكن إثباته.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Constraints - المحظورات</h4>
+        <ul>
+          <li>لا تفترض معلومات غير موجودة في التقرير.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Success criteria - معيار النجاح</h4>
+        <ul>
+          <li>القرار النهائي (صالح أو غير صالح للاعتماد) مبني على أدلة من التقرير ويمكن تتبعه.</li>
+          <li>كل نقطة تتضمن الحقول الستة المطلوبة.</li>
+          <li>الجدول الملخص يغطي كل النقاط المذكورة بالأرقام نفسها.</li>
+          <li>قسم "ما لا يمكن إثباته" موجود ومحدد بوضوح.</li>
+        </ul>
+      </div>
+      <div class="fw-item">
+        <h4>Output spec - مواصفات المخرجات</h4>
+        <ul>
+          <li>قرار واضح في البداية: صالح للاعتماد أو غير صالح.</li>
+          <li>قائمة مرقمة للنقاط، يحمل كل رقم خطأ حقوله الستة.</li>
+          <li>جدول ملخص منظم في الختام.</li>
+          <li>قسم صريح لما لا يمكن إثباته من التقرير.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    function select(tab) {
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      tab.focus();
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          const dir = e.key === 'ArrowLeft' ? 1 : -1; // RTL: left goes forward
+          select(tabs[(i + dir + tabs.length) % tabs.length]);
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
