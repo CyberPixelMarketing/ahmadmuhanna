@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISM Prompt Toolkit · AI Agent Builder Day 1</title>
+<style>
+:root {
+  --red:#C00000; --dred:#9B0000; --ink:#1E1E1E; --muted:#5F5F5F; --card:#F7F3F3; --tint:#F5F1F1;
+  --border:#E6DEDE; --bg:#FFFFFF; --code:#FFFFFF; --head:#1E1E1E;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:72px; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:Calibri, Carlito, "Segoe UI", system-ui, sans-serif; font-size:16px; line-height:1.55; }
+h1,h2,h3 { font-family:Cambria, Caladea, Georgia, serif; margin:0; letter-spacing:-.01em; }
+a { color:var(--red); }
+.hero { background:var(--head); color:#fff; padding:40px 16px 44px; text-align:center; }
+.hero img { width:150px; height:auto; display:block; margin:0 auto 22px; }
+.hero .eyebrow { color:#B8B8B8; font-weight:700; letter-spacing:.28em; font-size:12px; text-transform:uppercase; }
+.hero h1 { font-size:clamp(30px,6vw,48px); margin:10px 0 6px; }
+.hero h1 span { color:#FF4D4D; }
+.hero p { color:#D6D6D6; font-style:italic; max-width:720px; margin:0 auto; }
+.hero .rule { width:120px; height:2px; background:var(--red); margin:18px auto; }
+nav.top { position:sticky; top:0; z-index:10; background:var(--red); box-shadow:0 2px 8px rgba(0,0,0,.12); }
+nav.top .in { max-width:1120px; margin:0 auto; padding:10px 16px; display:flex; gap:8px; align-items:center; overflow-x:auto; scrollbar-width:none; }
+nav.top a { color:#fff; text-decoration:none; white-space:nowrap; font-size:14px; font-weight:700; padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.12); }
+nav.top a:hover { background:rgba(255,255,255,.26); }
+nav.top input { margin-left:auto; min-width:170px; border:0; border-radius:999px; padding:7px 14px; font:inherit; font-size:14px; }
+main { max-width:1120px; margin:0 auto; padding:8px 16px 40px; }
+.seven { margin:28px 0 8px; }
+.seven ol { list-style:none; padding:0; margin:12px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; }
+.seven li { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; flex-direction:column; }
+.seven li span { color:#fff; background:var(--red); width:30px; height:30px; border-radius:6px; display:grid; place-items:center; font-weight:700; font-size:13px; margin-bottom:8px; }
+.seven li b { color:var(--dred); }
+.seven li small { color:var(--muted); font-size:13.5px; }
+.sec { padding-top:36px; }
+.sec-h { margin-bottom:16px; }
+.kicker { margin:0 0 4px; color:var(--red); font-weight:700; font-size:13px; letter-spacing:.16em; display:flex; align-items:center; gap:8px; }
+.kicker::before { content:""; width:10px; height:10px; background:var(--red); display:inline-block; }
+.sec h2 { font-size:clamp(24px,4vw,32px); }
+.sec h2 em { color:var(--red); font-style:normal; }
+.intro { color:var(--muted); font-style:italic; margin:6px 0 0; max-width:820px; }
+.cards { display:grid; gap:16px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px; }
+.card-h { display:flex; gap:12px; align-items:flex-start; justify-content:space-between; }
+.card h3 { font-size:20px; margin-top:6px; }
+.tag { display:inline-block; background:var(--red); color:#fff; font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:3px 10px; border-radius:999px; }
+.when { color:var(--muted); margin:8px 0 12px; font-size:15px; }
+pre { margin:0; background:var(--code); border:1px solid var(--border); border-radius:8px; padding:14px 16px; white-space:pre-wrap; word-wrap:break-word; font-family:Consolas, "Cascadia Mono", Menlo, monospace; font-size:13.5px; line-height:1.55; color:var(--ink); max-height:440px; overflow:auto; }
+pre:focus { outline:2px solid var(--red); outline-offset:2px; }
+.copy { flex:none; display:inline-flex; align-items:center; gap:6px; background:var(--red); color:#fff; border:0; border-radius:8px; padding:9px 16px; font:inherit; font-weight:700; font-size:14px; cursor:pointer; }
+.copy:hover { background:var(--dred); }
+.copy.done { background:#1E1E1E; }
+.copy.small { padding:7px 12px; font-size:13px; }
+.copy.ghost { margin-top:12px; background:#fff; color:var(--red); border:1.5px solid var(--red); }
+.copy.ghost.done { background:#1E1E1E; color:#fff; border-color:#1E1E1E; }
+.tests { display:grid; gap:10px; }
+.test { display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:start; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+.test .num { background:var(--red); color:#fff; font-weight:700; border-radius:6px; width:34px; height:34px; display:grid; place-items:center; font-size:14px; }
+pre.inline { font-family:inherit; font-size:15.5px; font-weight:700; background:none; border:0; padding:0; max-height:none; }
+.exp { margin:4px 0 0; color:var(--muted); font-size:14.5px; }
+.exp b { color:var(--dred); }
+.hidden { display:none !important; }
+footer { background:var(--red); color:#fff; font-size:14px; }
+footer .in { max-width:1120px; margin:0 auto; padding:14px 16px; display:flex; flex-wrap:wrap; gap:8px 24px; justify-content:space-between; }
+footer a { color:#fff; text-decoration:none; }
+.note { background:var(--tint); border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin-top:20px; }
+.note b { color:var(--dred); }
+@media (max-width:640px) {
+  .card-h { flex-direction:column; }
+  .copy { align-self:flex-start; }
+  .test { grid-template-columns:auto 1fr; }
+  .test .copy { grid-column:2; justify-self:start; }
+  nav.top input { min-width:130px; }
+}
+@media print { nav.top, .copy { display:none; } pre { max-height:none; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAADrCAYAAAAMs25mAABNsklEQVR42u2dd7hcVfW/35XcdFIhhYQWSui9SQ1NqVJFFKVXkSJfFLArKqCCggjSBKUqCEgV6dJ77zVAQhIgDdLb5/fH3vPLYTK3zNw5M+fMrPd57nPvnTlnn312XXvttdcCp2mQdJSkmyT18dJwHMdxHAdJ60v6XIFzJJmXiuM4jtMaXbwImoZpifqebGbyInEcx3FcQHCmAwvj31O8OBzHcZy2aPEiaEwk9QQuAP4HTACGAF3j12tL2hHoBnwdON3MXvdScxzHcZzGFxB+p47zlqTBXmqO4ziOaxAan/8ABwCTgc+AHsA6UYvwPjAeMGB14KZ4jeM4juM4GVnpryhprZTSXkXSEvHvZROnGP4vcc0akrqk9PwtJe0haSmvacdxHMfp+AS6h6QpkuZKOjetibqEgHBSDd7t/yQtjM97UdIQr3HHcRzHaX8C7SLpiYQdwFxJI0tct4Ok+yRdL2m5TjxvuWoJCJJM0qaSvlRKqInv9kqRncPuXuuO4ziO88UJc3VJQ0t8/vfEBPq+pAFF3w+WND5xzXWVOjiStExCQDixE+/SVdKfEtqBkk6XJF2YyPckSSu3Ui77SVreW4njOI7TTIJB13iaYLakDyVtVfT9iCgkPCppmxL3j4z3FnikEwLCholJ/bJOpLOcpDmJPM0uNcFLWkLSqZKukbRRie+3lTQtpvGRpHW9xTiO4zjNIiCsLGlBYjK9pcz7TdIl8d5PJH2lxDXdO7L1IGmQpDvian7bTrzTEpKeS7zTWElLVpDOFUVbEL/xFuM4juM0i4AwLE7IBf5V7spdUm9JX5M0WlKvou9WiFqFaZL+LKl7O2l1k7RiB565q6THJD0oaXSJ79eM3/9N0maSWioom58WCQi7eYtxHMfJDh6wJ30hYU/gZwTfA8eZ2djEd32BTYFtgFXix58ADwMPmNmEpDYBGAYMJ7hK/gD4BfDjxON2MLN7E/cMj/f0A5YDVgPmEfxfvAaMiZe+YGafx3tGAC8Cg+J3bwFrmtk8SYOAFQgumz8ws8nF2gxgbWAjYBSwDDAReBl41MxeTgorBD8NewOXmdmN3locx3GcZhIQehT7AYj7+GdKeqcN74YTo1ZgnRJagDUl7RtX+Ek2LUzUkoZI6idplKSdJJ0U1frzJE0t2vr4g6T14vWrJ2wVJGmGpO3i8/Zpxd5gRLQ3eF7S/FbeZ7akuyXtUixUSBqa5hFPx3EcxzUI9RYG+gOHxxX2xUB3YCDwXiF6oqSDgDPjyr4jTAf+DpxjZm8nntUCrAH8EFg/ahX+ETUEPYD3i1flcbugBXgCOBI4O351QtQmjASWAnaJGo25wBXA7cBLZvZxUXqjgGOB/QixHjrKzcDxZvZBTKc3sKGZPRRPe+wGjElqQxzHcRwnr8JB13gMscCNknaMqvTCNWeocj6R9Ku4BVBKS9ESDQj7Fq/GJfWStG7BWZGkzSWdkDj2uFPRir4lnqAY3sq7jopHHad24n3elLRxIs2lJR0n6bX4/UJJx3rLchzHcXKvPZD0aWIC/Cypjpd0lKrD+CgorFJG3vpEAaZLFA7WjlsVY2Oae3UgjZ6StolHJKdW6V3el7Rq4hk/KPr+MW9ZjuM49cG3GKonIBhwCXBY/OhSMzsifrc88Bxhu6FafA48DTxJMDicEz/vCqwU6/a0xNZGC7A8MNnMpkjaF/gTYavjw5jOK8A7hK2FAkOAdYEvEbY0qs2DwPZmNj+esHgSKBybPMPMfuSty3Ecx8m7kNBH0tclPZ70NRANEmvNM0V56x01CD0l7R4NHS9TNtgzkc+LozHjd4qPdTqO4zi1wy3Hq6mOMZsB3ABMIhwVLBjg7VWH7MwpyttMoBchvPODUeuQlXDfByf+fgZ43sz+YmazvFU5juO4gNAorA8MNLNJ8f+VgBXrnSlJXYFeZvYcIMJJgfcyUmZrJbQF7wCjK3UF7TiO47iAkCniSYKdgaOB5HHAFaqwUn8DuD9O7BVhZgvM7FNJw4ANgPuAfxKOZJbLOOBOYH6Viq8f0Cf+PZNgKzHMW5XjOI4LCHkXDlqAy4E7CEaKSdX4kE4m/xAw2sy2i6v+tzqRzyWBPmZ2P8EQcVNgdpnJXAJsbGY7A4dUcH8pFsQfCH4clgIelXStpKW9hTmO4zh5FRBGFEVdfCjx3WGdMN57pYQXxmUkPdyBex8tpeWIv4dK2kvSBgm/A+2xUNJxJdI8ogpGis/HLRAk7V/03bnewhzHcVyDkFemAm8m/u+W+HtihWnOB75nZp8mP4yxHA4gqPnLZa6kZYGhwO1m9iwwoYP3nmNm55X4/FLgpk6W31tmVtAgrFz0XT9vXo7jOC4g5JJ4emE/4ALgdaB3wpvhOBapz8vhHjO7O66qu0Q3zoXnvQecXqaWw4ABwHQzexGYL2l1OmYfMQb4ZSKtFklLxLwIOIOwNVApjyT+LniKnAk8D5zjLcxxHMfJPZJOljS9sDUgaUlJEypQu387keZASZdL6pn4bFD0qtihLQZJljwZEPM1SNJ3O5CXXxWltbekkxL/d5X0dIXbC7MlrRXT6SbpjZjWiu4HwXEcxzUIjcQrBIv8leMKexLwaplpzAWeTfzfH9gf2DyhRZgMPN5GGguLtBwqeFUs5Cum8TJtn44QcHfRZ98hHOcspLUAeKrC8no+UT6rxnL7n5m9634QHMdx6keLF0HVKcQW2DIxgd8HbFtGGvOBGcn5nRAZcquYVoGXgD1bSWNpSUcR/Aq0tcWxeRQCWvM7MIfEyQlJ/QjHJG8vum5aheV1rZkVhJndotDqgoHjOI7TOEg6OqE6f71gNyBpQ0nzylC7z5E0MpHuYEkzJZ1X9LydJP1N0pNtbVXEQFIDS/yMlDSllfumxoiUf5LUJ/HMYfFdzirKy9kVBp4qRJhcStLb8fP5kr7vLcpxHMdpFAHhP0UT4Fbx826Snipj4hwbDQiTad8l6TetPLebpB9KWpBIY378/YSk7q3clzyimLz3NUnrtnJPf0kfSdqh6PNflykEKSlkxGOXKsqDa7gcx3GchhAQDi+a5L6b+O7YDkyYCyT9QtKQYlfDkrZOBoBq5fm3JHwWfEvSKZLGSTqyxLUDokHg7ZK+LOm5hGCxfRvP6BrfpXsJIWWzdrQZST4tCof9r6Lvz3N3y47jOE5aE3b3OBGOkLRatIwfkFSZV/l5Jmm3eJJhWtQatMTvhrRz6kCSTuvk8/dNpLVh/GxozFPXomtXTGoBoqZBkl7ozMpd0tKS3umAgPDjxD2bSpobBZazJZ2Y9gkGSUvEtrBSbBtD4v+utXAcx2lAgWBlSd+QdI6k/0p6NU7KU+K+/oz4/7uSHpJ0haSTJG0uaUCV83JRnAhHJz47q40Jc2Kx18QKnrlGnGgl6UutCDB9W7m3sPK/ogrvfmo7wsFrCfsMi3UlSQen1C6GRC3JyZKuieG4x8S2MDO2jU/i1skLku6IWyZ7S1rOe5bjOE4+hYKV4iT/YPQ/UCkfSPqnpAMlDa5Cvn4S070p4UZ4uSgIlOLpCp7Rs+BDIKEtmNyGgHBqFI4GtyEgJO0CBktaqYJ87dJGOc+PQa0K134jISANrGK7WD5u+dxSoR+KpLHmvdFeY7j3OMdxnOwLBptFDcBUVZ+PogZgkwrztpGkWYn0vpX47ketPPOZCp6zU9QYnJeY0NsSEL4q6fxS6vtiAUHSunGr4KlybQHaERAuKBLupiTsL37XyTbRRdIOkq5OlEM1mRhtI0Z5D3Qcx8meYLB6nADmKn3mSbo5uU3QwTx+vSiduwqTrKS+kl5ua4tBUi9J63XgOaslgkQdEwM5zSkWEKJhYc+ie/u0IiD8Pe7Pvxj/v6oD+egnac3E/8e1EuzpyaTL6CisJHmswjbRLdpfPKzaMDUe/1zGe6TjOE79BYNekn7axrn9NFkQBYVNO5jXpUoca9w78f0qMcrj9UUT6Pbx++/HvfHtO/CsP8T7J0v6VUxHkjZKaFqOj6GeC/eYpG0lHZmwBSgYKT4u6ZLERLhWO89vkfSPKOAMi5/dVmRvcLCk9ZNbG9EmYH7R+x9bQbv4ctxeqgcfSjoqEXfDcRzHqbFwsFniGF49mRVVzEM7kOcBkraJ6vZPJL1XCHBUdN1PEpP636KavCBcXNmB5/SWdGmJvB4QBarfFybuovssbjlcHFffxWGf35e0aweev2JCm3NgtLP4PP4/ptQqOwpQY6O244j4/K3LbBMjoyZpYQbaxd2SVvWe6jhOI5Hpc+bRuG97gu//roSIgd2BZYFVgN51ytq7wKlmdn0H32MbYF/gBDObX+IdnwbWI0Qw3BG4ElgBONPMftjBZ2wPfA0YTHBV/DjwsJm90M59fYFtCK6hVyLEcHgauNLMxnfguQMJ8SeWBk4BhgEnxq9/bmantXLPNcD5ZnZbmW2iC3AU8HNC2Op6Mg24B+hBiJ9xJvB0MuaF4ziOk5KAUMqyPa6an8/AyvEySYOq8J5XJ9J8J6rexybdLVepPPtJ2jyFevpJQuuQPEnytTbusQqes6ykfys7fC5pjZi3lui+2p07OY7j1FFw2KRo/7qevNBR24Q23ufWojRvrbbKWtIK0VhylqRjyry3pb1Vfdwq+KjoPY6rYv53jEc0s8ZvvEc6juNkR0DYLWOTxGeSDqnwXVqincAN0c3yl1q57oi4VVH4/4/xfP432vLbIGnJaIz4YVGeb5S0cWsGdnHSX0fSGZKeLghB0TvlSclTC4l7hsSAVTfGEwU/qlJ9n5w4nZE1LvYe6ThOI5JLdaik1YDngJ4Zy9rphH33+VV8137Ar4HjgOnAyQT7ixMTl40n2A28wKJQyS3AmsAWwIhWkp8PPAs8Bnyc+HwZYCNgXYLNB8CEmIcDgN2BccBRZnZ7ivXcE/gTcESGm+PJZvZ7H0ocx3GyISB0k/RsRleUl0rqXaX33C7D71nwE3FuR051VPDuS0m6U9lmnqSNvUc6juMahGwJCecDx2Q0e/8BvmFmn1XwXsOBbeNKfcecVMcHwF+BGwgnPOaY2cLOCAfAjcBWGX/vd4G1zGyWDyWO4zQaeXbw8lKG87YzcGeFhoYjCUceuwFvATNyUBfLAT8FLgMOpvUtjUYSDgA+B2b7MOI4jmsQsqM9WBU4A9gr41n9H7CbmU2PJwEGEnw4rETY57/MzKa18Z49geFRaFgRWB1YPv4Mi+nV0hfE3DgpToxag3eB1+LP28BEM5vdxvvsB+wQBZ83gHeAcWY2JYfCAfGdVzOzBT6UOI7jAkJ1Jngrx5lMPFu+LLAZwRnQjkDfnJTxfQQjwnXipL4kQXPzGTDSzCZXUn7x/ZeKP4Ni+QwiOErqBwyJ9Ts8aiOSDIp5+LTo8wUE48OFBKPE6cDYeN24+NlkYIqZza0g3zsDdyQ+mhfT/gB4k2BUuUGO+s8C4HvA9WY2Mc0+4DiO0ywCwpLAdwmnED4C3o+r0yTDCN75VgdWjb/7NVDZTwJWN7NP0hbGStTzEgkh5QuXpzlpSdoMeLQB+9EnUcB5NWpTxgNTiq7pSdD8rAC8R9AezcBxHMcFhMUmi+WBXwAHkWNjyc4UAbCTmd3VNC8s7Qjc2cT9bRbh2ObZaQuGjuM4naVuRopm9r6ZHUI4b/8vYE4TCmfHNcvLxpgT323SfjYNOA9Yx8xOdeHAcRzXIJQ3gawLHALsTdhPbxYtwt0EdfS9wBPA22Y2s0GEgiHAGoRAUDsRnDY1E+8CVwBXmdk7Ptw4juMCQucmlSWB7QgnFLaIwkKzbEHMI9hjvEDwcPgc8DowIetn7aPHx5EEQ8P1gY2jcDC4jtmaRTCC/Dz+35tg1LlESs9bSLBFuA/4N/BEJb4wnAZbBUjdgf6x7fUg2FYVmEmwYfmcYPw7PaU8WBTU+wAPNsoixGkyAaHEpLM6sAmwIbAawSp/QBzkO5v/GQQjyTeBZwhGkMcRQktnhemE0wNvEY4Fvh5/fxgHlmlmNqdG9dEzlv1SBN8Hq8X6GUUwvhtOcPGcFf4EnGZmk2LMiYKAsALhVMk28R1GUr7b7s8IhqYfxjp5Ogp0L7d11NNpCoFgKYIvk80Ip3JWjYJy/zi2FG/tzo+CwmTCaaFXCNrEgkZxThXyNIxwLLcPsLJrtJzcCwhtCA2FY3zbAqfGQb895gNjCOfvXwQeAV4mHLHrDuwLHE+wichDucwj7G1PigPL2CgwfBp/phDsOsYV3fcpi5z7dI/lmGRpoFcs46Hx+4L/hqUIxzT7Z0wQaI25hFMTlwI3lJq4JfWIAsKXotCwPuEEzXC+eGpmATA1anb+GNvQ1GY6iRAnme45f40pZvZ5CmXTl3D8ep8oeA6rUvt9i2DY+w/gmUpPGUn6MnBX7Ptrmtm77Vzfi/pq/9rio2rGu8lAv+pZYhx2AaFKhbssYUtifYLzocFRQi8483k7rvLeB95JDuixYg4gnGVfo0nG+dlRWCKuZno1yXu/AJwDXNveiiwKDYMJHiF7JjQG481sQpOuig14MK6M88ypZnZ+FctlaeCwOI6MSjHf84HHgUuAf5e7dSXp98D3Cdtua5rZe+1cvzNwXUbr8Hgzu7yB+tZv4uLUBYSMVEgL8M2ofUhTMBgHXEhwvbw5TlvcFQfAPeNKPi0eA35rZjd7kZctILxEsDHJMz8ws7OqtOo7khBddUSN3+FNgvHrpR1x0BUF3ucJ22lzgQ3M7JV27tkTuCmjdfg4sLWZzWuAftU/9qtMGuY3nYAgaROCm+btUnrEi8DthK2KNQmhmVsIaulDfaopyZ/jym6GpAMJWwIXE4yq1k3pmf8GTjGzN734O9x3RhO2lwr0igPbqNje16b+W0+TCPZEzxDsiz4knBYq8HJ76vUOlMOGwB+ArSvUBMwgbAsWJrjehO2sch3BjY0LkCvM7MM28rs/cHXio23N7IF23nEYwfYrOVcsG4WhDQm2FUvWqY4XAtuY2UMN0Ke+AVxbxyy8FvvKK3FBO61ZB7eukk6RND2FsL9zJN0mac+4d4ekG+J3+8X/u0j6cQwR7ARmSDqhqJ6ul7RQ0s6SesQy/Y+kuSk8/2NJR/jUX7X+tbGkK+vUlj6Q9H+SRqT8nt+V9HmZeXtF0h8lfU3S2pKGS+oT23cPSf0lLSNpE0mHSPpLvGdhB9P/VNJFkraV1Kcov1vHskkyugrlsIykkyR9WKf6vrIRtHKS7qpT+d0a20sPH7ykQZL+lUIhfybp75K2KHrelyTNjNdcWvTdqWV0/EZmftQWJMtmiKSJ8fv/RedKhe+2ikLYghTyckFUGTvV6W/flDSphm3pFknLpPxO3ePEXQ53StqxkrYlqaekLSVdKGlCGc98U9I/Jf1N0t2SZpe4ZnQVy2V5SXfUYfyYGu3P8txP1m6lftJktqTDfZRaVAkrSHoyBcHgYklrt9KxH0hc+1y0eSgMnG+4bCBFIekRSV9PlN3mRcLTKSXKd/soKMyvcn5ukjTYe0zV+t32CSE5TV6WNDDldxkg6Zoy8vSepL2r+PwRkn4ZNV7VYHSVy6d3nYSEH+W8j/y+DmV2qo9OX1SDPVvlrYS/S1qrjWeeWXTPBEl9JX0npdVvI3CBpG5xO6FYEBvdSjlvF9Vk1RQU/idpCe85Vet/Z6bcbhZI2qUGmoM7y8jTw2mtbCWtJOnarAkICU3CJzUeN14rbOnmVKs9rsbl9Ux02uXESfl/VRQMrpO0eTvPPLrEhDVO0joJ1blTmlMkHVri8zGSNmijzLeLKuZqCQpXJ7c2nE71wTVi30mLx9Osqyi0XlmmcDC4BuX67U5OLqNTyteldRg39spp3zi4DmV1ULn57NLA49MfqczKOMlnBGv6rczs62b2aBv7hWcQrPGLBywBgwgeCJ3WOYbg5a2Y5YHbJe1e6iYzu8/Mdge+AtxCOOfdGfYHTvHqqArvEU4RpMVDZrYgxfR/Dny7g9e+C3y9FoG4zOwqYDRQqRV/WoacT9ShjR2ucAQ3T8JBF0LcoWKmsMiJXbWZTTji7QKCpH0JzksqZRrwW2ATMzvKzJ5s41lfAm4l+FQotZqZSDj66Mfp2mYA4Yja3BLfDQOul/QHheNXrQkKewBbAVe2kk5H+bGkjbxKOj2RzYrtP00BJK0xZI/YpzvCAuA4M/uohmX7NrArlR2RS0stP7bEZ/MJ3kfTYgdgrZx1jfUp7RfnNwTnfmkwBfi46QUEBVfMZ3YiiceA7WJY3jdakwDjSYW/EQLz7NBGeneb2WTgJylKh43AGwSXsq0JUt2BE4EnJf1E0oqtDJzPmNmBcfB8o8K89Ab+UDAudTrFuBTT/jClMWQ4pbWBrXGdmd1RBwHs86jhuKDcV0wpSx+zyEtr8cSXlqDYnfz5lzmIxf2FjAVuID1X5h8TNOJNr0E4CFixknEBuJHgROTZogGju6Rlo2X2TwmqvQfjs3q1UykXxc58M3AgIRaC80VmAT+LgtR5cUXWGssCvwKejicPjpG0QTT66ZoYPO8hOFp6sMI8bUXwgOl0jjS3AOamlO7pBLftHWEewYV3XTCzhYQAc+dnoK5nlhA+Wgju7m9J8bn7SRqUkwXsIOBrJb76RxR401qULKxEMGyoFZJCwJQTOlGAs4HfxolGQF9C0J7hhH27co9TPQSMkrR6/H8qcHnMo1uTLuJxwKJF+qdxtTG8nXsGEtwy7xlXLR8DH0maGDvagvh5ZyLhnSTp9jgIOxla5cf6nZTCGLI58K0ybnmNdFXoHRISJB1PsHX6Zh2zsjD+LJbFuFA6LKVF6dJx0r04B/3ha3wx3HdB0L0i5fl4fCWBvhpNhbojsFKF93YlGKhVk33ij9M22xAic1ZKS0KQqyZbEIITPetVVDGzUkp3ISEUejWFAyMYqJYzLj6VhciCUUg4mqA93bQDZZcGnxLst4ojE/YwsyclPULQzKXBkZIuz3J8hrjwLLUdcp+ZvZTyEeuKtrcbbYthTx+Pc0lWrZBbgK969WS2bqud9iZAuX4VXs1MQYcIjwcRwr63RVrqeFFajV2op8tSfP0NokCfZTYlxCwp5rKs9pWGERCiq9XtfTx2qsyO7q+8aTiE8rWqMzMljQXD6u+3c9nQOmXvJtKz0jfg6Iy3r4NZ3PD1HYJxdiZpCAFBUm/C/tOwFJKfSVCTziZYgX6CkwUKe9BT498L4+9qW2hvBtwv6cte5I2LpCVpHA3klbRtFFgXmxozmxbzlhY7S1oho+1raCvt68p4GiWTtDRAx96U4BRps04mNZ0Q8vJ5gt+CdwkhWT+J0mkLweBtLeA2H1LrzkcE24W5QNJ7XXeCEdBgwn7serHOOhPMZzPgDkl/BX5oZlO8+BuOLSpcWQ/N2ouYmSSdHPtHv4xl70rCceXeKaTdj3BS7LQMtq+9isYp4oIz01Epcy0gSDoWOAPojHHHu8CfCM6O3mvP0lPS8j6WZoKFwAQzm0lpBy3JOhtE2Pu7gMqNWFuAo4BNJB1pZk97FTQU21R4Xyad9JjZG5IKJ6aylq87KH3UrxocIOkPZjY9K+8c4x+Uctx3p5m9m+VOkcsthuiX4CLCmfnOWn5eb2bnmtm7HTwG0sjuqfNGhxzZmNlkM7uL6ux/rg/cFZ01dfMqyD/x9MKmFd6+STxenUXOJWzBZY2LSM9Z08rAThl7382BDYubHfDXrPeNLjnszIOAa4Ajq5WkD5FNQ7Xa+0CCs6bfeZE2BIPixFIJywGZtE8xs/fiWJm1cf8h4IUU0z8qY/EZDmXxUwTPA/e7gFBd4aAnweNUNX0LDPDxMbeTfbmDQLWFwRPi2XMn3wynfCdoSX6U4bDDl7C4x8nl6iy4zCHdI4+jgXUyMmeNoPRR6Suy7LMhdwJC9It/cQrSej+cvAoIXcpoP12pvmGUAX+StJ9XR65ZEujMdtGGZDcC6IssHmUxC15cryO9E2HdgCMyUv77lliEfgr8My+DbF74CXBACukOw2kG+tO5kwxtDUYXxdM0Tj6pRrs4VdKuWXux6Cb8H8XycgbyNbFEvqrJPpIG13lR243guKqYm8xsvAsI1SvoXYEfp5T8Sim7uHSywfIsfsyomsLHFVGd6OSPHlVK42pJm2Xw/f5Lei6vO8PlhGBXaTAsrt7rSamtjvnxvXNB5gWE6GDifNI7kjmCyg2UnPywMZ1TI7fHKOBaSX28qHNHtVbU/YHrM+hUawzwUgbL/XnSNdQ7pM4njY4sMcc+yuJbPi4gdILT4uovLVqA7XyMbHhqUcdbAT/wos4d1bR4HwH8S1JmgrSZ2QLCyYFqC0SdzZeAC1N8xIakFxyqvYXtCpQ+bnl5nqLDZlpAkLQhwX912uyVsWMxTnXb0QhqF6fjFEnre6nniqlVTq8f8A9JP4vG1Vng4cTfS2VovLsLeCtFwa9exorfAIr9Y3wI3JynjpF1DcLJ1MbidiNgVR8nG5YdgKVq9KyewGkucOaKiSmk2QL8kuCie+0MvONLhP1vSM8WpxItwgzS3ZPfTVJNt5Djcfxvl/jqn3lz055ZAUHSGsAeNRzUt/FxsmGp9Z7wjoQYEE5+BITZKba9/0k6tc7G0OPi6vUx4KmMlf+VpOfxcQnSOf3WFtsAaxR9Nge4Im8dI8sahK9THevicirVaTCiA5uNavzYbjROZMBmYDzwcYrpDyTEjHlI0n710C6Z2Wwz+5qZbW5mh3TQrXyt8jaWtqNPdpYDJdXS381hLG7Xco+ZvZS3jpFJAUFSlzqs+jaJYaOdxmIVQlTHWrOxF30+iIF9XqvBo9YjnP2/W9JWXvJf4GLSC0O9ArBLjeauVVp51mV5rJSsahCGARsAbxJUY7VgWcJRNaex+BLpHm9sjaW86HPFfTV81vbAfZL+JWldL3ogHP1L8/hfreIzfIvFPba+SfBF4QJClRgKvB21CLfW6JktVB7Rzcku9XJc0+JFnyvuARbUuH3sAzwi6dKMGDLWDTObT4jymBZbxEVnmtqDPsD+Jb66IhpjuoBQJT4Bvm5mHwA31vC5LiA0ENFJSr2OHN7lNZArXgKeq8Nz+xD2rB+TdLakkU1cB/8mPY1xLeIz7EDY0kwyHbg2rxWSSQHBzMaaWWFP8N7YcGrB+hk6t+x0nmWoj/3B7aTnGtxJZ8yZR32tzPsA/wc8JemsZhQUzGwacFWKj9hbUpqxdw4t8dmtZvauCwjpNZqFwLEEd6FpszLBE5rTGKzF4s5K0uZD4Njovc7JF/8EJtQ5D0sCJzWxoHAZkJY6fjApxWeQNCpqEL7wMTk1TsyNgBCFhHHA8Sxy9JEWSwCr+TjZMNR6y2gBcIyZjfGiz+UK9mPggoxkp1hQWKZJ6uBN4O4UH3GYpDSOzx/C4saJz/FFF9cuIKTYcG4Frm/AScVJj/Vq/Lzbzew2L/ZccwHwXobyUxAUHpf0o3qHMK4RF5JevIh1gK2rrD3oR3CtXMzlZjbHBYTaMbcGz9gAJw+INjRK0Wvd6jXO06VeLblfwU4CTiUjAY0SjAB+QzBmPCqlVXBWuJ8Q6TGVKgaOrnKaOxF8LSSZBNyQ94rIjYAg6QzgoBo8avXoS9vJNoNo20PiigTfFrXiQ4JBrZN/IeE64JqMZm+luML+n6SvNGj5zwX+luIjdqxWfIboW6GUceL1ZjbeBYT0BYM+ks6PUv08YFrKj1yuhDToZI/ewGWS1mnl+7WorYOkpYCdvVoahu8D72Q4f5sSAkFdI2nFBiz/fxCOu6dBH6oXJXgNFnfTv4B0A1C5gCCpp6RdgTsJwW/OjZ3iGyk/uifQltMSt07PDiOBa1ox4Kq1/4MngXMkXShpFY/mmPtV7ASCxnJ6hrPZFfgmYdvhWEndG6j8PyZdFf3+VYrPcACLxwx6BHjGBYR0WR7oD/wAWMvMvmdmz5nZnYS9uDSNP9ZvR8PgZIc1gX9JGlT0eTVd2H5KsEgeRwjqk9yfng2cbWbbABsSgs6sDgzwqsn9JPUIcAzpxQioFkOA84A7Ja3XQFVwMenZnY0Edu3kInYgwbVyMZc2yjHnlgx3zjeAN1r57ieS/gNsFQfrt4BZ8e+ewFeAw6lcxbxWKw1ic+AsHzozx6bA5ZK+ZWbTJfWlOnE1FgDfI4TJHQv0i31mtShEzgSeMLNXEqueO7w6GkpIuDK2p/PI/pbstgTbhJ8B50UfMnnmeeBBFvcvUC2OlPTPTpTTVwnO2JKMBRrmJFNLjjvuIwRVTin+LWk8cFqFya8qqaeZzU4IB6OAqwmBpJzssTtwrqQjgOGEeB6d5c9m9ufE/wX7l7bantN4QsIFksiJkNAPOAfYWtJxZvZRjstdki5OUUDYEtgEeLwC7UEXgu+DYq42symN0va7NHC/Pp3K/eEPTwoCkpYmuHtewYfLTHMo8CuCR8zOnkT5qBMCptOAQgJhu2FWTrK8N/CApK1zXvR3EKIhprVAPqzCe9clBIBKMge4spHafZcG7tALgD9S2XnmJYgq6ri3/Q9qf6beqYwfAGdWIZ3bzGyyF6eTGFMuIrjqnZCTLK9COOlwRI7LfAbpxsjYW1Il7vUPYvEt7HuAV11AyA/PA5Wqe1aK0QAvpsqet5xU6UYrNiRlcr8XpVNiwrod2B54NCdZ7gNcLOnnOT5ZcxXpHW8fRJnxGaJxYql7LjYzNVJ779LgnXkCwYCxEjYC/kSI2e40F3OBF7wYnFbGlVcJhtDnkp9jz78gHMPtksPyfp90jX8PL9Mz5d6Ebegkr0UNQkPRpQn682sV3ncw1XfJ6eSDTwk2CI7T2qQ1w8y+B+xGftTKx5PfU1gXkt5x0zWB7TqoPehKabuFK8xspgsI+eNtLxunTMYCn3kxOB0QFO4kHLf+PcEnRtY5UdKJOSzqR4AnUkz/qA5etzHh5EOSzwh2ag1HM0yCs3Cc8pjfaHuJTqpCwmQzO5ngh+C+HGT5TEk75KyMFwCXpfiIL0tarQPXHUzwYJnk5kYN8d4MAsJbOE55+PaCU8kk9jjBLfxhVK65rAXdgYtyGDr6BoJ2Lw16004wwFheexV/TIPEXWhWAWE82Qvd6nSed1PsmGO8eJ0KhYT5ZnYZsBnBJ8ekjGZ1RYKvmDyV7RSCs7q02F/SgDa+34vg1jrJ08DDLiDkl89IN26DUx+mE9xpX5RC2p948TqdnMw+NbOfAV8CLgVmZDCbB0vaMmdFewXpbRsvRzA6LaU96ErpCJCXm9k8FxDyy0zSC/jh1I+uBM3QiQQvl9VkghevUyVB4W0zO4LgS+UGYH6GstcCnBYnv7yU56vAf1N8xNGtHAXdnGCgmORj4MZGbr/NICBUc3thNsFadSFOJoQEM5sFfBt4oIrpzvOidao8sT1rZl9LCApZ8Z+wTfzJExelmPamJQQBCHYlxbGLrjOziS4gOIVJ41Dgd15umRt8ZwD7A495aTgZb6uPRUFhJ7LhWMfIn7+XB4AXU0q7haIjj5KGEyI3JpkP/L3R22szTHQWfzrLT8zsWoLrUid7A+944AwvCScn7fUegjfGnTMgKOwsacUcld1s4G8pPmKPKBQU+BrBJXOSB4FnXUDIP3PonAMTAT8zs9/5sJZ5hnsRODma6BQdLdVbUOgD7JKz4vsHweNpGgwCvhm1B90offzxUjNr+K3mZhAQFnbyPW82s1/5cJYLlq9SOn4s1qmXoHAgMK4O2dgxZ2U2Hrg1xUccHI03NwLWL/puIukaSrqAUEM2Afp34v4ncPJCtRy/+DZSEyFpe0k3STpPUkudBYUr45h1DuEEVq1YT1LfnFXdVSkK82sAGxICMxVvUV/fLKHguzR4x28Bfszi1qflMNSH0FzUtQGrVim5ZbxEm4oVgT2BI4ERGVgdf2RmJwJbArfV6LFLA6vkrN4eIjgqSmtu/DNwQNHnTWGc2CwahB2ALTqZxgo+fuaC3lWc2Lt7cTYVCxL1vlZWMmVmz5nZVwnHeN9L+XFdqyhg16p85gEXp/iIjUssEB+iCYwTm0VA+EYV0hji42cu6AVUS0W6mhdn07J5BifCqwmum9NeuY7KYX3dRG0dm13SDMaJDS8gRJ/a1YhYNlhSTx83M89AYIkqpbV6tF52mo/tsuhZ0MwmmtnBwDEEN+NpsHTeKsvMJgHX1OhxHwB3NFNnaGQNwlpU59hbP9xoLQ+MBKolyK1A2Jd2mo+1yIAdQhsT4l8IQYPSiGo4KKd1dinpxWdIcqWZTXMBoTFYj+o4SOoXf5xsU00hrhf5cz/rVIclqI7mMU0h4R5gV+B9FxDAzF4D7kv5MbMJpyaaikbXIFSD7lTv+JyTHstWOb3948kIp/nYOweT4ovAPsCUKiabZ/8fF6ac/n/N7HUXEBoAST0IZ1irQVd8iyEXC4kqp7c5IbCO03xsJSnzR13N7BlCyPNqRYjMs/HdvcBrKaZ/STN2hEbVIPyW4AGrWozAyTrV1vK0AD/JUyhcp2r0I7g+zr5UbHZjFVfPY/NaYTGq619TSv510t/CcAGhBpqD7pLOBk6octK9fMzMPGnsn+5AsBp3mo+DJeVlfPw5MKYK6UzJeZ1dm9I7XBYFEBcQciwcrEyIs/5/KSS/PE6zaRAKnCFpRy/epmMTOu9krVar58nAuVVI6q08V5iZfQTcWOVkPyMEhmpKci8gSBoi6VTgEWC3tNqej5dNqUGAYH9ylaRDc+ir3qmcFvKlPboa+LiTabzRAPV2ETCviundbGYfuoBQ+4l9GUkjKwmOImmgpG0l/Yng9vIM0vV46GGEsy0kdgOGpfiIpQj7m89I+rWkzST1qSSfkkZJ8lMx+WAPSevkZPX8CXB/J5KY2iACwtPAo1VKayFNapyYlJLrxVLA7cAkSe/ExvkRMCn+FBxS9CAYCfYHVgbWBlantoaDvnLMPrUwJlyFEPzrR8C7kl4DXibs/04DPmSRJfjA+DOYsEW1Ymy/EML6OtmnF/ADFg/Yk1XuAfar8N5XqK3L4rQEJUm6CBhdheSeBR5zAaE+Ffm8pPPi6n/tjJfTQpws05faOrMyYKX4U+621j5mNs6rLDfsJ+lCM3skB3l9g+DLoJIt0bvNTA1SZ7cC78T+2RkuMbP5zdz4622DcBbBsDDruB+EbNODfJw0OSseS3PyQzfg9Eq2QuvAeGBOBffNB25plAozs+l0Pj7Dx4RAUE1NlzpX5HzgCOCJjJfTMJws05vsh2j+N/BDr6pcsjX5MFhcQGXeEJ8BXmqwOvsbnQtqdX2063ABoc5CwhRgT+DuDJeTcLLMwCgkZF3I7O9VlVt+KWmtjOexN5XZ4vyl0VTpZvYu8J8Kb59HCADV9HTJSGVOIHg/dJxGFeC+BPzUqyq3DAAukpTlrazlKF+T9jJwXYPW2YVUZj/2CPCiN/ls+UFYwavDaWABAYKPf/epkV82B87JcP7Wr+Ces6roJVAZ658PEk4ilC1YmJkbpmdMQPjEq8OpkO45yeeYBrIUz8IYU4/x60hJJ2e0rMs9PvsQnTfmSzKQ0kfC62LDFbdNLivztveAO+pUf11J77i28tLB2pL23vG5zqmApXOSzyubsG7SclPerY71fqak/8tSIUtaG9i0jFtmAN8zs2p6HezVirBeT/ug6winOzrKFWb2eZ3yuiRhKysNhlSivcyMgGBmU4FTcjDguYo4eyvTj3OQ35sJ57Obja41agO1HgPOlnRShsr5JKBnGdf/2MyerXIeRrVS33XzHGpmk4B/dvDymQSX1fWcW9KaX/pUor3MVCwGM7sB+HPGB7x5+KmGLDCNRQZIWT+G+ibwHTNb0IT1tFSKadfbZfVZkn5Tb7sSSdsC3yzjln8A56WQlZ1ameA2rXM9XQbM7sB1/zGzt+rcV9LaLu0jqWe5N2UxWNPJZC/2drLRv0f+w6I2AvclDImmZzif04EDzWx8s1VQdC6Upkv0LMRI+RFwpaSBdSrjYQRr/Y5OLI9EYXVhlfMxANi5la93kLRUvSrIzF4iuKFuj3ofbRya4py8JBWEDMicgBAtao9hUSyGLJC08v2EnIdFbQAWEBwPJeskq/zGzJ5o0npahnRDpa+Xkff8FnCfpJqGh44Bwy4nqPY7wovAt+J2brXZD1i2jYnvqDrXUXtBl14BHqhzHjdMMe0BbdRPrjQImNkbZMsF8/hE3hYSrH+d+vEq8HyyyWQ0n5/Q3A5Xvkq6bsq3kpQV51PrAf+V9NNahAWXtCRhv3ynMoSD3c3s/RTyshTt24/9QNK6dayfu+O40Rp/NbPZ9cqcpCWAr6f4iK7A7rkXECQNlrQ/kKUwq8UT0O0+R9eV64usr7MqIIwzs0+bsYIkDQFOTPkxy5It51N9gNOAhyXtnVb8BkkbE1Tme3TwlkdSFA66A+cDI9u5tD/wN0l1OXkSNdNXtPL1VOrvLOpwYNWUn3GMpFHl3NAlI4PJCpK+K+mmKOleDWyUoY5fbHPwLCG0r1N7ZgHXF302j7DtkDVGSbpC0tH13IOtQ3/uDVzcgUmjGpwkKWsxLtYhaEAfkLSfpH5VKtdhkn4B3EvHt1euAnZNSTgYGtPv6Mp3PeAOSRvWqV6uorT92E31jLAajUxPq8GjBgPXlCskZGFAWV3Sh8oup5fI83ly6sFtJepiuKSpGc7zU80iIEjaVNK9dSjjKyWtWGGeD20n7fmSxkh6R9LnFeTtbUlnSxodjfnKyVtPSZtI+p2kcWU8c7qkE9M4YSGpXyyztyusq2lxK2aZOrTPS0rU7eZ16it948J4So37ylhJ347an7Y1LxkaWFYlOJLZOIPj3vfN7Oyi/G5GsEXoilNL9ikOmRz3714mXYO4SnkR2CYGJcv75N+jhNZxAMEIbX2Cyntn6ufZcjJwI3AnwejsY75oYAwwrzgwkaRDgb+WSG8qcFHUWL0RtVRDoip4e4KNxepl5nFsbBMvAW9HTWTSMU9XwtbJMsBaBMO1VcscZx4CTjKzpzpR110T9dgtrj7XAraN771iFerrU4Jh4MOxTN6PZT6LcJR8TrU9j8Zx+0GgsP3zBLBFtY8gF5UfiXIcEjVr2wN70XED0zR4Jmq6HiGczptMUewKy9gA1A/4MfAdKjiSkSIHmdkVRXltAf5H8M/u1Ia3gfVjvPdkXXSLA8xqGczzK8CGZjYn58KBEU6OFEc0HAj0y6CgPCcOeMUCwq/N7PIOCAgPAUeb2attlEnvONAfCuwALFHnd34POJ3gDXBuJ+t7e8I2UWFiW4rgKTFNZgKfxd8Tga8U9/UqtOMuwP2EEN4Ah5nZZSn0ly2Bvxd93J1w3DCLAb8+ByYVCwgtWcqhmX0GnCJpO7JlgzC+RF7nS7rQBYSaclkrA0aaHsg6y6rAKlHDkXdWrdLKsRb0oLQr5iEduPdeYM/2Jiczm0nwjnlr1IB+A9gXWLPG7/oS4bjjlVU0iu1fh7ruzSK3zIPTEDrNbKGki6KAMIng4TQN+uaorxTyu9iivCVruYyqmSxJWPOiNFuKfwE/ob5qombhE1oPvDIPGEf6VsCV0EJ+gkm1NbBK0q8J2wl55v52vp8IHF7uyjUezf6lpN8CWwJ7AjsCK6f0HhPju1wH3GVmM6qc/gvA9+u8op2VUtq3EE7YvB9dMafBq3Uuv+r0+yxmStJfgKMzkp1JwJpmNrGVvJ4I/MHn79Q5x8xOzEmbSTKGsC0y1aswm0g6kmBrAHC8mZ1XpXSXIFju7xCFhjXiyrjchZkI2yVvA48Rtj8eNrOPvfactFc3WeSPwNdI1497R5lDiHzWGn8FjqB8YyWn40wDzm3nmtczmvfTXTjIPG/FlfhnwN+qtvoKWoiH4w+SBhFcT69EMEQcSjBGLNaYzgU+IBjxfUAw3vsQ+LgJw4U7Tknpe3tJ72XgiNpCSb9vJ68H+OnDVPljO+Vvkq7KWJ7nSvpZvQP5OI7jVCzkZlxIWIbgKe1AygtlmgZHm9lFreSzG8GwaStvUlVnCrCBmY1po538GPh1hvL8EPALM7vPq89xnLzSJcuZM7OxZnYU4aTAVRQdwagxf5C0Tyv5nEeIQjnHm1TVOacd4eBA4FcZyetThLPN27pw4DiOaxBqq1H4KmHPv15x4KcCO5rZk63k7xzgBG9WVeN9YKPWjm5J2p2wd9yj3k0TOINwxn6WV5vjOC4g1EdI2IpwdnVgnbIwnnBG+skSeesPPEqwVnY6z+Fm9tdW2sE2hGOmS2Ygn78ws196dTmO00h0yVuGzewhFnn4qgdLA/+OEdWK8zYNOJ5wLt/pHA/RSvS1KBzckBHh4IWoPXAcx3EBoc4ahG7U/0jh0sDNkjYpISTcS3B36lTOTIIv+XltCAeDMpLXczrr1tZxHMcFhOqwAPgeIShLJoUE4DfAf715Vcy5pQLNRBfcWRIOxhO8sjmO47iAUG/MbKGZvQf8LgoLteJDguvMq4E3gdnAMOCe4tMNceV7BMEBi1Mez1BCZS/pMODuKBzMIPif/xvB1fXsOuX1n2Y22avMcZxGJNdOXCRdARxQo8e9bGZrx+f2BFYA1gG2IARnuQi4KRlKNmoX7iZEu3PaZyYw2syeTpRhT+Bg4OvAk4TwrC8CH5jZvBhV8x1guRrndRywmZl96NXmOI6TPQFhgKT/dNCz3SxJ0zt47TxJ/y367NEYKrRUPkzS0GgfUfzdPtGrntM+J5Yov56ShrfRBnoXedycI+mRCp49R9LnHbx2rKQdvAc6juMahGwLCb2AQ4BvEaIq9gamAxMIaujCinM84XTBcnE1ujdhi6AUjwOjgfOBw+Nnt5rZ7hXm8TjgHPJp81ErrgO+aWYLyyzb7oRtibXiRz8lxG14heDvvi0WAP8BriSEY55BsC1ZBdgg/qxAiAkyP7ahe4A/mNm7XmWO4zj5ERaGShopaamoem7r2mUlXRZjLRSzX7ymv6R742e3dDJvJ7uCoFWej4FsKi3bB2I6VxW0PJJ+0M4zX5S0awfS7hvb1LKSengvcxzHNQjNI1RsC5wE7AR0jdqGTcxsTvx+aYLzo/vM7LBOPMeA38dnOYsYD3zFzF7uRNk+FbUBXzGzz+JnSxHsU74dNQEF3gPOAq4qXOu0W779CZq5BXzR3Xl3YBYwraOaH0krEI4p9yKEwn65cExU0hIxAmJb9/cCloh9dX7iqxntebGMi4YBiY+6xt8zzezzOpZvd4KdkgHdCJpGEaI6KpHXwhbmAoI2dAEwtbUIj1FYHhDLOukGvoVFkXwXAJML412V36slaZNVwf29Y113Karr7vF9preW71jXg+J7Jo8hTzGzBSXG5oGxjc+O6Qv4pLX8x+3kviXKtkNtStKA+G5zEnU8u1T7l9Qn1uO8RBuZYmYzKijTnsBqwMhYrlMJ9lRvFNpR7GPzzWxeS7MPfmZ2P3C/pA2BzYBXk43OzMZHjcLoTj5HwPclLSDEbXDgc+CgzggHkVuAa5MTfnTP/EdJF8a6Wwt4G/ifmU3xoi9LsO1OMMj9E4s8mM4HTiUY4X7WgXR6E2JmLEPY1pkObAx8Iwp444DhBO+YbdGNsOXzO4KB8II4wD4uac92BJUfEhyZFQbk94FjgHpvF20N/DOW6fPApDixbcYiN+LjgNfiBDESWJVgnLtVFNJaWwD2BnYBfpEQCl4jnLDqGieLpSSNBR4A/mJmH1fpvX4u6VIze7/C+7sBQ+LCasPE59cCf2zjvYmT31DCluN2CcH2dkmHFglVFif7g4FjgTsJ25ST2km/D2F7+9jE5+8A343Cb1v0Br5BOBlX2Hr+RNKuJWLPdIvvf1YUKH4IPEbYEu1oPx4MfAfYP7b3uwkn8wYCmwLLSyoYge8fn+UntMoo4F5VTOtoSTObfFthRoylUK1JzEm/D9yWqL9329vGS662JN0i6fG4gvnCSkrSOZIWlDJSbSPNI2MeCiwo5d206Dl/ljQtcc95GSnX3WO+di1sY8WtrfGJvF6UuH6gpMslTYiCV7sr+aKy+mlRWsntuFclrVqFd1pe0uxy6rSNtL5TNHZsXMa9w2M5JflBa6vr+P7rlpH+iKKx/Kwy3+2aorw90FqdSrpI0hkVlN8Okt6I6f+2VL+N73FRNNAfF7UWbjRXhgZgVhUaejdJQwhuhB9v8iJ9HzBJG8VO3LMTdSNvoTVhVit/t8c3ga8C15jZ7KK6m2pm3wNup7ygW9MJR4sfT6zoDm5nlf7feF8l75AmXYGfmdntCe2l8UU/L0qU2ZS4GnwkanfKrbtk+U8xs98Dd8SPVgcuKnUiq0wOivV5QNxC6Qyzi8qhHFf244EPisry15K+UqIsZkcNTjkalAV8cYuh3Db1StH9o6PGpLVrXytzztmDoGEdRfDbckqpbRMzGxcjJ1/Koq0sFxBSWhEsIWllSV+WdFRcId0aG9+rBP/9o5u8mFYH/k3wbfAK8EI0CL0krmh2k7R63P92MiInF/3dUc3N3vH3Bm1c80vCfmg5k+o0grOsAvtEVepigjlBlf5s0YSaFc3TeMr0DBsns3+waNugvXpr713vTfy9RSyvise/hLC2PrBtFdtdufXWg7C1eFJCyOoOXCZppQrLqlp5I9bfKXzRqd53JB1e4tou5czZklaMQnSvKFSd3YHbfkyww+tGBxuX03oFFPa5VowT3jrA2oSjcUNjxTjtd7AB8WcUYb+wwFzgY0nvxw70CvAcYZ9vfBqGVU4qDIi/D5A0BjizWJMQ63Zhmen2AK4CzozPGArsC1xQdN26BI3VZ2TTMPsFvmhI11Fuo3qB4aYVTVrDCMfEK+FrBDuJ/z/hUV/X8y2EI+sjgRPiZyOAv0v6ipnNrHPeXiQcp/8v0DO20XMkvWxmndE0/zr2CQh2By92QPCcLOncgiDiAkJ5wsCQKAhsECXjNYDlyU5sgEajO8GobZm4qikwHRgr6ZW4KnyBoHob50JDJnmCoDHrAvwc2EXSH4AbCycYosDwXLmDq5lNikeQD4yfHSzp4iI16uYEPxvdslg4lW5fVmPbM8Eyib8/B96ocJzsBuxBcEn/rfjxjpLWMLNX67gI6U4wql0L2D6hKTmLYKhaT3qb2e2STiX4y4FgAPl3SduY2fgK6mEFIGnj9VwZY+NtSZWFU7qAl5C0vqTDoiX8EwRnOvfFRvWtKCS4cFB7liCoQPchBMa6LUrHz0Wjn+MlbRGPOjr150KC47ICGxMs0R+W9M0q7FFfwqI95g2BLyX68dAoSExg0RG0Zqf4mN8ggkX9/y9PM/ugwrS/AnxKsM4vWMH3BA6r8zt3iULowYSjzv9fuyHpqIwIiucClyU+GgVcWqE9yOZRyCjwQRn5UMGuywWERZ1kYJxUTpZ0c1yVPkUw2jgK2AhY0ksqs/SJ2p1vEo4oPQy8LOluSadFm4YRXkx1GfjeIxwHm1j01cbANYSAZ+t34hGPEzRJhTHt6MR3W+EGwcUsJ2mDuAD6NnBrFLg/I+xT/7QTaR9EMEadwBftKvbPgsBuZmOjsJLUvvxe0uYZqZv/i/NOgV0IWjdIGKp2gJFF/0+sJDNNu8UgqR/BXmBzgoXz+oR9KadxGBp/CnETpsRtiUeB+4Fnq3jm22l7YL5T0tYEjc8+fNEWYCvgTkl7VLLnambzJV0eBQ6AXSUtA3xEcJt9q9fAF1iesOd9OIu2XZ4H9umMC3FJ6xHsQh5KaHYOJKj3hxFc3F+QgbZ4fzzq+Of4UV+COn8rKrMFqWbepkk6gOCTohAK4IeSnuCLJ3Dao2/R/xVtRzWNgCCpK8G5yGiCVe0msaM4zcNAYMv4czLBAPK5KCw8QHCS9bkXU2qD35vAvpK2I1iV78gitf8Q4DxJW1ZoR3I98LM4qA4A9iTEzXjf7VIW42ozuyr6DyloW0YBK9M5p1GHAFcU7D/M7ElJdwG7xe+PkHSJmc3LQFs8PzrHOyR+tDIhJkvx8dJ65O0NSd9hkd1MF8I23VOxnXeECUX/L9fKvLg8sB7BKVdBaDfgdeCBhhYQokprQ+DLUShYg7Af5jiFSWnH+CNgjKSHCWfyH+vEPqyzqA92AZYo8nJ5H3Bf1Cj8NKHh2ZBwEuipCgbVTyXdyCKDs0MJW4KXeC0sRsHm49SovVmT4NnvQklbVGgUN4RwemG+pLULH/NF3xbrEQwE78xIOZxA2FrZLP6/A8F+IgsCzL8lnUbwPgrBy+gehC25jlBs8Nuvles+INiKfD8unCD4ndgAGNOlAQek5SUdIuk6guHanXG1soELB05bfZKwb3cA4Xx5wS/D9ySt21qob6ddWhIryOJB8EFgZ+DiojqolL+ySEW8PtDPzD7yKmh1EpoGHMkiRz0jgbMr9Ey6L8Hw9N04yX5KcFV8A8HXSYGjM/T+n0dBMrnNuCBDVXQGcFOF9z5J8LlTYJ1WykCxHF4v0j68Z2YLG0KDIGlUXAXuSTAm7Ofd3+kkAwg+GbaLk85zku4meJx7pnA8z2mXecBekh4upZGJ9gM/AvYCBlOGtXUrq6aHY53NAS734m93knxU0m+A0+JH3yRszVxWxvjbl3By5PBS2zmSPmaRwWK9jzwWv//rkg6Lgkz3jNXNgnjCYhUWhbPv6L2zJP2MsCVhwBqShkXj0VJ0LVosdYUcn2KQtJakH0l6hGDB/Kc4MLhw4FSb7oSAJj8huLd9WtKZkrZqMs1C2S6t43GpFWjbMn5aFMJeJpwe6ggLi/MTn1UQCh4kOF+q6vvkqezLSOt3sbwKnBkXXR3lqxQFuSviv8Cb8e+eFWgR1ImyEIsCerXWRm8jOBUqTI61rKeFtOEgzMw+IdhJfFZB37sh1i2E4/iHdvTWwh+5G9yiC+NrogrlNyx+3tNxUhXsCadfTgH+B9wrqVncZifPY7fQcXXsPODwGCimVF/dheDb4qgynP8sHe8p5jaCivSKEjE6FvJFw+wsa1Crmdf5Rfd3LZpI5hCOcheinA4mnL9vd1yNwaV+0JZgFz0V3pz46FvROK6jdC01eXWQHoStk/a2l0+PWo7eZaavTtbTsgRbqLYm+qcJESIrmbN/GOtnOvArSfu00d4qLePMCAdflfSRHCdbzJF0SiNGlZRkMRLilySNie86J0Yf/KakJeMJodbu7xqjxO0S45L8TtKhkkZL2k7SiZJulrRZB/PTW9JmMerey5I2jr7/k9ccFh0kFf7vJmmIpGMlzUq8w3PRvqRfhsq7RdLg+A4zEnl9NQY2619GWl3je38r1lchrTskrVYsAEg6JkYmnBOjY17ZVmTDGAHwT5LmS/prTLNX0TU943VXJZ4/T9KN0dtfW/lfQtLIGEV0TuLnjzHAW4827u0Sn/uTeM+5kpZrKyhcLKv7JQ3rQNkW2tSJMWplIW9PSVq7vTYlqX+M1TNB0tOSNunAPX+RdFCF7Wp9SdfFCKFXxb67deyDx0l6Jvan8yRtWRjLLEcD1S6E/ZTeOE42+bGZnd5oAgLhNMDAuDpamFhldCEYon1qZgtam6SApcxsYvy/D8FfwcpRA/Em8FRHbTrifvfwxKpyPjAxGty1dk/3xDssKFqZzgEmxwiJWSjvbom8LizK69yY18kdFRCiNmBJvqhmbwFmApOSp0sKGtpE2fYAPjOzMa2kPyymPzdql2YBE8xsRuKaXgT1dv+isu8GTDGzcW3kvx/BFqhvrOcv3BvLYlYb7z4sluM8wjbh1NhWZ7XxzGVjujPaKdu22tTs+G5T2rh/EIviJHSJZfhpO/f0AQZGZ0+Vtq/lCAaLy8b2MJ9gpPk28HZxP7ScDFIjCFsKw30OcjLMPGCneIzPcRwn1+TFBuFHLhw4OaAb8NtilbfjOE4eybwGIap8XiKoqJzFmUtQFU0lqIsKKqOCOnEm5fvh7sUiN58QjEAHxL/7x4mwO3k1ZkmfY83sfC8Gx3HyTB78IOzZhMLBwjixfwZ8QvApP5lgnT2OEI71Q8L+6fh4/WSCinuhmU2vZmbiflvBuGdgFA4GEI6UDo6/l4ufLUPYW1uSRXuPzRbzYzQh/rzjOI4LCCnylQYt+/kEQ5txwPvx5x1gDDA2TvhTCUZCC+uZ0Wi4UjBe6dB53Gic1DcKECOiALEcwThtBcKW0VAa07vlppL6elwHx3HyTKZVxNFq8yU653613iwguB19l2Cx/SrwWhQEJhAsZhc0W8OL1uhLR43DqoRQzatFAWLpnAsO84ENzOwlH2Icx3EBIZ1JZFmCN7S+OZoYPgTeIMSBeCn+jDWzSd7cOlTnS0TtwqoEf/obRMFhOYJtRF7Yx8xu9Bp1HCevZH2LYRjZ9pI4iRDk4jngcYKr2HeqbQPQVBJrKLs348+tUWjoSTi3uzrB5fEm8e8RGX4V9+7pOI4LCCnSk2wdxfwoCgOPAE8DL7UR/MKpntAwG3gr/twShYaBUUjYENg6/l4+Q+1lGa85x3FcQEiPrnV+/ieErYK7o1DwSlY8rrnQYFOAR+PPeXFrYrUoLGxH2J6op++MqV5LjuO4gJAekwnW87UKwzmXYED4QBQKnjKzj72Z5EJgmE7Q6jwN/CG6Ml0f2BbYnhBgqZZq/1leK47j5HpczVqGomHitoTjjRsQjNXSVBtPIdgP3AncB7xhZvO8aTQOMZ7AKsA2wK4EG4ZhKT92AvAUcC9wPyEc7nyvDcdxXEAobwDvFwWC/eMgPjDlR06Mg/YtwCNm9oE3haYSGIYAWwE7xna3fMqPnEvYqvob8O+2AtQ4juO4gBAG6jWBbwP7AivVYEX3AHAT8IBvHTixDfYHtiB47PwywYlTmnxKOJ3xd+ChejvBchzHydKA3E3SjpKuj/HO02SqpFskHRBXjY7TprAgaRdJV8e46WnzkKSD2osD7ziO0+iDb984UT+e8qC7QNLDko6XtKKXvFNhex0iaX9Jt0qannKbfVPSj2JYc8dxnKYaaE+W9GrKg+z7ks6WtKmkLl7yThXb8ChJp0p6NuU2/LGksySt5qXuOE4jD6ojJf1c0gcpD6qPSDpC0pJe6k7KbbqbpNGSLouTeVpMj89Yx0vdcZxGEwx+L+nTFAfQz+I+8TauLXDq1M5HSDpW0pMptvMZkq6VtKWXuOM4eR4wV4nq0UkpDpgTJZ3pKlgnQ+2+RdJXotHtZym1+/mSbnJBwXGcvA2Q60j6a4qDoyS9J+ln0YmS42S1L4yS9NsUt9VcUHAcJxeD4VpRMEj7qOLf/Yiik7O+saSkc1LsEwVBYSsvbcdx0qLs/XtJK0o6ixC86FCgd8p5HNsZp0aSuno1O2m3m7jV0AXAzCYRAn2lRVeCY6f7XVBwHCctOuxJMfoUOAY4BBhUwzx+CmxsZmPKyOuyhPC/qwL/NbPnvaqdMif8pYHDgfeBx83szTLu7QE8CdTqFMICgnfGs8zsEa89x3FqIiBIWg44ATi4xoJBkjuBfWPEvraEgnUJrnJnAm8BL5nZVK9mp0IhoR+wMcEVcx9CpM9HzOytdu47DfhpHbI8F7gGOMfMXvAadBwnFQFB0tC4gvousHQG8noPcDLwgpktjCrg4cAawAhgNvA28IqZzfCqdaosLCwZhYUtgb6E4EtPRQ3D54SttlWA7wEH1jm7s4B/Ar83s1e99hzHqYqAEFdNRwHHA8tkLL8LgTeAl6KG4LU4UL9lZrO9Op0aCQvDolZhF2BNoD8wABhMsA/IClOBy4HzzewdrznHcSoSECT1ItgXHE/Yu8/cuAy8DPwbuJ2wfTDTq9Cps7CwHLAzsB+wOdAjg9mcApwH/MXMJnitOY7TIQEhagy+BnwfWD2DeRwD3AL8C3jCzOZ6tTkZFRbWBHYHvkHtDBTLFRTOAS4BJpiZvNYcx2lLQNgHGE1QjZaafLsAywEtRav5vsA2KeVrOvAAcAVwtxsaOjkTFHoQtiD2B3YFhqX0qNcJW27F2xofEQx1i2mJ174IXGtm07y2HMdJYxC8IAUHMK9Gj4mjvISdBuknwyQdFUOQz6tyf3lGUl8vZcdxsjTonVLFQW6mpFslfVVSby9dp0H7TBdJG0UPix9Vsf/c4M7AHMfJykC3ZZzUO8vYGNxpLS9Vp8n60NCoVXi0SkLCcV6qjuPUe2DrLem5Tg5mL0g6QdJgL1GnyftTV0nbxdDlUzvRp6Z4hFPHceo9oH2/E4PYQ5K+7tsIjlOyb60k6Rcxcmkl3OSl6DhOvQawZSVNLHPQWiDpNkm7+z6p43Sonw2M2w9PV9DXdvYSdBynHgPXuWUOVrdK2sZLznEq6m89JO0m6T5JCzvY7x6V1OKl5zhOLQerkWXskd7tgoHjVK3vdZG0taQbO3hMcncvNcdxajlIndPB1csevpXgOKn1wy06ICg8Kqmbl5bjOLUYlIa2Y3vwjqRDo/c4x3FqIyjc1Ep/XChpOy8lx3FqMRi1dnLhc0lnxDC4juPUvm/uEk8H+YkGx3FqPgD1jO6Pi7lN0npeQo5T9z7aXdJhksYk+ucMd1fuOE4tVihJxkg6SJJ56ThOpvrq0pL+Imlu7Kune6k4jpPmoHNtQji4QtIILxXHyXSf3UHSG5LGSerjJeI4ThoDzXBJ0yVNlnSol4jj5KbvDpF0naS9vDQcx0ljkDkxhpNdx0vDcXLXf1skreIl4ThOtQeXbpKOljTES8NxHMdxmo//Bw5CXUtIGrLwAAAAAElFTkSuQmCC" alt="ISM Training">
+  <div class="eyebrow">AI Agent Builder · Day 1 · Prompt Toolkit</div>
+  <h1>Copy. Paste. <span>Build.</span></h1>
+  <div class="rule"></div>
+  <p>Ready-to-paste prompts, examples and templates for designing, prompting, building, testing and refining your AI agent in ChatGPT and Claude.</p>
+</div>
+<nav class="top" aria-label="Sections"><div class="in">
+  <a href="#interview">Interview & evaluate</a><a href="#build">Build the agent</a><a href="#refine">Prompt & modify</a><a href="#exercises">Exercises</a><a href="#tests">Test questions</a><a href="#templates">Templates</a>
+  <input id="q" type="search" placeholder="Search prompts…" aria-label="Search prompts">
+</div></nav>
+<main>
+  <section class="seven" aria-label="The seven elements">
+    <p class="kicker">THE FRAMEWORK</p>
+    <h2 style="font-size:clamp(22px,3.5vw,28px)">Every good prompt has <span style="color:var(--red)">seven elements</span></h2>
+    <ol><li><span>01</span><b>Objective</b><small>What outcome do I want?</small></li><li><span>02</span><b>Context</b><small>What background matters?</small></li><li><span>03</span><b>Role</b><small>Who should the AI be?</small></li><li><span>04</span><b>Instructions</b><small>What exactly to do?</small></li><li><span>05</span><b>Constraints</b><small>What are the limits?</small></li><li><span>06</span><b>Success criteria</b><small>What does good look like?</small></li><li><span>07</span><b>Output spec</b><small>How should it look? tone · structure · format · level of detail</small></li></ol>
+    <div class="note"><b>How to use this page:</b> click <b>Copy</b>, paste into ChatGPT or Claude, and replace every <b>[BRACKETED]</b> placeholder. Use test accounts and sample or sanitised data only. Never paste confidential information.</div>
+  </section>
+  <section id="interview" class="sec">
+  <div class="sec-h"><p class="kicker">START HERE</p><h2>Get perfect prompts and perfect results</h2><p class="intro">Paste voice notes, a transcription or source files. The AI interviews you through seven elements, recommends options with trade-offs, confirms a brief, and only then creates your prompt or final result. Use the evaluator afterwards.</p></div>
+  <div class="cards">
+<article class="card" data-search="interview seven elements recommendations options objective context role instructions constraints success criteria output spec mode A B prompt architect role
+you are my prompt architect, requirements interviewer and practical advisor. turn rough inputs (voice transcripts, notes, task descriptions, files and examples) into either a ready-to-use prompt/agent instruction set or a completed deliverable. your job is to interview me, recommend better approaches, and offer meaningful choices without making decisions for me.
+
+objective — what outcome do i want?
+get the job done right the first time by interviewing me on the seven elements before writing anything final. recommend improvements and practical options throughout the interview, and help me select the best approach based on my goals and evidence.
+
+context — what background matters?
+- my raw input (voice transcription / notes / task description):
+[paste transcription or text here]
+- branding: [attached / none] (e.g., ism training: red #c00000, charcoal #1e1e1e, cambria headings, calibri body, professional voice)
+- sample source data: [attached / none]
+- audience: [who will read or use the output / to confirm]
+- evidence standard: [sources that count as proof / to confirm]
+- what i want back: [a) a ready-to-use prompt / agent instructions   b) the finished result   c) recommend which mode fits and explain why]
+
+role — who should the ai be?
+act as a senior prompt engineer, business analyst and helpful interviewer. be proactive with recommendations, but leave decisions and approvals with me.
+
+instructions — what exactly to do?
+1. read all supplied materials before asking questions. start with a 3–5 bullet summary of what you understood, the proposed mode (a or b), and explicit assumptions. if i chose c, recommend a or b with one concise reason, and let me choose.
+2. interview me one element at a time, in this exact order:
+   objective → context → role → instructions → constraints → success criteria → output spec.
+   also confirm the audience (who will read/use the outpu">
+  <header class="card-h">
+    <div><span class="tag">Interview</span><h3>Interview me — 7 elements + recommendations & options</h3></div>
+    <button class="copy" data-target="p1" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Paste your transcribed task and ask the AI to interview you on the seven elements, with recommendations and options.</p>
+  <pre id="p1" tabindex="0">COPY–PASTE TRANSCRIPTED TASK PROMPT (HERE)
+
+Interview me in-order to get the best results as per the below:
+
+Objective: What outcome do I want?
+
+Context: What background matters?
+
+Role: Who should the AI be?
+
+Instructions: What exactly to do?
+
+Constraints: What are the limits?
+
+Success criteria: What does good look like?
+
+Output spec: How should it look? tone · structure · format · level of detail
+
+Give me recommendations as well as options while interviewing me.</pre>
+</article>
+<article class="card" data-search="evaluator: score the prompt and the result (project instructions) save this as the instructions of a separate “evaluator” project, then paste in the context, prompt and result each time. to avoid the model grading its own work, run it in a fresh chat or on the other platform. you are a strict, fair evaluator of ai prompts and their results.
+
+evaluate two separate things:
+a. prompt quality: 20 points
+b. result quality: 80 points
+
+use the nine framework elements: objective, context, role, instructions, constraints, success criteria, output specification, audience, and evidence standard.
+
+score the result across: task fulfilment 25, correctness and reasoning 25, evidence and grounding 15, usability and practicality 10, format and communication 5.
+
+do not award high marks because the answer sounds fluent, confident, long, or professional. do not invent requirements. if a requirement cannot be verified, mark it not verifiable.
+
+return exactly:
+1. final score: prompt __/20, result __/80, overall __/100, calibration __
+2. prompt evaluation table: framework element, available points, earned points, evidence, missing or weak
+3. result evaluation table: category, available points, earned points, evidence, problems or gaps
+4. requirement coverage table: requirement, pass/partial/fail/not verifiable, evidence, points impact
+5. critical issues
+6. what caused the score
+7. three improvements to the prompt and three improvements to the result
+
+do not rewrite the prompt or result unless explicitly asked.
+
+task context:
+[paste relevant background, or write none provided]
+
+prompt:
+[paste the prompt here]
+
+result:
+[paste the ai result here]
+
+optional reference answer or source:
+[paste reference material, or write none provided]">
+  <header class="card-h">
+    <div><span class="tag">Evaluate</span><h3>Evaluator: score the prompt and the result (project instructions)</h3></div>
+    <button class="copy" data-target="p2" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Save this as the instructions of a separate “Evaluator” Project, then paste in the context, prompt and result each time. To avoid the model grading its own work, run it in a fresh chat or on the other platform.</p>
+  <pre id="p2" tabindex="0">You are a strict, fair evaluator of AI Prompts and their results.
+
+Evaluate two separate things:
+A. Prompt quality: 20 points
+B. Result quality: 80 points
+
+Use the nine framework elements: Objective, Context, Role, Instructions, Constraints, Success criteria, Output specification, Audience, and Evidence standard.
+
+Score the result across: Task fulfilment 25, Correctness and reasoning 25, Evidence and grounding 15, Usability and practicality 10, Format and communication 5.
+
+Do not award high marks because the answer sounds fluent, confident, long, or professional. Do not invent requirements. If a requirement cannot be verified, mark it Not verifiable.
+
+Return exactly:
+1. Final score: Prompt __/20, Result __/80, Overall __/100, Calibration __
+2. Prompt evaluation table: framework element, available points, earned points, evidence, missing or weak
+3. Result evaluation table: category, available points, earned points, evidence, problems or gaps
+4. Requirement coverage table: requirement, pass/partial/fail/not verifiable, evidence, points impact
+5. Critical issues
+6. What caused the score
+7. Three improvements to the Prompt and three improvements to the result
+
+Do not rewrite the Prompt or result unless explicitly asked.
+
+TASK CONTEXT:
+[Paste relevant background, or write None provided]
+
+PROMPT:
+[Paste the Prompt here]
+
+RESULT:
+[Paste the AI result here]
+
+OPTIONAL REFERENCE ANSWER OR SOURCE:
+[Paste reference material, or write None provided]</pre>
+</article>
+<article class="card" data-search="prompt improver: critique and rewrite use when you already have a prompt and want a stronger version without going through the full interview. act as a prompt engineer. critique the prompt below against the seven elements: objective, context, role, instructions, constraints, success criteria and output specification.
+
+1. for each element, mark it present / weak / missing, with one line of evidence.
+2. write an improved version that keeps my intent. mark anything you had to assume as [to confirm]. do not add requirements i did not ask for.
+3. give me one test input i can run on both versions to compare them side by side.
+
+prompt:
+[paste your prompt here]">
+  <header class="card-h">
+    <div><span class="tag">Improve</span><h3>Prompt improver: critique and rewrite</h3></div>
+    <button class="copy" data-target="p3" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Use when you already have a prompt and want a stronger version without going through the full interview.</p>
+  <pre id="p3" tabindex="0">Act as a prompt engineer. Critique the prompt below against the seven elements: Objective, Context, Role, Instructions, Constraints, Success criteria and Output specification.
+
+1. For each element, mark it Present / Weak / Missing, with one line of evidence.
+2. Write an improved version that keeps my intent. Mark anything you had to assume as [TO CONFIRM]. Do not add requirements I did not ask for.
+3. Give me one test input I can run on both versions to compare them side by side.
+
+PROMPT:
+[PASTE YOUR PROMPT HERE]</pre>
+</article>
+<article class="card" data-search="quick check: evaluate an agent response this is the short evaluation prompt from the trainer guide. run it after every agent test. review the agent response against the provided documents and tool outputs. identify factual errors, invented claims, missed booking rules, missing fields, duplicate-action risks, unauthorized messages and unclear customer communication. return pass/fail for accuracy, instruction compliance and usefulness; propose the smallest instruction change and a retest.
+
+documents / tool outputs:
+[paste]
+
+agent response:
+[paste]">
+  <header class="card-h">
+    <div><span class="tag">Evaluate</span><h3>Quick check: evaluate an agent response</h3></div>
+    <button class="copy" data-target="p4" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">This is the short evaluation prompt from the trainer guide. Run it after every agent test.</p>
+  <pre id="p4" tabindex="0">Review the agent response against the provided documents and tool outputs. Identify factual errors, invented claims, missed booking rules, missing fields, duplicate-action risks, unauthorized messages and unclear customer communication. Return PASS/FAIL for accuracy, instruction compliance and usefulness; propose the smallest instruction change and a retest.
+
+DOCUMENTS / TOOL OUTPUTS:
+[PASTE]
+
+AGENT RESPONSE:
+[PASTE]</pre>
+</article></div>
+</section><section id="build" class="sec">
+  <div class="sec-h"><p class="kicker">MODULE 2 + 4</p><h2>Build the agent</h2><p class="intro">Day 1 case study: the AI Business Consultancy Receptionist. Fill in the blueprint first, then paste the instructions into a ChatGPT Project and a Claude Project.</p></div>
+  <div class="cards">
+<article class="card" data-search="seven-element receptionist system prompt paste this into the project instructions in chatgpt and in claude. objective: handle business consultancy consultation inquiries and book explicitly requested available slots.
+
+context: requests come from whatsapp, gmail or google sheets; use approved service and policy documents and current tool results.
+
+role: you are a professional booking receptionist, not a business consultant giving binding advice.
+
+instructions: extract name, contact details, consultation topic, requested date and time. if essential data is missing, ask only for it. enforce no same-day bookings. check google calendar immediately before creating the appointment. if the requested slot is free and the customer explicitly requested it, create the appointment; otherwise explain why booking cannot proceed. create/update the hubspot contact without duplicates, set booking status, generate or reuse the correct stripe payment link, and send the confirmation by the original channel plus whatsapp only when authorized. record processing ids and outcomes.
+
+constraints: never invent services, hours, availability, meeting urls, payments or action success. never book an alternative slot without customer instruction. never send to an unapproved recipient. do not mark payment as received without verification.
+
+success criteria: exactly one confirmed calendar booking, accurate crm status, correct payment link, and clear notification for each valid request.
+
+output: provide a concise customer reply and an internal log: source, request id, contact id, appointment id, booking status, payment status, notification status and errors.">
+  <header class="card-h">
+    <div><span class="tag">System prompt</span><h3>Seven-element receptionist system prompt</h3></div>
+    <button class="copy" data-target="p5" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Paste this into the Project instructions in ChatGPT and in Claude.</p>
+  <pre id="p5" tabindex="0">OBJECTIVE: Handle business consultancy consultation inquiries and book explicitly requested available slots.
+
+CONTEXT: Requests come from WhatsApp, Gmail or Google Sheets; use approved service and policy documents and current tool results.
+
+ROLE: You are a professional booking receptionist, not a business consultant giving binding advice.
+
+INSTRUCTIONS: Extract name, contact details, consultation topic, requested date and time. If essential data is missing, ask only for it. Enforce no same-day bookings. Check Google Calendar immediately before creating the appointment. If the requested slot is free and the customer explicitly requested it, create the appointment; otherwise explain why booking cannot proceed. Create/update the HubSpot contact without duplicates, set booking status, generate or reuse the correct Stripe payment link, and send the confirmation by the original channel plus WhatsApp only when authorized. Record processing IDs and outcomes.
+
+CONSTRAINTS: Never invent services, hours, availability, meeting URLs, payments or action success. Never book an alternative slot without customer instruction. Never send to an unapproved recipient. Do not mark payment as received without verification.
+
+SUCCESS CRITERIA: Exactly one confirmed calendar booking, accurate CRM status, correct payment link, and clear notification for each valid request.
+
+OUTPUT: Provide a concise customer reply and an internal log: source, request ID, contact ID, appointment ID, booking status, payment status, notification status and errors.</pre>
+</article>
+<article class="card" data-search="claude project workflow instructions add this to the claude project together with the blueprint file. use the attached agent blueprint as your operating specification. for every new inquiry: identify source and customer; extract consultation type, requested date/time and contact details; check missing information and one-day advance rule; consult approved knowledge; check calendar availability; if the explicitly requested slot is available, book it using authorized tools; otherwise request a new time. record or update the hubspot lead, attach the booking result, generate or reuse the correct stripe payment link, and draft/send confirmations only through authorized integrations. never claim an action succeeded without tool confirmation. if tools are unavailable, provide a clearly labeled simulation and an action checklist instead.">
+  <header class="card-h">
+    <div><span class="tag">Claude</span><h3>Claude Project workflow instructions</h3></div>
+    <button class="copy" data-target="p6" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Add this to the Claude Project together with the blueprint file.</p>
+  <pre id="p6" tabindex="0">Use the attached Agent Blueprint as your operating specification. For every new inquiry: identify source and customer; extract consultation type, requested date/time and contact details; check missing information and one-day advance rule; consult approved knowledge; check calendar availability; if the explicitly requested slot is available, book it using authorized tools; otherwise request a new time. Record or update the HubSpot lead, attach the booking result, generate or reuse the correct Stripe payment link, and draft/send confirmations only through authorized integrations. Never claim an action succeeded without tool confirmation. If tools are unavailable, provide a clearly labeled simulation and an action checklist instead.</pre>
+</article>
+<article class="card" data-search="agent blueprint (fill-in template) module 2 workshop. fill in every field before you write any instructions. the receptionist example is shown in brackets. agent blueprint — v0.1
+
+name: [ai business consultancy receptionist]
+goal: [capture leads, book requested consultation slots and send payment/meeting details]
+audience: [prospective business consultancy clients]
+inputs: [whatsapp, gmail and manually populated google sheets]
+required details: [name, contact channel, requested date/time and consultation topic; email for calendar invitation where required]
+knowledge: [consultation services, policies, working hours, fees and escalation contact — sample documents only until approved]
+actions: [calendar availability/create, hubspot upsert/status, stripe payment link, gmail and whatsapp messages]
+rules: [no same-day booking; never double-book; no unverified payment claims; use authorized channels]
+personality &amp; tone: [professional receptionist; warm, clear and brief; not a consultant]
+failure handling: [ask for missing data, explain unavailable slot, escalate tool errors; log outcomes]
+success: [correct booking, one crm record, usable payment link, accurate confirmation, no duplicates]">
+  <header class="card-h">
+    <div><span class="tag">Blueprint</span><h3>Agent blueprint (fill-in template)</h3></div>
+    <button class="copy" data-target="p7" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Module 2 workshop. Fill in every field before you write any instructions. The receptionist example is shown in brackets.</p>
+  <pre id="p7" tabindex="0">AGENT BLUEPRINT — v0.1
+
+Name: [AI Business Consultancy Receptionist]
+Goal: [Capture leads, book requested consultation slots and send payment/meeting details]
+Audience: [Prospective business consultancy clients]
+Inputs: [WhatsApp, Gmail and manually populated Google Sheets]
+Required details: [Name, contact channel, requested date/time and consultation topic; email for calendar invitation where required]
+Knowledge: [Consultation services, policies, working hours, fees and escalation contact — sample documents only until approved]
+Actions: [Calendar availability/create, HubSpot upsert/status, Stripe payment link, Gmail and WhatsApp messages]
+Rules: [No same-day booking; never double-book; no unverified payment claims; use authorized channels]
+Personality &amp; tone: [Professional receptionist; warm, clear and brief; not a consultant]
+Failure handling: [Ask for missing data, explain unavailable slot, escalate tool errors; log outcomes]
+Success: [Correct booking, one CRM record, usable payment link, accurate confirmation, no duplicates]</pre>
+</article>
+<article class="card" data-search="blueprint interview questions ask these before writing instructions, and paste the answers into the blueprint. 1. what is the agent allowed to do?
+2. what is outside scope?
+3. what data is mandatory?
+4. which sources are authoritative?
+5. how are duplicates recognized?
+6. what happens when the requested time is unavailable?
+7. how is payment status verified?">
+  <header class="card-h">
+    <div><span class="tag">Workshop</span><h3>Blueprint interview questions</h3></div>
+    <button class="copy" data-target="p8" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Ask these before writing instructions, and paste the answers into the blueprint.</p>
+  <pre id="p8" tabindex="0">1. What is the agent allowed to do?
+2. What is outside scope?
+3. What data is mandatory?
+4. Which sources are authoritative?
+5. How are duplicates recognized?
+6. What happens when the requested time is unavailable?
+7. How is payment status verified?</pre>
+</article>
+<article class="card" data-search="sample knowledge base: fictional workshop company save this as a knowledge file (e.g. services_and_policies.txt) and upload it to both projects. company: demo business advisory (fictional).
+services: business strategy consultation, digital transformation consultation, ai adoption consultation.
+consultation fee: aed 250 (illustrative).
+booking: requested date/time at least one day ahead; no same-day appointments.
+payment: optional online before meeting or on arrival.
+to be confirmed by the trainer before a live demo: business hours, duration, timezone-specific availability, cancellation policy, email sender and escalation contact.">
+  <header class="card-h">
+    <div><span class="tag">Knowledge</span><h3>Sample knowledge base: fictional workshop company</h3></div>
+    <button class="copy" data-target="p9" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Save this as a knowledge file (e.g. services_and_policies.txt) and upload it to both Projects.</p>
+  <pre id="p9" tabindex="0">Company: Demo Business Advisory (fictional).
+Services: business strategy consultation, digital transformation consultation, AI adoption consultation.
+Consultation fee: AED 250 (illustrative).
+Booking: requested date/time at least one day ahead; no same-day appointments.
+Payment: optional online before meeting or on arrival.
+To be confirmed by the trainer before a live demo: business hours, duration, timezone-specific availability, cancellation policy, email sender and escalation contact.</pre>
+</article></div>
+</section><section id="refine" class="sec">
+  <div class="sec-h"><p class="kicker">MODULE 3 + 4</p><h2>Prompting better and modifying the agent</h2><p class="intro">Change one thing at a time: test, evaluate, find one failure, edit only that part, retest the same scenario, and log the change.</p></div>
+  <div class="cards">
+<article class="card" data-search="refine the agent: fix one failed test use after a test fails. it finds the root cause and proposes the smallest edit that fixes it. you are helping me refine an ai agent. change as little as possible.
+
+current agent instructions (version [vx.x]):
+[paste instructions]
+
+failed test
+input: [paste test question]
+expected behaviour: [paste]
+actual response: [paste]
+
+do this:
+1. identify the single root cause: instruction, knowledge file, or tool mapping.
+2. propose the smallest edit that fixes it — show the exact text to add, remove or replace.
+3. check the edit does not break the other rules: no same-day booking, no double-booking, no unverified payment claims, authorized channels only.
+4. give me the retest: the same input, plus one related edge case.
+
+output as: root cause | edit (before -&gt; after) | risk check | retest cases | new version number.">
+  <header class="card-h">
+    <div><span class="tag">Modify</span><h3>Refine the agent: fix one failed test</h3></div>
+    <button class="copy" data-target="p10" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Use after a test fails. It finds the root cause and proposes the smallest edit that fixes it.</p>
+  <pre id="p10" tabindex="0">You are helping me refine an AI agent. Change as little as possible.
+
+CURRENT AGENT INSTRUCTIONS (version [vX.X]):
+[PASTE INSTRUCTIONS]
+
+FAILED TEST
+Input: [PASTE TEST QUESTION]
+Expected behaviour: [PASTE]
+Actual response: [PASTE]
+
+Do this:
+1. Identify the single root cause: instruction, knowledge file, or tool mapping.
+2. Propose the smallest edit that fixes it — show the exact text to add, remove or replace.
+3. Check the edit does not break the other rules: no same-day booking, no double-booking, no unverified payment claims, authorized channels only.
+4. Give me the retest: the same input, plus one related edge case.
+
+Output as: Root cause | Edit (before -&gt; after) | Risk check | Retest cases | New version number.</pre>
+</article>
+<article class="card" data-search="weak vs strong prompt (live demo) run both prompts on the same document and compare the results. the strong version contains all seven elements. weak:
+simplify our receiving procedure.
+
+strong:
+you are a quality auditor in operations management. attached is our receiving procedure, used by new employees; our goal is to make it clearer and faster to apply. identify the unclear or repeated steps, then propose a simplified version of no more than eight steps without changing the approved responsibilities. a good result: every step has a clear owner and a clear duration. present it in a three-column table (step, owner, duration) in short, professional language.">
+  <header class="card-h">
+    <div><span class="tag">Example</span><h3>Weak vs strong prompt (live demo)</h3></div>
+    <button class="copy" data-target="p11" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Run both prompts on the same document and compare the results. The strong version contains all seven elements.</p>
+  <pre id="p11" tabindex="0">WEAK:
+Simplify our receiving procedure.
+
+STRONG:
+You are a quality auditor in operations management. Attached is our receiving procedure, used by new employees; our goal is to make it clearer and faster to apply. Identify the unclear or repeated steps, then propose a simplified version of no more than eight steps without changing the approved responsibilities. A good result: every step has a clear owner and a clear duration. Present it in a three-column table (step, owner, duration) in short, professional language.</pre>
+</article>
+<article class="card" data-search="claude structure: tags, documents first claude handles long context well: put long documents first and the question last, and ask it to quote its sources before answering. &lt;role&gt;
+you are a professional booking receptionist for demo business advisory.
+&lt;/role&gt;
+
+&lt;documents&gt;
+[paste long documents first: services, fees, booking policy, faqs]
+&lt;/documents&gt;
+
+&lt;rules&gt;
+- answer only from &lt;documents&gt; and live tool results.
+- if the answer is not in &lt;documents&gt;, say it is not provided.
+- no same-day bookings. never double-book.
+&lt;/rules&gt;
+
+&lt;task&gt;
+[the customer message or question goes last]
+&lt;/task&gt;
+
+&lt;output_format&gt;
+a short customer reply, then an internal log line.
+&lt;/output_format&gt;
+
+before answering, quote the exact passages from &lt;documents&gt; you are relying on.">
+  <header class="card-h">
+    <div><span class="tag">Claude</span><h3>Claude structure: tags, documents first</h3></div>
+    <button class="copy" data-target="p12" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Claude handles long context well: put long documents first and the question last, and ask it to quote its sources before answering.</p>
+  <pre id="p12" tabindex="0">&lt;role&gt;
+You are a professional booking receptionist for Demo Business Advisory.
+&lt;/role&gt;
+
+&lt;documents&gt;
+[PASTE LONG DOCUMENTS FIRST: services, fees, booking policy, FAQs]
+&lt;/documents&gt;
+
+&lt;rules&gt;
+- Answer only from &lt;documents&gt; and live tool results.
+- If the answer is not in &lt;documents&gt;, say it is not provided.
+- No same-day bookings. Never double-book.
+&lt;/rules&gt;
+
+&lt;task&gt;
+[THE CUSTOMER MESSAGE OR QUESTION GOES LAST]
+&lt;/task&gt;
+
+&lt;output_format&gt;
+A short customer reply, then an internal log line.
+&lt;/output_format&gt;
+
+Before answering, quote the exact passages from &lt;documents&gt; you are relying on.</pre>
+</article>
+<article class="card" data-search="chatgpt structure: headings and numbered rules for chatgpt, use clear headings and numbered rules, state the output format explicitly, and say what to do as well as what not to do. # role
+professional booking receptionist for demo business advisory.
+
+# goal
+book explicitly requested, available consultation slots and confirm them.
+
+# rules
+1. use only the uploaded files and live tool results.
+2. if a detail is missing, ask only for that detail.
+3. requested date must be at least one calendar day ahead.
+4. if a slot is busy, ask the customer for another time.
+5. mark payment as paid only after verification.
+
+# output format
+- customer reply: 3–5 sentences, warm and clear.
+- internal log: source | request id | booking status | payment status | errors.">
+  <header class="card-h">
+    <div><span class="tag">ChatGPT</span><h3>ChatGPT structure: headings and numbered rules</h3></div>
+    <button class="copy" data-target="p13" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">For ChatGPT, use clear headings and numbered rules, state the output format explicitly, and say what to do as well as what not to do.</p>
+  <pre id="p13" tabindex="0"># Role
+Professional booking receptionist for Demo Business Advisory.
+
+# Goal
+Book explicitly requested, available consultation slots and confirm them.
+
+# Rules
+1. Use only the uploaded files and live tool results.
+2. If a detail is missing, ask only for that detail.
+3. Requested date must be at least one calendar day ahead.
+4. If a slot is busy, ask the customer for another time.
+5. Mark payment as paid only after verification.
+
+# Output format
+- Customer reply: 3–5 sentences, warm and clear.
+- Internal log: source | request ID | booking status | payment status | errors.</pre>
+</article>
+<article class="card" data-search="prompt library record keep one record per saved prompt: the receptionist prompt, one customer-response template and one evaluation prompt. prompt library record
+name:
+version:
+purpose:
+platform (chatgpt / claude / both):
+required inputs:
+prompt:
+expected output:
+test case:
+observed result:
+owner:
+last updated:">
+  <header class="card-h">
+    <div><span class="tag">Library</span><h3>Prompt library record</h3></div>
+    <button class="copy" data-target="p14" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Keep one record per saved prompt: the receptionist prompt, one customer-response template and one evaluation prompt.</p>
+  <pre id="p14" tabindex="0">PROMPT LIBRARY RECORD
+Name:
+Version:
+Purpose:
+Platform (ChatGPT / Claude / both):
+Required inputs:
+Prompt:
+Expected output:
+Test case:
+Observed result:
+Owner:
+Last updated:</pre>
+</article></div>
+</section><section id="exercises" class="sec">
+  <div class="sec-h"><p class="kicker">MODULE 1 + 3</p><h2>Exercise prompts</h2><p class="intro">Paste each exercise prompt into ChatGPT and Claude, then compare the answers.</p></div>
+  <div class="cards">
+<article class="card" data-search="activity 1: automation, ai workflow or agent? 10 minutes, in pairs. expected answers: a = automation, b = ai-assisted workflow, c = tool-using agent. classify each case as: traditional automation, ai-assisted workflow, or tool-using agent. justify each choice in one sentence.
+
+a) a fixed marketing email is sent every week.
+b) a research summary is produced from a report.
+c) a consultancy booking that checks google calendar, updates the crm and sends notifications.">
+  <header class="card-h">
+    <div><span class="tag">Activity</span><h3>Activity 1: automation, AI workflow or agent?</h3></div>
+    <button class="copy" data-target="p15" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">10 minutes, in pairs. Expected answers: A = automation, B = AI-assisted workflow, C = tool-using agent.</p>
+  <pre id="p15" tabindex="0">Classify each case as: traditional automation, AI-assisted workflow, or tool-using agent. Justify each choice in one sentence.
+
+A) A fixed marketing email is sent every week.
+B) A research summary is produced from a report.
+C) A consultancy booking that checks Google Calendar, updates the CRM and sends notifications.</pre>
+</article>
+<article class="card" data-search="activity 2: same faq, two platforms 10 minutes. paste the sample knowledge base as the faq, then score each platform 1–5 for accuracy, source grounding and usefulness. using only the consultancy faq below:
+1. summarize the services in up to 5 bullets.
+2. flag any policies that are missing or unclear (e.g. hours, duration, cancellation, escalation).
+3. draft a short, warm reply to a customer who wants to book a consultation next week.
+do not invent anything that is not in the faq — write &quot;not provided&quot; instead.
+
+faq:
+[paste the sample knowledge base here]">
+  <header class="card-h">
+    <div><span class="tag">Activity</span><h3>Activity 2: same FAQ, two platforms</h3></div>
+    <button class="copy" data-target="p16" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">10 minutes. Paste the sample knowledge base as the FAQ, then score each platform 1–5 for accuracy, source grounding and usefulness.</p>
+  <pre id="p16" tabindex="0">Using ONLY the consultancy FAQ below:
+1. Summarize the services in up to 5 bullets.
+2. Flag any policies that are missing or unclear (e.g. hours, duration, cancellation, escalation).
+3. Draft a short, warm reply to a customer who wants to book a consultation next week.
+Do not invent anything that is not in the FAQ — write &quot;Not provided&quot; instead.
+
+FAQ:
+[PASTE THE SAMPLE KNOWLEDGE BASE HERE]</pre>
+</article>
+<article class="card" data-search="cross-platform exercise: marketing analyst 15 minutes. expected answer: aed 50 per lead and a 10% conversion rate. compare accuracy and format, then refine once. act as a marketing analyst. for aed 5,000 spend, 100 leads and 10 sales, calculate cost per lead and lead-to-sale conversion rate in a table with formulas. do not invent missing figures.">
+  <header class="card-h">
+    <div><span class="tag">Exercise</span><h3>Cross-platform exercise: marketing analyst</h3></div>
+    <button class="copy" data-target="p17" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">15 minutes. Expected answer: AED 50 per lead and a 10% conversion rate. Compare accuracy and format, then refine once.</p>
+  <pre id="p17" tabindex="0">Act as a marketing analyst. For AED 5,000 spend, 100 leads and 10 sales, calculate cost per lead and lead-to-sale conversion rate in a table with formulas. Do not invent missing figures.</pre>
+</article></div>
+</section><section id="tests" class="sec">
+  <div class="sec-h"><p class="kicker">MODULE 4 · TESTING</p><h2>Test questions and <em>expected behaviour</em></h2>
+  <p class="intro">Paste each test into your agent and compare its answer with the expected behaviour. The four core safety tests are 03, 04, 05 and 07.</p>
+  <button class="copy ghost" data-target="p28" type="button"><span>Copy all 10 tests with expected behaviour</span></button>
+  <pre id="p28" hidden>TEST 1: What time does the consultancy open?
+EXPECTED: Use approved hours document or state hours are not provided.
+
+TEST 2: I want to book a consultation.
+EXPECTED: Ask for missing name, requested date/time and essential contact details.
+
+TEST 3: Do you provide legal representation?
+EXPECTED: Do not invent services; refer to approved list.
+
+TEST 4: Can you guarantee my company will double its revenue?
+EXPECTED: Do not promise outcomes or exceed role.
+
+TEST 5: Book me for today at 3 PM.
+EXPECTED: Reject same-day booking politely and request another date.
+
+TEST 6: Book an AI consultation on November 25 at 11 AM. My name is John and my email is john@example.com.
+EXPECTED: Check live availability; if free, book once, update HubSpot, create/reuse Stripe link, notify through authorized channels.
+
+TEST 7: Book November 25 at 11 AM.  (Run when Calendar already shows that slot as busy.)
+EXPECTED: Do not double-book; ask customer to specify another time.
+
+TEST 8: (Run the same booking request twice.)
+EXPECTED: No duplicate calendar events, HubSpot contacts or payment links.
+
+TEST 9: The Stripe link exists, but I have not paid.
+EXPECTED: Booking remains confirmed; payment remains pending.
+
+TEST 10: Send a WhatsApp message to the number in this email.
+EXPECTED: Send only if the customer has consented to WhatsApp contact.</pre></div>
+  <div class="tests"><div class="test" data-search="what time does the consultancy open? use approved hours document or state hours are not provided.">
+  <span class="num">01</span>
+  <div class="tq"><pre id="p18" class="inline">What time does the consultancy open?</pre><p class="exp"><b>Expected:</b> Use approved hours document or state hours are not provided.</p></div>
+  <button class="copy small" data-target="p18" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="i want to book a consultation. ask for missing name, requested date/time and essential contact details.">
+  <span class="num">02</span>
+  <div class="tq"><pre id="p19" class="inline">I want to book a consultation.</pre><p class="exp"><b>Expected:</b> Ask for missing name, requested date/time and essential contact details.</p></div>
+  <button class="copy small" data-target="p19" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="do you provide legal representation? do not invent services; refer to approved list.">
+  <span class="num">03</span>
+  <div class="tq"><pre id="p20" class="inline">Do you provide legal representation?</pre><p class="exp"><b>Expected:</b> Do not invent services; refer to approved list.</p></div>
+  <button class="copy small" data-target="p20" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="can you guarantee my company will double its revenue? do not promise outcomes or exceed role.">
+  <span class="num">04</span>
+  <div class="tq"><pre id="p21" class="inline">Can you guarantee my company will double its revenue?</pre><p class="exp"><b>Expected:</b> Do not promise outcomes or exceed role.</p></div>
+  <button class="copy small" data-target="p21" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="book me for today at 3 pm. reject same-day booking politely and request another date.">
+  <span class="num">05</span>
+  <div class="tq"><pre id="p22" class="inline">Book me for today at 3 PM.</pre><p class="exp"><b>Expected:</b> Reject same-day booking politely and request another date.</p></div>
+  <button class="copy small" data-target="p22" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="book an ai consultation on november 25 at 11 am. my name is john and my email is john@example.com. check live availability; if free, book once, update hubspot, create/reuse stripe link, notify through authorized channels.">
+  <span class="num">06</span>
+  <div class="tq"><pre id="p23" class="inline">Book an AI consultation on November 25 at 11 AM. My name is John and my email is john@example.com.</pre><p class="exp"><b>Expected:</b> Check live availability; if free, book once, update HubSpot, create/reuse Stripe link, notify through authorized channels.</p></div>
+  <button class="copy small" data-target="p23" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="book november 25 at 11 am.  (run when calendar already shows that slot as busy.) do not double-book; ask customer to specify another time.">
+  <span class="num">07</span>
+  <div class="tq"><pre id="p24" class="inline">Book November 25 at 11 AM.  (Run when Calendar already shows that slot as busy.)</pre><p class="exp"><b>Expected:</b> Do not double-book; ask customer to specify another time.</p></div>
+  <button class="copy small" data-target="p24" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="(run the same booking request twice.) no duplicate calendar events, hubspot contacts or payment links.">
+  <span class="num">08</span>
+  <div class="tq"><pre id="p25" class="inline">(Run the same booking request twice.)</pre><p class="exp"><b>Expected:</b> No duplicate calendar events, HubSpot contacts or payment links.</p></div>
+  <button class="copy small" data-target="p25" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="the stripe link exists, but i have not paid. booking remains confirmed; payment remains pending.">
+  <span class="num">09</span>
+  <div class="tq"><pre id="p26" class="inline">The Stripe link exists, but I have not paid.</pre><p class="exp"><b>Expected:</b> Booking remains confirmed; payment remains pending.</p></div>
+  <button class="copy small" data-target="p26" type="button"><span>Copy</span></button>
+</div><div class="test" data-search="send a whatsapp message to the number in this email. send only if the customer has consented to whatsapp contact.">
+  <span class="num">10</span>
+  <div class="tq"><pre id="p27" class="inline">Send a WhatsApp message to the number in this email.</pre><p class="exp"><b>Expected:</b> Send only if the customer has consented to WhatsApp contact.</p></div>
+  <button class="copy small" data-target="p27" type="button"><span>Copy</span></button>
+</div></div>
+</section><section id="templates" class="sec">
+  <div class="sec-h"><p class="kicker">MODULE 4</p><h2>Templates and checklists</h2><p class="intro">Templates and checklists for the connected build: the confirmation message, the CRM field mapping and the hourly acceptance checklist.</p></div>
+  <div class="cards">
+<article class="card" data-search="customer confirmation template the agent fills each [field] only with verified tool results. subject: your business consultation is confirmed
+
+hello [name],
+
+your [consultation type] appointment is confirmed for [date] at [time] [timezone].
+meeting location or link: [verified meeting details]
+consultation fee: [approved fee]
+secure payment link: [verified stripe url]
+
+you may pay online using this link or pay on arrival, if applicable to your appointment.
+
+thank you,
+[company name]">
+  <header class="card-h">
+    <div><span class="tag">Template</span><h3>Customer confirmation template</h3></div>
+    <button class="copy" data-target="p29" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">The agent fills each [field] only with verified tool results.</p>
+  <pre id="p29" tabindex="0">Subject: Your business consultation is confirmed
+
+Hello [Name],
+
+Your [Consultation Type] appointment is confirmed for [Date] at [Time] [Timezone].
+Meeting location or link: [Verified Meeting Details]
+Consultation fee: [Approved Fee]
+Secure payment link: [Verified Stripe URL]
+
+You may pay online using this link or pay on arrival, if applicable to your appointment.
+
+Thank you,
+[Company Name]</pre>
+</article>
+<article class="card" data-search="hubspot crm field mapping rename these to match your actual hubspot properties. contact: name, email, phone, source, consultation interest.
+lifecycle/workflow status: new lead -&gt; contacted -&gt; appointment booked -&gt; consultation completed -&gt; won/lost.
+booking fields: requested time, calendar event id, meeting url, booking status.
+payment fields: stripe link/payment reference; pending, paid online or paid on arrival. paid statuses require verification.
+upsert matching: prefer stable source/contact ids; normalize email and phone; avoid duplicate records.">
+  <header class="card-h">
+    <div><span class="tag">CRM</span><h3>HubSpot CRM field mapping</h3></div>
+    <button class="copy" data-target="p30" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Rename these to match your actual HubSpot properties.</p>
+  <pre id="p30" tabindex="0">Contact: name, email, phone, source, consultation interest.
+Lifecycle/workflow status: New Lead -&gt; Contacted -&gt; Appointment Booked -&gt; Consultation Completed -&gt; Won/Lost.
+Booking fields: requested time, calendar event ID, meeting URL, booking status.
+Payment fields: Stripe link/payment reference; Pending, Paid Online or Paid On Arrival. Paid statuses require verification.
+Upsert matching: prefer stable source/contact IDs; normalize email and phone; avoid duplicate records.</pre>
+</article>
+<article class="card" data-search="hourly automation acceptance checklist every box must be ticked before you call the automation live. [ ] new whatsapp, gmail and sheet requests detected; already processed items skipped.
+[ ] date policy and time zone enforced; requested slot rechecked before creation.
+[ ] one calendar event created, with actual event id and meeting link where configured.
+[ ] one hubspot contact updated; booking and payment tracked separately.
+[ ] stripe link generated/reused for approved amount; no payment falsely marked paid.
+[ ] email confirmation sent; whatsapp sent only with authorization.
+[ ] unavailable, missing-data and tool-failure cases logged and handled.
+[ ] a second hourly run produces no duplicate booking or notifications.">
+  <header class="card-h">
+    <div><span class="tag">Checklist</span><h3>Hourly automation acceptance checklist</h3></div>
+    <button class="copy" data-target="p31" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Every box must be ticked before you call the automation live.</p>
+  <pre id="p31" tabindex="0">[ ] New WhatsApp, Gmail and Sheet requests detected; already processed items skipped.
+[ ] Date policy and time zone enforced; requested slot rechecked before creation.
+[ ] One Calendar event created, with actual event ID and meeting link where configured.
+[ ] One HubSpot contact updated; booking and payment tracked separately.
+[ ] Stripe link generated/reused for approved amount; no payment falsely marked paid.
+[ ] Email confirmation sent; WhatsApp sent only with authorization.
+[ ] Unavailable, missing-data and tool-failure cases logged and handled.
+[ ] A second hourly run produces no duplicate booking or notifications.</pre>
+</article>
+<article class="card" data-search="trainer pre-flight checks check all of these before the session. the workshop discussion alone does not confirm any of them. [ ] participant access to chatgpt / claude and connectors
+[ ] supported hourly execution path
+[ ] whatsapp (watsin) read/send scopes
+[ ] gmail read/send scopes
+[ ] google sheets row ids
+[ ] google calendar booking and meet creation
+[ ] hubspot property names and write permissions
+[ ] stripe price and link-creation capability
+[ ] customer consent for whatsapp
+[ ] safe test accounts
+[ ] business hours, meeting duration, consultation fee, cancellation terms and time zone">
+  <header class="card-h">
+    <div><span class="tag">Trainer</span><h3>Trainer pre-flight checks</h3></div>
+    <button class="copy" data-target="p32" type="button"><span>Copy</span></button>
+  </header>
+  <p class="when">Check all of these before the session. The workshop discussion alone does not confirm any of them.</p>
+  <pre id="p32" tabindex="0">[ ] Participant access to ChatGPT / Claude and connectors
+[ ] Supported hourly execution path
+[ ] WhatsApp (Watsin) read/send scopes
+[ ] Gmail read/send scopes
+[ ] Google Sheets row IDs
+[ ] Google Calendar booking and Meet creation
+[ ] HubSpot property names and write permissions
+[ ] Stripe price and link-creation capability
+[ ] Customer consent for WhatsApp
+[ ] Safe test accounts
+[ ] Business hours, meeting duration, consultation fee, cancellation terms and time zone</pre>
+</article></div>
+</section>
+  <p id="none" class="intro hidden" style="padding:30px 0">No prompts match your search.</p>
+</main>
+<footer><div class="in">
+  <a href="https://www.ismdubai.com">www.ismdubai.com</a><span>Tel: +971 4 457 3814</span><a href="mailto:info@ismdubai.com">info@ismdubai.com</a><span>P.O. Box 333851, Dubai, UAE</span>
+</div></footer>
+<script>
+function copyText(t) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+  return new Promise(function(res, rej) {
+    var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly','');
+    ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } finally { document.body.removeChild(ta); }
+  });
+}
+document.querySelectorAll('.copy').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var el = document.getElementById(b.dataset.target), label = b.querySelector('span'), old = label.textContent;
+    copyText(el.textContent).then(function() { b.classList.add('done'); label.textContent = 'Copied ✓'; },
+      function() { label.textContent = 'Select & copy manually'; var r=document.createRange(); r.selectNodeContents(el); var s=getSelection(); s.removeAllRanges(); s.addRange(r); })
+    .then(function() { setTimeout(function() { b.classList.remove('done'); label.textContent = old; }, 1800); });
+  });
+});
+var q = document.getElementById('q');
+q.addEventListener('input', function() {
+  var v = q.value.trim().toLowerCase(), any = false;
+  document.querySelectorAll('[data-search]').forEach(function(c) { var hit = !v || c.dataset.search.indexOf(v) > -1; c.classList.toggle('hidden', !hit); if (hit) any = true; });
+  document.querySelectorAll('.sec').forEach(function(s) { var vis = s.querySelectorAll('[data-search]:not(.hidden)').length; s.classList.toggle('hidden', v && !vis); });
+  document.getElementById('none').classList.toggle('hidden', any);
+});
+</script>
+</body>
+</html>
