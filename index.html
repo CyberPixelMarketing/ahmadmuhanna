@@ -230,16 +230,15 @@
     </div>
   </section>
 
-  <!-- 3 · Next session: full-bleed signal band (ships in waitlist state) -->
-  <section class="band" id="next" aria-labelledby="next-h" data-session-card data-state="waitlist" data-cta-bar-hide>
+  <!-- 3 · Featured: 3-day online AI Agents workshop (full-bleed signal band) -->
+  <section class="band" id="next" aria-labelledby="next-h" data-cta-bar-hide>
     <div class="band__ticker marquee" data-marquee data-marquee-speed="46" data-wipe>
       <div class="marquee__viewport">
         <ul class="marquee__track band__track" role="list">
-          <li data-i18n="tk1">الجلسة القادمة</li>
-          <li data-session="waitlist full" data-i18n="tk2">قائمة الانتظار مفتوحة</li>
-          <li data-session="open-free open-paid" hidden data-i18n="tk2_open">التسجيل مفتوح</li>
-          <li data-i18n="tk_len">60 دقيقة · أونلاين · مباشر</li>
-          <li data-i18n="tk3">بالعربية</li>
+          <li data-i18n="aw_tk1">ورشة جديدة</li>
+          <li data-i18n="aw_tk2">ابنِ وكيلك الذكي</li>
+          <li data-i18n="aw_tk3">3 أيام · 3 ساعات يومياً · أونلاين</li>
+          <li data-i18n="aw_tk4">بالعربية والإنجليزية</li>
         </ul>
       </div>
     </div>
@@ -247,21 +246,16 @@
       <div class="band__info">
         <p class="band__status">
           <span class="status-light" aria-hidden="true"></span>
-          <span data-session="waitlist" data-i18n="sc_status">الموعد القادم يُعلن قريباً</span>
-          <span data-session="open-free open-paid" hidden><time data-session-date></time>، <time data-session-time></time> <span data-i18n="sc_tz">بتوقيت الإمارات</span></span>
-          <span data-session="full" hidden data-i18n="sc_full">اكتملت المقاعد، والانتظار مفتوح</span>
+          <span data-i18n="aw_status">الموعد القادم يُعلن قريباً</span>
         </p>
-        <h2 class="band__title" id="next-h" data-i18n="sc_title">الذكاء الاصطناعي لعملك بأقل عدد من التطبيقات</h2>
-        <p class="band__past"><span data-i18n="sc_past">الجلسة السابقة:</span> <time datetime="2026-08-05" data-session-date="2026-08-05T17:00:00+04:00">الأربعاء 5 أغسطس 2026</time></p>
+        <h2 class="band__title" id="next-h" data-i18n="aw_title">ابنِ وكيل ذكاء اصطناعي يعمل لعملك — في 3 أيام</h2>
+        <p class="band__past" data-i18n="aw_sub">ورشة أونلاين مباشرة · 9 ساعات · ChatGPT و Claude · بدون برمجة</p>
       </div>
       <div class="band__cta">
-        <div class="stack" style="--stack:var(--s-2)" data-not-waitlisted>
-          <a class="btn btn--ink" href="free-workshop.html#register" data-session="waitlist full" data-magnetic="4" data-track="cta_click" data-cta="card_waitlist" data-target="form"><span data-i18n="cta_notify">أبلغني بالموعد</span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ink" href="free-workshop.html#register" data-session="open-free" hidden data-track="cta_click" data-cta="card_free" data-target="form"><span data-i18n="cta_free_open">احجز مقعدي المجاني</span></a>
-          <a class="btn btn--ink" href="workshop-register.html" data-session="open-paid" hidden data-track="cta_click" data-cta="card_paid" data-target="internal"><span data-i18n="cta_paid_page">احجز مقعدك: 50 درهماً</span></a>
-          <p class="band__note" data-session="waitlist full" data-i18n="sc_free">مجاناً، ولا دفع الآن.</p>
+        <div class="stack" style="--stack:var(--s-2)">
+          <a class="btn btn--ink" href="ai-agents-workshop.html#register" data-magnetic="4" data-track="cta_click" data-cta="band_agents_register" data-target="internal"><span data-i18n="aw_cta">احجز مقعدك</span><svg class="icon icon--dir" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="band__note" href="ai-agents-workshop.html#curriculum" data-track="cta_click" data-cta="band_agents_details" data-target="internal" style="text-decoration:underline;text-underline-offset:3px"><span data-i18n="aw_more">شاهد البرنامج يوماً بيوم</span></a>
         </div>
-        <p class="band__note band__note--on" data-waitlisted hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="sc_waitlisted">أنت على القائمة. سأرسل لك الموعد فور الإعلان عنه.</span></p>
       </div>
     </div>
   </section>
@@ -783,6 +777,15 @@ window.CONTENT = {
     sc_past: 'الجلسة السابقة:',
     sc_free: 'مجاناً، ولا دفع الآن.',
     sc_waitlisted: 'أنت على القائمة. سأرسل لك الموعد فور الإعلان عنه.',
+    aw_tk1: 'ورشة جديدة',
+    aw_tk2: 'ابنِ وكيلك الذكي',
+    aw_tk3: '3 أيام · 3 ساعات يومياً · أونلاين',
+    aw_tk4: 'بالعربية والإنجليزية',
+    aw_status: 'الموعد القادم يُعلن قريباً',
+    aw_title: 'ابنِ وكيل ذكاء اصطناعي يعمل لعملك — في 3 أيام',
+    aw_sub: 'ورشة أونلاين مباشرة · 9 ساعات · ChatGPT و Claude · بدون برمجة',
+    aw_cta: 'احجز مقعدك',
+    aw_more: 'شاهد البرنامج يوماً بيوم',
     /* Recent training */
     recent_h: 'أحدث التدريبات',
     quote_mark: '«',
@@ -1040,6 +1043,15 @@ window.CONTENT = {
     sc_past: 'Last session:',
     sc_free: 'Free. Nothing to pay now.',
     sc_waitlisted: 'You’re on the list. I’ll send you the date as soon as it’s announced.',
+    aw_tk1: 'NEW WORKSHOP',
+    aw_tk2: 'BUILD YOUR AI AGENT',
+    aw_tk3: '3 DAYS · 3 HOURS A DAY · ONLINE',
+    aw_tk4: 'ARABIC & ENGLISH',
+    aw_status: 'Next dates announced soon',
+    aw_title: 'Build an AI agent that works for your business — in 3 days',
+    aw_sub: 'Live online · 9 hours · ChatGPT & Claude · no coding',
+    aw_cta: 'Reserve your seat',
+    aw_more: 'See the day-by-day plan',
     /* Recent training */
     recent_h: 'Recent training',
     quote_mark: '“',
